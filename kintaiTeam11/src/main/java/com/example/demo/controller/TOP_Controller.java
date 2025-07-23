@@ -103,14 +103,14 @@ import org.springframework.web.bind.annotation.RequestParam;
     	 }
     	 
     	 
-    	 @PostMapping("/search_complate")
-    	 public String search_complate(
-    	     @RequestParam String search_id,
-    	     @RequestParam String search_date,
-    	     @RequestParam String search_range,
-    	     Model model) {
-    	     return "search_complate"; // 登録完了画面を表示
-    	 }
+    	 //@PostMapping("/search_complate")
+    	 //public String search_complate(
+    	//     @RequestParam String search_id,
+    	 //    @RequestParam String search_date,
+    	 //    @RequestParam String search_range,
+    	//     Model model) {
+    	//     return "search_complate"; // 登録完了画面を表示
+    	// }
     	
     	 @PostMapping("/search_edit")
     	 public String search_edit( Model model) {
