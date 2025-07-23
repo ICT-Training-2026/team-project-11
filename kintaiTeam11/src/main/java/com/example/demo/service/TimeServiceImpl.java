@@ -18,24 +18,57 @@ public class TimeServiceImpl implements TimeService{
 	public Duration timediff(LocalTime time1, LocalTime time2, LocalTime time3) {
 		LocalTime defo =LocalTime.of(7, 0);
 		LocalTime base =LocalTime.of(0, 0);
-	    Duration fdiff = Duration.between(time1, time2);
-	    Duration sdiff = Duration.between(time3, defo);
-	    Duration tdiff = fdiff.minus(sdiff);
-	    
-	    LocalTime overtime =base.plus(tdiff);
-	    
-	    if (overtime.isBefore(defo)){
-	    	return tdiff;
+		
+		Duration fdiff = Duration.between(time1, time2);
+		
+	    LocalTime fdiffL = base.plus(fdiff);
+	    if(fdiffL.isAfter(time3)) {
+	    	LocalTime save = fdiffL;
+	    	fdiffL = time3;
+	    	time3 = save;
 	    }
-	    return Duration.ZERO;
+	    Duration sdiff = Duration.between(fdiffL, time3);
+	    LocalTime sdiffL = base.plus(sdiff);
+	    if(sdiffL.isBefore(defo)) {
+	    	return Duration.ZERO;
+	    }
+	    if(sdiffL.isAfter(defo)) {
+	    	LocalTime save = sdiffL;
+	    	sdiffL = defo;
+	    	defo = save;
+	    }
+	    
+	    Duration tdiff = Duration.between(sdiffL,defo);
+	    
+	    
+	    return tdiff;
+	    
 	    
 	}
 
 	@Override
 	public Duration timediff(LocalTime time1, LocalTime time2, LocalTime time3, LocalTime time4) {
-	    Duration fdiff = Duration.between(time1, time2);
-	    Duration sdiff = Duration.between(time3, time4);
-	    return fdiff.minus(sdiff);
+	
+		LocalTime base =LocalTime.of(0, 0);
+		
+		Duration fdiff = Duration.between(time1, time2);
+		
+	    LocalTime fdiffL = base.plus(fdiff);
+	    if(fdiffL.isAfter(time3)) {
+	    	LocalTime save = fdiffL;
+	    	fdiffL = time3;
+	    	time3 = save;
+	    }
+	    Duration sdiff = Duration.between(fdiffL, time3);
+	    LocalTime sdiffL = base.plus(sdiff);
+	    if(sdiffL.isAfter(time4)) {
+	    	LocalTime save = sdiffL;
+	    	sdiffL = time4;
+	    	time4 = save;
+	    }
+	    Duration tdiff = Duration.between(sdiffL,time4);
+	   
+	    return tdiff;
 	}
 
 	
