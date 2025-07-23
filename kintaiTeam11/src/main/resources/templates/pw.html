@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+	<h1>パスワード再設定</h1>
+	<form th:action="@{/Register_pw}" method="POST">
+		       <label>
+		           旧パスワード<br>
+		           <input type="text" name="oldpw" placeholder="現在のパスワードを入力">
+		       </label><br>
+			   <label>
+			   	      新パスワード<br>
+			   	       <input type="text" name="newpw" placeholder="新しいパスワードを入力">
+			   	   </label><br>
+
+			   <label>
+			       新パスワード※確認用<br>
+			       <input type="text" name="new1pw" placeholder="再度新しいパスワードを入力">
+			   </label><br>
+			   
+			   
+
+		       <input type="submit" value="登録">
+		   </form>
+		   <a href="/System">戻る</a>
+
+
+</body>
+</html>

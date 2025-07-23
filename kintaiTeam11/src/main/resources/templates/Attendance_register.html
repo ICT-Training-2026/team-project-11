@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>勤怠登録</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+	<h1>勤怠登録画面</h1>
+	
+	
+	
+	
+		
+     <form th:action="@{/Register_complate}" method="POST" 
+		   		th:object="${AttendancetForm}">
+				<label>ID<br>
+				        <input type="number" th:field="*{empId}" placeholder="社員番号" required>
+				    </label><br>
+
+				    <label>日付<br>
+				        <input type="date" th:field="*{workDate}" placeholder="日付を選択" required>
+				    </label><br>
+
+				    <label>勤怠タイプ<br>
+				        <select th:field="*{leaveType}" required>
+				            <option value="出勤">出勤</option>
+				            <option value="振出">振出</option>
+				        </select>
+				    </label><br>
+
+				    <label>開始時間<br>
+				        <input type="time" th:field="*{checkInTime}" placeholder="勤務開始時間を入力" required>
+				    </label><br>
+
+				    <label>勤務終了時間<br>
+				        <input type="time" th:field="*{checkOutTime}" placeholder="勤務終了時間を入力" required>
+				    </label><br>
+
+				    <label>休憩時間<br>
+				        <input type="time" th:field="*{breakTime}" placeholder="休憩時間を入力" required>
+				    </label><br>
+
+				    <label>残業時間<br>
+				        <input type="time" th:field="*{overtimeHours}" placeholder="残業時間を入力" required>
+				    </label><br>
+
+				    <label>連続勤務日数<br>
+				        <input type="number" th:field="*{consecutiveDays}" placeholder="連続勤務日数を入力" required>
+				    </label><br>
+
+				    <label>実労働時間<br>
+				        <input type="time" th:field="*{workTimeHours}" placeholder="実労働時間を入力" required>
+				    </label><br>
+
+				    <label>備考<br>
+				        <input type="text" th:field="*{remarks}" placeholder="備考">
+				    </label><br>
+
+				    <label>承認状態<br>
+				        <select th:field="*{approval}" required>
+				            <option value="0">未承認</option>
+				            <option value="1">承認済</option>
+				        </select>
+				    </label><br>
+					<label>更新日<br>
+					<input type="datetime-local" value="2018-06-12T19:30" th:field="*{updatedAt}" placeholder="備考">
+									    </label><br>
+				    <input type="submit" value="登録">
+				</form>
+
+				<a href="/AtMenu">勤怠メニュー</a>
+				</body>
+				</html>

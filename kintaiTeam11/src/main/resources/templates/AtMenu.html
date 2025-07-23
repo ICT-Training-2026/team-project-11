@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>システムメニュー</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
+	
+
+	
+	a {
+		       text-decoration: none; /*リンクに下線を引かせないようにする*/
+		   }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #FDF6D7;
+      font-family: "メイリオ", sans-serif;
+      height: 100%;
+      overflow: hidden; /* スクロール防止 */
+    }
+
+    .container {
+  display: flex;
+  height: 700px;
+  width: 100vw;       /* ← 横幅を画面いっぱいに変更 */
+  max-width: none;    /* ← 中央寄せを解除 */
+}
+
+
+    .sidebar {
+      width: 280px;
+      position: relative;
+    }
+
+    .circle {
+      position: absolute;
+      top: -300px;
+      left: -450px;
+      width: 1000px;
+      height: 1000px;
+      background-color: #87816C;
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .menu-buttons {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* 子要素を左端に揃える */
+  margin-top: 20px;
+}
+
+    .menu-button { 
+  transform: translateY(-20px); /* Y軸方向に上に移動ボタンを上にそろえる */
+  width: 220px;
+  height: 100px;
+  background-color: #C3BB8D;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  line-height: 100px;
+  text-align: center;
+  border: 2px solid black;
+  border-radius: 0 100px 100px 0;
+  margin-bottom: -2px;
+  margin-left: 0; /* 左端に配置するためのマージン */
+}
+
+    .logo-area {
+      position: absolute;
+      top: 50%;
+      left: 90%; /* ← ロゴをさらに右寄りに調整 */
+      transform: translate(-50%, -50%);
+      color: white;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .monoton-regular {
+      font-family: "Monoton", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .logo-area .company {
+      font-family: "Montserrat", sans-serif;
+      letter-spacing: 5px;
+      font-size: 18px;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .logo-area .m {
+      font-family: "Monoton", sans-serif;
+      font-size: 150px;
+      font-weight: 300;
+      line-height: 1;
+    }
+
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 50px; /* 余白を小さくして上へ */
+    }
+
+    .main h1 {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 50px;
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .main-button {
+      left: 0%;
+      width: 280px;
+      height: 60px;
+      font-size: 22px;
+      font-weight: bold;
+      background-color: white;
+      border: 2px solid black;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+	
+	.button-group .center-link {
+	  display: block;
+	  text-align: center;
+	  margin: 0 auto;
+	  font-size: 18px;
+	  font-weight: bold;
+	  width: 100px;        /* 幅は好みで調整 */
+	  padding: 10px 0 0 0; /* 上に余白 */
+	  color: rgb(0, 0, 255);         /* 好みで色調整 */
+	  text-decoration: underline;
+	}
+	
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <div class="circle"></div>
+      <div class="menu-buttons">
+         <a href="/top"><div class="menu-button">トップページ</div></a>
+       <a href="/L"><div class="menu-button">ログイン</div></a>
+      </div>
+      <div class="logo-area">
+        <span class="company">company</span>
+        <span class="m">M</span>
+      </div>
+    </div>
+    <div class="main">
+      <h1>勤怠メニュー</h1>
+      <adiv class="button-group">
+   <a href="/Attendance_register"><button class="main-button">勤怠登録</button></a>
+   <a href ="/Attendance_edit"><button class="main-button">勤怠編集</button></a>
+   <a href ="/Attendance_search"><button class="main-button">勤怠検索</button></a>
+   <a href="/L"><button class="main-button">ログアウト</button></a>
+   <a href="/System" class="center-link">戻る</a>
+        </adiv>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

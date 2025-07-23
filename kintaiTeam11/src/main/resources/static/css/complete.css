@@ -1,0 +1,105 @@
+@charset "UTF-8";
+ body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #fdf6d7;
+      font-family: "メイリオ", sans-serif;
+      overflow: hidden; /*画面の大きさ固定*/
+    }
+
+    .container {
+      display: flex;
+      height: 100%;
+    }
+
+    .sidebar { /*タグボタン*/
+       width: 280px;
+      position: relative;
+    }
+
+    .circle-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1000px;
+      height: 1000px;
+      background-color: #87816c;
+      border-radius: 50%;
+      transform: translate(-50%, -20%);
+      z-index: 0;
+    }
+
+    .menu-buttons {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start; /* 子要素を左端に揃える */
+      margin-top: 20px;
+    }
+
+    .menu-button {
+      transform: translateY(-102px); /* Y軸方向に上に移動 */
+      width: 220px;
+      height: 100px;
+     background-color: #C3BB8D;
+     color: white;
+      font-size: 22px;
+      font-weight: bold;
+      line-height: 100px;
+      text-align: center;
+      border: 2px solid black;
+      border-radius: 0 100px 100px 0;
+      margin-bottom: -2px;
+      margin-left: 0; /* 左端に配置するためのマージン */
+    }
+
+    .main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 80px;
+    }
+
+    .result-block {
+      width: 400px;
+      margin-left: 20px; /* 中央より右に少し寄せる */
+    }
+
+    h1 {
+      transform: translateY(-80px); /* Y軸方向に上に移動 */
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .info-row {
+      transform: translateY(-60px); /* Y軸方向に上に移動 */
+      display: flex;
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    .info-row .label {
+      width: 120px;
+      font-weight: bold;
+    }
+
+    .info-row .value {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    .back-link {
+  font-size: 16px;
+  font-weight: bold;
+  color: #0077cc;
+  text-decoration: underline;
+  margin-top: 10px;
+  text-align: left;
+}
+
+
+ 

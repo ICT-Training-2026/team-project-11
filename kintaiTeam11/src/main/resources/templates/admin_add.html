@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>新規ユーザー登録</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
+    a { text-decoration: none; }
+    * { box-sizing: border-box; font-family: "メイリオ", sans-serif; }
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #fdf6d7;
+    }
+    .container {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      position: relative;
+    }
+    .left {
+      width: 50%;
+      position: relative;
+      z-index: 1;
+    }
+    .circle-bg {
+      position: absolute;
+      width: 130vmin;
+      height: 130vmin;
+      background-color: #87816c;
+      border-radius: 50%;
+      bottom: -15vmin;
+      left: -15vmin;
+      z-index: 0;
+    }
+	.menu-buttons {
+	  position: relative;
+	  z-index: 1;
+	  display: flex;
+	  flex-direction: column;
+	  align-items: flex-start; /* 子要素を左端に揃える */
+	  margin-top: 20px;
+	}
+	.menu-button { 
+	  transform: translateY(-20px); /* Y軸方向に上に移動ボタンを上にそろえる */
+	  width: 220px;
+	  height: 100px;
+	  background-color: #C3BB8D;
+	  color: white;
+	  font-size: 22px;
+	  font-weight: bold;
+	  line-height: 100px;
+	  text-align: center;
+	  border: 2px solid black;
+	  border-radius: 0 100px 100px 0;
+	  margin-bottom: -2px;
+	  margin-left: 0; /* 左端に配置するためのマージン */
+	}
+    .logo-area {
+      position: absolute;
+      top: 54%;   /* ←ロゴを下げました（例: 36%→54%） */
+      left: 38%;
+      transform: translate(-30%, -30%);
+      color: white;
+      text-align: center;
+      z-index: 2;
+    }
+    .logo-area .company {
+      font-family: "Montserrat", sans-serif;
+      letter-spacing: 5px;
+      font-size: 18px;
+      margin-bottom: 5px;
+      display: block;
+    }
+    .logo-area .m {
+      font-family: "Monoton", sans-serif;
+      font-size: 120px;
+      font-weight: 300;
+      line-height: 1;
+    }
+    .right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 15px;
+      width: 50%;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    form {
+      width: 100%;
+      max-width:400px;
+      background: none;
+    }
+    .error-message {
+      color: red;
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+	
+
+	.form-group label {
+	  font-size: 16px;
+	  font-weight: bold;
+	  width: 130px;
+	  white-space: nowrap;
+	}
+
+	
+
+    .form-input-wrap {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 8px 34px 8px 10px;
+      font-size: 16px;
+      border: 2px solid #333;
+      border-radius: 5px;
+      max-width: 100%;
+    }
+    .show-password-btn {
+      position: absolute;
+      right: 7px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: #444;
+      padding: 2px 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    button[type="submit"] {
+      width: 100%;
+      max-width: 220px;
+      padding: 12px 0;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: white;
+      border: 2px solid black;
+      border-radius: 12px;
+      cursor: pointer;
+      display: block;
+      margin: 32px auto 0 auto;
+      transition: background 0.18s;
+    }
+    button[type="submit"]:hover {
+      background: #efe6c9;
+    }
+    .return-link {
+      color: #18477A;
+      font-size: 17px;
+      text-decoration: underline;
+      display: block;
+      margin: 10px auto 0 auto;
+      border: none;
+      background: none;
+      cursor: pointer;
+      width: fit-content;
+    }
+    .required { color: #d82828; font-weight: bold; margin-right: 2px;}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="left">
+      <div class="circle-bg"></div>
+      <div class="menu-buttons">
+        <a href="/top"><div class="menu-button">トップページ</div></a>
+      </div>
+      <div class="logo-area">
+        <span class="company">company</span>
+        <span class="m">M</span>
+      </div>
+    </div>
+    <div class="right">
+      <h1>新規ユーザー登録</h1>
+      <form method="POST" action="/Register" autocomplete="off">
+        <div class="form-group">
+          <label for="userid"><span class="required">※</span>ユーザーID</label>
+          <div class="form-input-wrap">
+            <input type="text" id="employeeId" name="employeeId" required placeholder="※社員番号">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email"><span class="required">※</span>メールアドレス</label>
+          <div class="form-input-wrap">
+            <input type="text" id="email" name="email" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="username"><span class="required">※</span>名前</label>
+          <div class="form-input-wrap">
+            <input type="text" id="username" name="username" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="department"><span class="required">※</span>部門ID</label>
+          <div class="form-input-wrap">
+            <select id="department" name="department" required>
+              <option value="" disabled selected>選択してください</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password">パスワード</label>
+          <div class="form-input-wrap">
+            <input type="password" id="password" name="password" value="password" required>
+            <button type="button" class="show-password-btn" onclick="togglePassword()" tabindex="-1" aria-label="パスワード表示">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="role">役割</label>
+          <div class="form-input-wrap">
+            <select id="role" name="role" required>
+              <option value="0">0</option>
+              <option value="1">1</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit">登録</button>
+        <a href="/Admin" class="return-link">戻る</a>
+      </form>
+    </div>
+  </div>
+  <script>
+    function togglePassword() {
+      const pwInput = document.getElementById('password');
+      pwInput.type = pwInput.type === 'password' ? 'text' : 'password';
+    }
+  </script>
+</body>
+</html>

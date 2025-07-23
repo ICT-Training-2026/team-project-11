@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>勤怠検索</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+	<h1>ユーザー検索画面</h1>
+	
+	<div class="container">
+	    <h2>ユーザー検索</h2>
+	    <form th:action="@{/search_complate}" method="POST">
+	       
+	        <input type="text" id="search_id" name="search_id" placeholder="ID" required>
+			<input type="date" id="search_date" name="search_date" placeholder="date" required>
+			<labe>
+				   <select name="search_range" required>
+				     <option value="1週間">1週間</option>
+				     <option value="1か月">1か月</option>
+				   </select>
+				   </label><br>
+	        <input type="submit" value="検索">
+	    </form>
+
+	    
+	</div>
+	  <a href="/AtMenu">勤怠メニュー</a>
+</body>
+</html>
+

@@ -1,0 +1,152 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2family=Monoton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap');
+
+* {
+  box-sizing: border-box;
+  font-family: "メイリオ", sans-serif;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #747060;
+	text-align: center;
+    margin: 0;
+	padding: 0;
+    padding: 20px;
+	height: 100%; /*親要素の高さを最大化*/
+	overflow: hidden;
+
+}
+/* コンテナのスタイル */
+.container {
+    display: flex; /* フレックスボックスを使用 */
+    position: relative; /* 子要素の絶対位置を調整するため */
+    height: 100vh; /* ビューポートの高さを100%に設定 */
+	justify-content: center;
+	align-items: center;
+}
+
+/* 左の黒い円 */
+.circle{
+  position: absolute;
+  top: 30%;
+  left: -10%;
+  transform: translateY(-50%);
+  width: 120vh;/*円の大きさ*/
+  height: 120vh;
+  background-color: #3a3831;
+  border-radius: 50%;/*角を丸く*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
+
+/* リンクのスタイル */
+a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #F4EBDA(255, 128, 64);
+    color:#A6B5A5;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.login-button{
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  transform: translateY(-50%);
+  padding: 5px 150px;
+  font-size: 20px;
+  background-color: white;
+  border: 2px solid #000;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+
+}
+.login-button:hover{
+	background-color: #262724;
+}
+
+a:hover {
+    background-color: #262724;
+}
+
+.logo{
+	font-family: 'Monoton' , sans-serif;  
+	position: absolute;
+    top: 55%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    z-index: 2;
+    font-size: 150px;
+	font-weight: 300; /* フォントウェイトを300に設定 */
+	line-height: 1; /* ラインハイトを1に設定 */
+ }
+ .logo-area {
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+     color: white;
+     text-align: center;
+     z-index: 2;
+ }
+			
+ .company-text{
+ 	 font-family: "Montserrat", sans-serif;
+ 	 color: white;
+ 	 padding-left: 30px;
+      letter-spacing: 5px;
+      font-size: 30px;
+      margin-bottom: 10px;
+      display: block;
+}
+	
+.logo-area .company {
+    font-family: "Montserrat", sans-serif;
+    letter-spacing: 5px;
+    font-size: 30px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.logo-area .m {
+    font-family: "Monoton", sans-serif;
+    font-size: 120px;
+    font-weight: 300;
+    line-height: 1;
+}
+
+/* メディアクエリの例 */
+@media (max-width: 600px) {
+    .circle {
+        width: 300px; /* 固定サイズ */
+        height: 300px; /* 固定サイズ */
+        top: 30%; /* 固定位置 */
+        left: 10%; /* 固定位置 */
+    }
+    .login-button {
+        padding: 5px 20%; /* 固定サイズ */
+        font-size: 16px; /* 固定サイズ */
+        top: 50%; /* 固定位置 */
+        right: 10%; /* 固定位置 */
+        transform: translateY(-50%); /* 中央に配置 */
+    }
+    .logo {
+        font-size: 80px; /* 固定サイズ */
+        top: 50%; /* 固定位置 */
+        left: 50%; /* 固定位置 */
+        transform: translate(-50%, -50%); /* 中央に配置 */
+    }
+    .company-text {
+        font-size: 16px; /* 固定サイズ */
+    }
+}

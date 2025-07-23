@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+/*L.html*/
+  <meta charset="UTF-8">
+  <title>ログイン</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
+    a { text-decoration: none; }
+    * { box-sizing: border-box; font-family: "メイリオ", sans-serif; }
+    body { margin: 0; padding: 0; background-color: #FDF6D7; }
+    .container {
+      display: flex; height: 100vh; width: 100vw;
+      overflow: hidden; position: relative;
+    }
+    .left {
+      width: 50%; position: relative; z-index: 1;
+    }
+    .circle-bg {
+      position: absolute; width: 130vmin; height: 130vmin;
+      background-color: #87816C; border-radius: 50%;
+      bottom: -15vmin; left: -15vmin; z-index: 0;
+    }
+    .menu-buttons {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column;
+      align-items: flex-start; margin-top: 20px;
+    }
+    .menu-button {
+      transform: translateY(-20px);
+      width: 220px; height: 100px; background-color: #C3BB8D;
+      color: white; font-size: 22px; font-weight: bold;
+      line-height: 100px; text-align: center; border: 2px solid black;
+      border-radius: 0 100px 100px 0; margin-bottom: -2px; margin-left: 0;
+    }
+    .logo-area {
+      position: absolute; top: 50%; left: 38%;
+      transform: translate(-30%, -30%);
+      color: white; text-align: center; z-index: 2;
+    }
+    .logo-area .company {
+      font-family: "Montserrat", sans-serif;
+      letter-spacing: 5px; font-size: 18px; margin-bottom: 5px; display: block;
+    }
+    .logo-area .m {
+      font-family: "Monoton", sans-serif;
+      font-size: 150px; font-weight: 300; line-height: 1;
+    }
+    .right {
+      display: flex; flex-direction: column; justify-content: center;
+      align-items: center; padding: 60px 40px; width: 50%;
+    }
+    h1 { font-size: 32px; font-weight: bold; margin-bottom: 20px; }
+    form { width: 100%; max-width: 400px; }
+    .error-message {
+      color: red; font-weight: bold; font-size: 16px; margin-bottom: 20px; text-align: center;
+    }
+    .form-group {
+      margin-bottom: 40px; display: flex; align-items: center; gap: 20px;
+    }
+    .form-group label {
+      font-size: 20px; font-weight: bold; width: 120px;
+    }
+    .form-group input {
+      flex: 1; padding: 12px; font-size: 18px; border: 3px solid black;
+      border-radius: 5px; max-width: 100%;
+    }
+    .form-password-wrap {
+      position: relative; flex: 1; display: flex; align-items: center;
+    }
+    .form-password-wrap input {
+      width: 100%; padding-right: 38px; /* 右側の余白を増やす */
+    }
+    .show-password-btn {
+      position: absolute; right: 7px; top: 50%;
+      transform: translateY(-50%);
+      background: none; border: none; font-size: 20px; cursor: pointer;
+      color: #444; padding: 2px 3px; display: flex; align-items: center; justify-content: center;
+    }
+    button[type="submit"] {
+      width: 100%; max-width: 300px; padding: 15px 50px; font-size: 22px;
+      font-weight: bold; background-color: white; border: 3px solid black;
+      border-radius: 12px; cursor: pointer; display: block; margin: 40px auto 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="left">
+      <div class="circle-bg"></div>
+      <div class="menu-buttons">
+        <a href="/top"><div class="menu-button">トップページ</div></a>
+      </div>
+      <div class="logo-area">
+        <span class="company">company</span>
+        <span class="m">M</span>
+      </div>
+    </div>
+    <div class="right">
+      <h1>ログイン</h1>
+      <div class="error-message" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+      <form method="POST" action="/System" autocomplete="off">
+		<div class="form-group">
+		  <label for="employeeId">ユーザーID</label>
+		  <div class="form-password-wrap">
+		    <input type="text" id="employeeId" name="employeeId" required>
+		  </div>
+		</div>
+		<div class="form-group">
+		  <label for="password">パスワード</label>
+		  <div class="form-password-wrap">
+		    <input type="password" id="password" name="password" required>
+		    <button type="button" class="show-password-btn" onclick="togglePassword()" tabindex="-1" aria-label="パスワード表示">
+		      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		        <circle cx="12" cy="12" r="3"/>
+		        <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/>
+		      </svg>
+		    </button>
+		  </div>
+		</div>
+		   
+        <button type="submit">ログイン</button>
+      </form>
+      <script>
+        function togglePassword() {
+          const pwInput = document.getElementById('password');
+          pwInput.type = pwInput.type === 'password' ? 'text' : 'password';
+        }
+      </script>
+    </div>
+  </div>
+</body>
+</html>
