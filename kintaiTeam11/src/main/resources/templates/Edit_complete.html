@@ -1,12 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" th:href="@{/css/style.css}">
+  <meta charset="UTF-8" />
+  <title>勤怠編集結果</title>
+<link rel="stylesheet" th:href="@{/css/complete.css}">
 </head>
 <body>
-<h1>編集登録完了画面</h1>
-<a href="/AtMenu">勤怠システムメニュー画面に戻る</a></br>
+    
+<div class="container">
+    <div class="left">
+      <div class="circle-bg"></div>
+      <div class="menu-buttons">
+        <div class="menu-button"><a href='/top' style="color: rgb(255,255,255); text-decoration: none;">トップページ</a></div>
+        <div class="menu-button"><a href='/L' style="color: rgb(255,255,255); text-decoration: none;">ログアウト</a></div>
+      </div>
+    </div>
+
+    <div class="main">
+      <div class="result-block">
+        <h1>勤怠編集結果</h1>
+        <div class="info-row"><div class="label">日付</div><div class="value">2025/07/17</div></div>
+        <div class="info-row"><div class="label">開始時刻</div><div class="value">09:00</div></div>
+        <div class="info-row"><div class="label">終了時刻</div><div class="value">18:00</div></div>
+        <div class="info-row"><div class="label">休憩時間</div><div class="value">01:00</div></div>
+        <div class="info-row"><div class="label">勤怠区分</div><div class="value">通常</div></div>
+        <div class="back-link"><a href='/AtMenu' >勤怠メニューに戻る</a></div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
