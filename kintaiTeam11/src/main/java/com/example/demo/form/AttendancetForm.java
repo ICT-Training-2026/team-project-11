@@ -11,7 +11,6 @@ import lombok.Data;
 @Data
 
 public class AttendancetForm {
-	private Integer empId;
 	private LocalDate workDate;
 	private String leaveType;
 	private LocalTime checkInTime;

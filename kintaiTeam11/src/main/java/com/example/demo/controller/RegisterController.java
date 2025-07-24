@@ -37,7 +37,7 @@ public class RegisterController {
     @PostMapping("/Register_complate")
     public String registerComplate(
     		@Validated @ModelAttribute AttendancetForm form,
-            BindingResult result) {
+            BindingResult result,HttpSession session) {
     	
     	
     	
@@ -58,18 +58,18 @@ public class RegisterController {
         
         LocalDate dayBefore = form.getWorkDate().minusDays(1);
         
-        
-        
+        String empId = (String) session.getAttribute("employeeId");
+        int employeeId = Integer.parseInt(empId);
         
         AttendanceEntity e = new AttendanceEntity();
-        e.setEmpId(form.getEmpId());
+        e.setEmpId(employeeId);
         e.setWorkDate(form.getWorkDate());
         e.setLeaveType(form.getLeaveType());
         e.setCheckInTime(form.getCheckInTime());
         e.setCheckOutTime(form.getCheckOutTime());
         e.setBreakTime(form.getBreakTime());
         e.setOvertimeHours(overtime);
-        e.setConsecutiveDays(form.getConsecutiveDays());
+        e.setConsecutiveDays(1);
         e.setWorkTimeHours(worktime);
         e.setRemarks(form.getRemarks());
         e.setApproval(0);
