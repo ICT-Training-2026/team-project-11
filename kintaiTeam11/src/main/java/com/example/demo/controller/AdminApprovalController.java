@@ -29,7 +29,6 @@ public class AdminApprovalController {
         return "admin_approval";
     }
     
-    
     @PostMapping("/admin/attendance/approve")
     public String approveAttendance(@RequestParam("empId") Long empId,
                                     @RequestParam("workDate") LocalDate workDate,

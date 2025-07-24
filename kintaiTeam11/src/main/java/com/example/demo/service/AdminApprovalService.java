@@ -23,6 +23,7 @@ public class AdminApprovalService {
         repository.deleteAttendance(empId, workDate);
     }
     
+    
     public void approveAttendance(Long empId, LocalDate workDate) {
         repository.deleteAttendance(empId, workDate);
     }
