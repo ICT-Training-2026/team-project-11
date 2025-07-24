@@ -1,57 +1,81 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>勤怠編集</title>
-<link rel="stylesheet" th:href="@{/css/style.css}">
-</head>
-<body>
-	<h1>勤怠編集画面</h1>
-	  
-	<form th:action="@{/edit_complate}" method="POST">
-	       <label>
-	           ユーザーID入力<br>
-	           <input type="text" name="edit_id" placeholder="ID入力">
-	       </label><br
-		   <label>
-		   	       日付<br>
-		   	       <input type="data" name="edit_date" placeholder="日付を選択">
-		   	   </label><br>
-
-		   <label>
-		       勤務開始時間<br>
-		       <input type="time" name="edit_startTime" placeholder="勤務開始時間を入力">
-		   </label><br>
-		   <label>
-		   		勤務終了時間<br>
-		   		       <input type="time" name="edit_endTime" placeholder="勤務終了時間を入力">
-		   		   </label><br>
-		   <label>
-		       休憩時間<br>
-		       <input type="time" name="edit_breakTime" placeholder="休憩時間を入力">
-		   </label><br>
-		  
-		   	<label>
-		   		  実労働時間<br>
-		   	<input type="time" name="edit_workTime" placeholder="休憩時間を入力">
-		   	</label><br>
-		   
-		   <labe>
-		   <select name="edit_attendanceType" required>
-		     <option value="出勤">出勤</option>
-		     <option value="振出">振出</option>
-		   </select>
-		   </label><br>
-		  
-		   
-
-	       <input type="submit" value="登録">
-	   </form>
+	<html lang="ja">
+	<head>
+	  <meta charset="UTF-8">
+	  <link rel="stylesheet" th:href="@{/css/editcomplete.css}">
+	  <title>勤怠編集</title>
+	  </head>
+	<body>
+	  <div class="container">
+	    <div class="left">
+	      <div class="circle-bg"></div>
+	      <div class="menu-buttons">
+	        <a href="/top"><div class="menu-button">トップページ</div></a>
+	        <a href="/L"><div class="menu-button">ログアウト</div></a>
+	      </div>
+	      <div class="logo-area">
+	        <span class="company">company</span>
+	        <span class="m">M</span>
+	      </div>
+	    </div>
+	    <div class="right">
+	      <h1>勤怠編集</h1>
+	      <form method="POST" action="/Register" autocomplete="off">
+	        <div class="form-group">
+	          <label for="userid"><span class="required">※</span>ユーザーID</label>
+	          <div class="form-input-wrap">
+	            <input type="text" id="employeeId" name="employeeId" required placeholder="※社員番号">
+	          </div>
+	        </div>
+	        <div class="form-group">
+	          <label for="email"><span class="required">※</span>日付</label>
+	          <div class="form-input-wrap">
+	            <input type="date" id="email" name="email"  placeholder="日付を選択" required>
+	           
+	          </div>
+	        </div>
+	        
+	        <div class="form-group">
+	          <label><span class="required">※</span>勤務開始時間</label>
+	            <input type="time" name="edit_startTime" placeholder="勤務開始時間を入力"required>
+	          </div>
 	
 	
+	       <div class="form-group">
+	          <label><span class="required">※</span>勤務終了時間</label>
+	            <input type="time" name="edit_endTime" placeholder="勤務終了時間を入力"required>
+	          </div>
 	
-	   <a href="/AtMenu">勤怠メニュー</a>
-
-</body>
-</html>
-
+	     <div class="form-group">
+	          <label><span class="required">※</span>休憩時間</label>
+	            <input type="time" name="edit_breakTime" placeholder="休憩時間を入力"required>
+	          </div>
+	
+	
+	        <div class="form-group">
+	          <label for="role">区分</label>
+	          <div class="form-input-wrap">
+	            <select id="role" name="edit_attendanceType" required>
+	             <option value="0">選択してください</option>
+	              <option value="1">出勤</option>
+	              <option value="2">振出</option>
+	              <option value="3">振休</option>
+	              <option value="4">年休</option>
+	              <option value="5">休日</option>
+	              <option value="6">欠勤</option>
+	            </select>
+	          </div>
+	        </div>
+	        <button type="submit">登録</button>
+	        <a href="/AtMenu" class="return-link">勤怠メニューに戻る</a>
+	      </form>
+	    </div>
+	  </div>
+	  <script>
+	    function togglePassword() {
+	      const pwInput = document.getElementById('password');
+	      pwInput.type = pwInput.type === 'password' ? 'text' : 'password';
+	    }
+	  </script>
+	</body>
+	</html>

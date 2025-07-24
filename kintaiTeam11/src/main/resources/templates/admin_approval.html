@@ -7,6 +7,72 @@
 </head>
 <body>
 <h1>申請承認・却下画面（管理者用）</h1>
+
+<table border="1">
+    <thead>
+      <tr>
+        <th>社員ID</th><th>日付</th><th>出勤区分</th><th>出勤</th><th>退勤</th><th>実労働時間</th><th>備考</th><th>承認</th>
+      </tr>
+    </thead>
+	
+	
+	
+	
+	
+	
+    <tbody>
+      <tr th:if="${unapprovedData.empty}">
+        <td colspan="6">承認待ちの申請はありません</td>
+      </tr>
+	  
+	  <tr th:each="attendance : ${unapprovedData}">
+		
+	   <td th:text="${attendance.empId}"></td>
+	   <td th:text="${attendance.workDate}"></td>
+	   <td th:text="${attendance.leaveType}"></td>
+	 <td th:text="${attendance.checkInTime}"></td>
+	  <td th:text="${attendance.checkOutTime}"></td>
+	   <td th:text="${attendance.workTimeHours}"></td>
+	 <td th:text="${attendance.remarks}"></td>
+	 <td th:text="${attendance.approval == 0 ? '未承認' : '承認済み'}"></td>
+	 
+	 
+	 
+	 <td>
+		<form th:action="@{/admin/attendance/approve}" method="post" style="display:inline;">
+		                        <input type="hidden" name="empId" th:value="${attendance.empId}">
+		                        <input type="hidden" name="workDate" th:value="${attendance.workDate}">
+		                        <button type="submit" class="btn btn-success">承認</button>
+		                    </form>
+	
+	
+	<form th:action="@{/admin/attendance/reject}" method="post" style="display:inline;">
+	                       <input type="hidden" name="empId" th:value="${attendance.empId}">
+	                       <input type="hidden" name="workDate" th:value="${attendance.workDate}">
+	                       <button type="submit" class="btn btn-danger">却下</button>
+	                   </form>
+	</td>	
+     </tr>
+				  
+			
+	   
+		  
+	    </td>
+	  </tr>
+		  
+	    </td>
+	  </tr>
+	  
+	  
+	  
+    </tbody>
+  </table>
+
+
+
+
+
+
 <a href="/Admin">管理者権限画面に戻る</a></br>
 </body>
 </html>
