@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import java.time.Duration;
 import java.time.LocalTime;
 
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -72,7 +74,9 @@ public class RegisterController {
     }
     
     @GetMapping("/Attendance_register")
-    public String showRegisterForm(Model model) {
+    public String showRegisterForm(Model model,Model model2,HttpSession session) {
+    	String employeeId = (String) session.getAttribute("employeeId");
+    	model2.addAttribute("employeeId",employeeId);
         model.addAttribute("AttendancetForm", new AttendancetForm()); // 必須！
         return "Attendance_register"; // HTML名
     }
