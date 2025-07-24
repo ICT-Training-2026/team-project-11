@@ -1,33 +1,242 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" th:href="@{/css/style.css}">
+  <meta charset="UTF-8">
+  <title>パスワード再設定</title>
+  <!-- スタイルは省略せず完全に保持 -->
+  <style>
+    /* 既存CSSコード（そのまま） */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
+    a { text-decoration: none; }
+    * { box-sizing: border-box; font-family: "メイリオ", sans-serif; }
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #F8F3D9;
+    }
+    .container {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      position: relative;
+    }
+    .left {
+      width: 50%;
+      position: relative;
+      z-index: 1;
+    }
+    .circle-bg {
+      position: absolute;
+      width: 130vmin;
+      height: 130vmin;
+      background-color: #87816c;
+      border-radius: 50%;
+      bottom: -15vmin;
+      left: -15vmin;
+      z-index: 0;
+    }
+    .menu-buttons {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 20px;
+    }
+    .menu-button {
+      transform: translateY(-20px);
+      width: 220px;
+      height: 100px;
+      background-color: #C3BB8D;
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+      line-height: 100px;
+      text-align: center;
+      border: 2px solid black;
+      border-radius: 0 100px 100px 0;
+      margin-bottom: -2px;
+      margin-left: 0;
+    }
+    .logo-area {
+      position: absolute;
+      top: 54%;
+      left: 38%;
+      transform: translate(-30%, -30%);
+      color: white;
+      text-align: center;
+      z-index: 2;
+    }
+    .logo-area .company {
+      font-family: "Montserrat", sans-serif;
+      letter-spacing: 5px;
+      font-size: 18px;
+      margin-bottom: 5px;
+      display: block;
+    }
+    .logo-area .m {
+      font-family: "Monoton", sans-serif;
+      font-size: 150px;
+      font-weight: 300;
+      line-height: 1;
+    }
+
+    .right {
+      width: 50%;
+    }
+
+    .absolute-center-form {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      width: 410px;
+      min-width: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: none;
+    }
+
+    h1 {
+      font-size: 30px;
+      font-weight: bold;
+      margin-bottom: 26px;
+      text-align: center;
+    }
+
+    form {
+      width: 100%;
+    }
+
+    .form-group {
+      margin-bottom: 19px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .form-group label {
+      font-size: 16px;
+      font-weight: bold;
+      width: 120px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .form-input-wrap {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 8px 34px 8px 10px;
+      font-size: 16px;
+      border: 2px solid #333;
+      border-radius: 5px;
+      background: #fff;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      max-width: 200px;
+      padding: 12px 0;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: #fff;
+      border: 2px solid #888;
+      border-radius: 12px;
+      cursor: pointer;
+      margin: 30px auto 0 auto;
+      box-shadow: 0 2px 7px rgba(0,0,0,0.06);
+      margin-left: 110px;
+    }
+
+    button[type="submit"]:hover {
+      background: #efe6c9;
+    }
+
+    .return-link {
+      margin-left: 140px;
+        display: block;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        color: #0077cc;
+        margin-top: 20px;
+        text-decoration: underline;
+        font-size: 16px;
+        font-weight: bold;
+        color: #0077cc;
+        text-decoration: underline;
+        margin-left: 110px;
+        text-align: left;
+    }
+
+    .required {
+      color: #d82828;
+      font-weight: bold;
+      margin-right: 2px;
+    }
+
+    @media (max-width: 900px) {
+      .container { flex-direction: column; }
+      .left, .right { width: 100%; }
+      .absolute-center-form { width: 98vw; max-width: 98vw; }
+    }
+  </style>
 </head>
 <body>
-	<h1>パスワード再設定</h1>
-	<form th:action="@{/Register_pw}" method="POST">
-		       <label>
-		           旧パスワード<br>
-		           <input type="text" name="oldpw" placeholder="現在のパスワードを入力">
-		       </label><br>
-			   <label>
-			   	      新パスワード<br>
-			   	       <input type="text" name="newpw" placeholder="新しいパスワードを入力">
-			   	   </label><br>
+  <div class="container">
+    <div class="left">
+      <div class="circle-bg"></div>
+      <div class="menu-buttons">
+        <a href="/top"><div class="menu-button">トップページ</div></a>
+        <a href="/L"><div class="menu-button">ログアウト</div></a>
+      </div>
+      <div class="logo-area">
+        <span class="company">company</span>
+        <span class="m">M</span>
+      </div>
+    </div>
 
-			   <label>
-			       新パスワード※確認用<br>
-			       <input type="text" name="new1pw" placeholder="再度新しいパスワードを入力">
-			   </label><br>
-			   
-			   
+    <div class="right"></div>
 
-		       <input type="submit" value="登録">
-		   </form>
-		   <a href="/System">戻る</a>
+    <div class="absolute-center-form">
+      <h1>パスワード再設定</h1>
+      <form th:action="@{/Register_pw}" method="POST">
+        <div class="form-group">
+          <label for="oldpw"><span class="required">※</span>旧パスワード</label>
+          <div class="form-input-wrap">
+            <input type="password" id="oldpw" name="oldpw" placeholder="現在のパスワードを入力" required>
+          </div>
+        </div>
 
+        <div class="form-group">
+          <label for="newpw"><span class="required">※</span>新パスワード</label>
+          <div class="form-input-wrap">
+            <input type="password" id="newpw" name="newpw" placeholder="新しいパスワードを入力" required>
+          </div>
+        </div>
 
+        <div class="form-group">
+          <label for="new1pw"><span class="required">※</span>確認用</label>
+          <div class="form-input-wrap">
+            <input type="password" id="new1pw" name="new1pw" placeholder="再度新しいパスワードを入力" required>
+          </div>
+        </div>
+
+        <button type="submit">登録</button>
+        <a href="/System" class="return-link">システムメニュー画面に戻る</a>
+      </form>
+    </div>
+  </div>
 </body>
 </html>
