@@ -7,8 +7,7 @@ import com.example.demo.entity.AttendanceEntity;
 
 
 @Service
-public interface AttendanceRepository { 
+public interface EditRepository { 
     
-	  void add(AttendanceEntity attendance);
-	  
+	  void update(AttendanceEntity attendance);
 }

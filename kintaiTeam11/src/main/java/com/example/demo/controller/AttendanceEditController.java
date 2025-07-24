@@ -18,7 +18,7 @@ import com.example.demo.service.RegistService;
 import com.example.demo.service.TimeService;
 
 @Controller
-public class RegisterController {
+public class AttendanceEditController {
 
 	@Autowired
 	private RegistService service;
@@ -31,8 +31,8 @@ public class RegisterController {
         return new AttendancetForm();
     }
 
-    @PostMapping("/Register_complate")
-    public String registerComplate(
+    @PostMapping("/Attendance_Edit")
+    public String AttendanceEditComplate(
     		@Validated @ModelAttribute AttendancetForm form,
             BindingResult result) {
     	
@@ -40,7 +40,7 @@ public class RegisterController {
     	
         if (result.hasErrors()) {
         	System.out.println("error");
-            return "Register_complate"; // HTMLのテンプレート名
+            return "Atmenu"; // HTMLのテンプレート名
        }
         
         LocalTime base = LocalTime.of(0, 0);
@@ -68,12 +68,12 @@ public class RegisterController {
         e.setUpdatedAt(form.getUpdatedAt());
 
         service.regist(e);
-        return "Register_complate";
+        return "Edit_complete";
     }
     
-    @GetMapping("/Attendance_register")
+    @GetMapping("/Attendance_Edit")
     public String showRegisterForm(Model model) {
         model.addAttribute("AttendancetForm", new AttendancetForm()); // 必須！
-        return "Attendance_register"; // HTML名
+        return "Attendance_edit"; // HTML名
     }
 }
