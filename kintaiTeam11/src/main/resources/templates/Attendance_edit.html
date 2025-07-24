@@ -24,38 +24,38 @@
 	        <div class="form-group">
 	          <label for="userid"><span class="required">※</span>ユーザーID</label>
 	          <div class="form-input-wrap">
-	            <input type="text" id="employeeId" name="employeeId" required placeholder="※社員番号">
+	            <input type="text" id="empId" name="empId" required placeholder="※社員番号">
 	          </div>
 	        </div>
 	        <div class="form-group">
 	          <label for="email"><span class="required">※</span>日付</label>
 	          <div class="form-input-wrap">
-	            <input type="date" id="email" name="email"  placeholder="日付を選択" required>
+	            <input type="date" id="workDate" name="workDate"  placeholder="日付を選択" required>
 	           
 	          </div>
 	        </div>
 	        
 	        <div class="form-group">
 	          <label><span class="required">※</span>勤務開始時間</label>
-	            <input type="time" name="edit_startTime" placeholder="勤務開始時間を入力"required>
+	            <input type="time" name="checkInTime" id="checkInTime" placeholder="勤務開始時間を入力"required>
 	          </div>
 	
 	
 	       <div class="form-group">
 	          <label><span class="required">※</span>勤務終了時間</label>
-	            <input type="time" name="edit_endTime" placeholder="勤務終了時間を入力"required>
+	            <input type="time" name="checkOutTime" id="checkOutTime" placeholder="勤務終了時間を入力"required>
 	          </div>
 	
 	     <div class="form-group">
 	          <label><span class="required">※</span>休憩時間</label>
-	            <input type="time" name="edit_breakTime" placeholder="休憩時間を入力"required>
+	            <input type="time" name="breakTime" id="breakTime" placeholder="休憩時間を入力"required>
 	          </div>
 	
 	
 	        <div class="form-group">
 	          <label for="role">区分</label>
 	          <div class="form-input-wrap">
-	            <select id="role" name="edit_attendanceType" required>
+	            <select id="leaveType" name="leaveType" required>
 	             <option value="0">選択してください</option>
 	              <option value="1">出勤</option>
 	              <option value="2">振出</option>
@@ -66,7 +66,7 @@
 	            </select>
 	          </div>
 	        </div>
-	        <button type="submit">登録</button>
+	        <a href="/Edit_complete"><button type="submit">登録</button>
 	        <a href="/AtMenu" class="return-link">勤怠メニューに戻る</a>
 	      </form>
 	    </div>
