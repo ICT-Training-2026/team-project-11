@@ -112,6 +112,7 @@ import org.springframework.web.bind.annotation.RequestParam;
     	//     return "search_complate"; // 登録完了画面を表示
     	// }
     	
+    	 
     	 @PostMapping("/search_edit")
     	 public String search_edit( Model model) {
     	     return "search_edit"; // 登録完了画面を表示
