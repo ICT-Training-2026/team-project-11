@@ -7,6 +7,35 @@
 </head>
 <body>
 <h1>検索完了画面</h1>
+
+
+<table border="1">
+    <thead>
+      <tr>
+        <th>社員ID</th><th>日付</th><th>出勤</th><th>退勤</th><th>休憩</th>
+        <th>残業</th><th>連続</th><th>勤務時間</th><th>備考</th><th>承認</th><th>更新日時</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:if="${attList.empty}">
+        <td colspan="11">該当データがありません</td>
+      </tr>
+      <tr th:each="a : ${attList}">
+        <td th:text="${a.empId}"></td>
+        <td th:text="${#temporals.format(a.workDate, 'yyyy-MM-dd')}"></td>
+        <td th:text="${a.checkInTime}"></td>
+        <td th:text="${a.checkOutTime}"></td>
+        <td th:text="${a.breakTime}"></td>
+        <td th:text="${a.overtimeHours}"></td>
+        <td th:text="${a.consecutiveDays}"></td>
+        <td th:text="${a.workTimeHours}"></td>
+        <td th:text="${a.remarks}"></td>
+        <td th:text="${a.approval}"></td>
+        <td th:text="${#temporals.format(a.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+      </tr>
+    </tbody>
+  </table>
+
 <a href="/System">システムメニュー画面に戻る</a></br>
 </body>
 </html>
