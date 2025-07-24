@@ -26,7 +26,6 @@ public class AdminApprovalRepositoryImpl {
     
     
     
-    
     public void deleteAttendance(Long empId, LocalDate workDate) {
     	String sql = "UPDATE attendance SET approval = 1 WHERE emp_id = ? AND work_date = ?";
         int rowsAffected = jdbcTemplate.update(sql, empId, workDate);

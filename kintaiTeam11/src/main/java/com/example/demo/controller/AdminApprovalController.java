@@ -21,7 +21,6 @@ public class AdminApprovalController {
     public AdminApprovalController(AdminApprovalService service) {
         this.service = service;
     }
-
     
     @GetMapping("/admin_approval")
     public String viewPending(Model model) {
