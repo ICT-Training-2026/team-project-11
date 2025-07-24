@@ -40,7 +40,7 @@
     }
 
     .menu-button {
-      transform: translateY(-102px); /* Y軸方向に上に移動 */
+      transform: translateY(-20px); /* Y軸方向に上に移動 */
       width: 220px;
       height: 100px;
      background-color: #C3BB8D;
@@ -60,7 +60,7 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding-top: 80px;
+      padding-top: 150px;
     }
 
     .result-block {
