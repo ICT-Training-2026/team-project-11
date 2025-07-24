@@ -24,7 +24,7 @@ public class SearchEmpController {
         if (user != null) {
             // 存在する場合、処理を続行
             // ここに続行するための処理を書く
-            return "NextPage"; // 遷移先のテンプレート名
+            return ""; // 遷移先のテンプレート名
         } else {
             // 存在しない場合
             return "Admin_Search"; // Search_Empのテンプレート名
