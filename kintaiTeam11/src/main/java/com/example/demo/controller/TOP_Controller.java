@@ -121,7 +121,10 @@ import org.springframework.web.bind.annotation.RequestParam;
     	     return "search_delate"; // 登録完了画面を表示
     	 }
     	
-    	 
+    	 @GetMapping("/Admin_Search")
+    	 public String admin_search(){
+    		 return "Admin_Search";
+    	 }
     	 
     	 @GetMapping("/admin_add")
   	    public String admin_add() {
