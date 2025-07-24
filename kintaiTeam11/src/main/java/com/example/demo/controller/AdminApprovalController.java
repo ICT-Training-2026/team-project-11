@@ -22,6 +22,7 @@ public class AdminApprovalController {
         this.service = service;
     }
 
+    
     @GetMapping("/admin_approval")
     public String viewPending(Model model) {
         List<AttendanceEntity> unapprovedData = service.getUnapprovedAttendance();

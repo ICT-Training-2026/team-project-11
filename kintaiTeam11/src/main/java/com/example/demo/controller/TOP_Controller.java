@@ -123,6 +123,7 @@ import org.springframework.web.bind.annotation.RequestParam;
     	
     	 
     	 
+    	 
     	 @GetMapping("/admin_add")
   	    public String admin_add() {
   	        return "admin_add"; // Thymeleafは templates/AtAdd.html を探します
