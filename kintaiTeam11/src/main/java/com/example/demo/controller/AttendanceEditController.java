@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.entity.AttendanceEntity;
 import com.example.demo.form.AttendancetForm;
-import com.example.demo.service.RegistService;
+import com.example.demo.service.EditService;
 import com.example.demo.service.TimeService;
 
 @Controller
 public class AttendanceEditController {
 
 	@Autowired
-	private RegistService service;
+	private EditService service;
 	@Autowired
 	private TimeService Tservice;
 	
