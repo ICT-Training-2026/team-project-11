@@ -1,8 +1,12 @@
 package com.example.demo.entity;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,6 +31,9 @@ public class User {
     
     @Column(name = "role")
     private int role; // 役割 (0: 管理者, 1: 一般ユーザー)
+    
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Holiday> holidays;
 
     public String getEmployeeId() {
         return employeeId;
@@ -75,4 +82,5 @@ public class User {
     public void setRole(int role) {
         this.role = role;
     }
+  
 }

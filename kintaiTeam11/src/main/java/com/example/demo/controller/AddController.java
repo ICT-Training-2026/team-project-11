@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.entity.Holiday; // Holidayをインポート
 import com.example.demo.entity.User;
+import com.example.demo.repository.HolidayRepository; // HolidayRepositoryをインポート
 import com.example.demo.repository.NuserRepository;
 import com.example.demo.service.Password_Hasher;
 
@@ -17,6 +19,9 @@ public class AddController {
     @Autowired
     private NuserRepository nuserRepository;
 
+    @Autowired
+    private HolidayRepository holidayRepository; // HolidayRepositoryの追加
+
     // アカウント登録フォームを表示するメソッド
     @GetMapping("/Register")
     public String showRegistrationForm(Model model) {
@@ -25,11 +30,15 @@ public class AddController {
 
     // アカウント登録処理
     @PostMapping("/Register")
-    public String registerUser(@RequestParam String employeeId, @RequestParam String username,
-                               @RequestParam String email, @RequestParam String password,
-                               @RequestParam String department, @RequestParam int role,
-                               Model model) {
-        
+    public String registerUser(
+            @RequestParam String employeeId,
+            @RequestParam String username,
+            @RequestParam String email,
+            @RequestParam String password,
+            @RequestParam String department,
+            @RequestParam int role,
+            Model model) {
+
         // パスワードをハッシュ化（SHA-256など）する処理
         String hashedPassword = Password_Hasher.hashPassword(password);
         int departmentId = Integer.parseInt(department);
@@ -46,10 +55,18 @@ public class AddController {
         // ユーザーをデータベースに保存
         nuserRepository.save(newUser);
 
+        // Holidayオブジェクトを作成し、データベースに保存
+        Holiday newHoliday = new Holiday();
+        newHoliday.setEmployeeId(employeeId);
+        newHoliday.setPaid(20); // paidカラムに20を設定
+        newHoliday.setSubstitute(0); // substituteカラムに0を設定
+
+        // Holidayデータを保存
+        holidayRepository.save(newHoliday);
+
         // 登録完了メッセージなどを表示
         model.addAttribute("successMessage", "アカウントが登録されました。");
 
-        return "Admin"; // 再度登録画面を表示（必要に応じてリダイレクトも可）
+        return "Admin"; // 再度登録画面やダッシュボードにリダイレクト
     }
 }
-
