@@ -1,5 +1,4 @@
 package com.example.demo.controller;
-
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,19 +10,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.entity.At1;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.Password_Hasher;
-
 @Controller
 public class LoginController {
-
     @Autowired
     private UserRepository userRepository; // ユーザー情報を取得するためのリポジトリ
-
     @PostMapping("/System")
     public String login(@RequestParam String employeeId, @RequestParam String password, Model model,HttpSession session) {
     	 String hashedPassword = Password_Hasher.hashPassword(password);
         // データベースで社員番号とパスワードを照合
         At1 user = userRepository.findByEmployeeIdAndPassword(employeeId, hashedPassword);
-
         if (user != null) {
         	session.setAttribute("employeeId", employeeId);
         	
