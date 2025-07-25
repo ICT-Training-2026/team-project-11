@@ -3,258 +3,262 @@
 <head>
   <meta charset="UTF-8">
   <title>社員検索</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
-    a { text-decoration: none; }
-    * { box-sizing: border-box; font-family: "メイリオ", sans-serif; }
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #B9B28A;
-    }
-    .container {
-      display: flex;
-      height: 100vh;
-      width: 100vw;
-      overflow: hidden;
-      position: relative;
-    }
-    .left {
-      width: 50%;
-      position: relative;
-      z-index: 1;
-    }
-    .circle-bg {
-      position: absolute;
-      width: 130vmin;
-      height: 130vmin;
-      background-color: #504B38;
-      border-radius: 50%;
-      bottom: -15vmin;
-      left: -15vmin;
-      z-index: 0;
-    }
-    .menu-buttons {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      margin-top: 20px;
-    }
-    .menu-button {
-      transform: translateY(-20px);
-      width: 220px;
-      height: 100px;
-      background-color: #C3BB8D;
-      color: white;
-      font-size: 22px;
-      font-weight: bold;
-      line-height: 100px;
-      text-align: center;
-      border: 2px solid black;
-      border-radius: 0 100px 100px 0;
-      margin-bottom: -2px;
-      margin-left: 0;
-    }
-    .logo-area {
-      position: absolute;
-      top: 54%;
-      left: 38%;
-      transform: translate(-30%, -30%);
-      color: white;
-      text-align: center;
-      z-index: 2;
-    }
-    .logo-area .company {
-      font-family: "Montserrat", sans-serif;
-      letter-spacing: 5px;
-      font-size: 18px;
-      margin-bottom: 5px;
-      display: block;
-    }
-    .logo-area .m {
-      font-family: "Monoton", sans-serif;
-      font-size: 150px;
-      font-weight: 300;
-      line-height: 1;
-    }
-    .right {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 40px 15px;
-      width: 50%;
-    }
-    h1 {
-      font-size: 28px;
-      font-weight: bold;
-      margin-bottom: 20px;
-    }
-    form {
-      width: 100%;
-      max-width:400px;
-      background: none;
-    }
-    .form-group {
-      margin-bottom: 18px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .form-group label {
-      font-size: 16px;
-      font-weight: bold;
-      width: 130px;
-      white-space: nowrap;
-    }
-    .form-input-wrap {
-      position: relative;
-      flex: 1;
-      display: flex;
-      align-items: center;
-    }
-    .form-group input {
-      width: 100%;
-      padding: 8px 10px;
-      font-size: 16px;
-      border: 2px solid #333;
-      border-radius: 5px;
-      max-width: 100%;
-    }
-    button[type="submit"] {
-      width: 100%;
-      max-width: 220px;
-      padding: 12px 0;
-      font-size: 18px;
-      font-weight: bold;
-      background-color: white;
-      border: 2px solid black;
-      border-radius: 12px;
-      cursor: pointer;
-      display: block;
-      margin: 32px auto 0 auto;
-      transition: background 0.18s;
-    }
-    button[type="submit"]:hover {
-      background: #efe6c9;
-    }
-    .search-result-table {
-      width: 100%;
-      max-width: 420px;
-      margin: 30px auto 0 auto;
-      border-collapse: collapse;
-      background: #fff6;
-      box-shadow: 0 2px 8px #0002;
-      border-radius: 12px;
-      overflow: hidden;
-      font-size: 17px;
-    }
-    .search-result-table th, .search-result-table td {
-      padding: 14px 16px;
-      text-align: center;
-      border-bottom: 1px solid #aaa6;
-    }
-    .search-result-table th {
-      background: #C3BB8D;
-      color: #444;
-      font-weight: bold;
-    }
-    .search-result-table tr:last-child td {
-      border-bottom: none;
-    }
-    .action-btn {
-      margin: 0 6px;
-      padding: 6px 20px;
-      border: none;
-      border-radius: 8px;
-      background: #504B38;
-      color: white;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-    .action-btn.edit { background: #18477A; }
-    .action-btn.delete { background: #d82828; }
-    .action-btn:hover { opacity: 0.8; }
-    .return-link {
-      color: #18477A;
-      font-size: 17px;
-      text-decoration: underline;
-      display: block;
-      margin: 10px auto 0 auto;
-      border: none;
-      background: none;
-      cursor: pointer;
-      width: fit-content;
-    }
-    .required { color: #d82828; font-weight: bold; margin-right: 2px;}
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="left">
-      <div class="circle-bg"></div>
-      <div class="menu-buttons">
-        <a href="/Admin"><div class="menu-button">ユーザー検索</div></a>
-      </div>
-      <div class="logo-area">
-        <span class="company">company</span>
-        <span class="m">M</span>
-      </div>
-    </div>
-    <div class="right">
-      <h1>社員検索</h1>
-      <!-- 
-        1. 社員ID検索フォーム（ここでIDを入力して検索）
-        サーバー側で検索処理を行い、検索結果を下に渡すよう実装する
-      -->
-      <form method="POST" action="/EmpSearch" autocomplete="off">
-        <div class="form-group">
-          <label for="employeeId"><span class="required">※</span>社員ID</label>
-          <div class="form-input-wrap">
-            <input type="text" id="employeeId" name="employeeId" required placeholder="社員番号を入力">
-          </div>
+ 
+  <!-- ファイル名: Admin_Search.html -->
+  <!DOCTYPE html>
+  <html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <title>社員検索</title>
+	<style>
+	   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap');
+	   @import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
+	   a { text-decoration: none; }
+	   * { box-sizing: border-box; font-family: "メイリオ", sans-serif; }
+	   body {
+	     margin: 0;
+	     padding: 0;
+	     background-color: #B9B28A;
+	   }
+	   .container {
+	     display: flex;
+	     height: 100vh;
+	     width: 100vw;
+	     overflow: hidden;
+	     position: relative;
+	   }
+	   .left {
+	     width: 50%;
+	     position: relative;
+	     z-index: 1;
+	   }
+	   .circle-bg {
+	     position: absolute;
+	     width: 130vmin;
+	     height: 130vmin;
+	     background-color: #504B38;
+	     border-radius: 50%;
+	     bottom: -15vmin;
+	     left: -15vmin;
+	     z-index: 0;
+	   }
+	   .menu-buttons {
+	     position: relative;
+	     z-index: 1;
+	     display: flex;
+	     flex-direction: column;
+	     align-items: flex-start;
+	     margin-top: 20px;
+	   }
+	   .menu-button {
+	     transform: translateY(-20px);
+	     width: 220px;
+	     height: 100px;
+	     background-color: #C3BB8D;
+	     color: white;
+	     font-size: 22px;
+	     font-weight: bold;
+	     line-height: 100px;
+	     text-align: center;
+	     border: 2px solid black;
+	     border-radius: 0 100px 100px 0;
+	     margin-bottom: -2px;
+	     margin-left: 0;
+	   }
+	   .logo-area {
+	     position: absolute;
+	     top: 54%;
+	     left: 38%;
+	     transform: translate(-30%, -30%);
+	     color: white;
+	     text-align: center;
+	     z-index: 2;
+	   }
+	   .logo-area .company {
+	     font-family: "Montserrat", sans-serif;
+	     letter-spacing: 5px;
+	     font-size: 18px;
+	     margin-bottom: 5px;
+	     display: block;
+	   }
+	   .logo-area .m {
+	     font-family: "Monoton", sans-serif;
+	     font-size: 150px;
+	     font-weight: 300;
+	     line-height: 1;
+	   }
+	   .right {
+	     display: flex;
+	     flex-direction: column;
+	     justify-content: center;
+	     align-items: center;
+	     padding: 40px 15px;
+	     width: 50%;
+	   }
+	   h1 {
+	     font-size: 28px;
+	     font-weight: bold;
+	     margin-bottom: 20px;
+	   }
+	   form {
+	     width: 100%;
+	     max-width:400px;
+	     background: none;
+	   }
+	   .form-group {
+	     margin-bottom: 18px;
+	     display: flex;
+	     align-items: center;
+	     gap: 10px;
+	   }
+	   .form-group label {
+	     font-size: 16px;
+	     font-weight: bold;
+	     width: 130px;
+	     white-space: nowrap;
+	   }
+	   .form-input-wrap {
+	     position: relative;
+	     flex: 1;
+	     display: flex;
+	     align-items: center;
+	   }
+	   .form-group input {
+	     width: 100%;
+	     padding: 8px 10px;
+	     font-size: 16px;
+	     border: 2px solid #333;
+	     border-radius: 5px;
+	     max-width: 100%;
+	   }
+	   button[type="submit"] {
+	     width: 100%;
+	     max-width: 220px;
+	     padding: 12px 0;
+	     font-size: 18px;
+	     font-weight: bold;
+	     background-color: white;
+	     border: 2px solid black;
+	     border-radius: 12px;
+	     cursor: pointer;
+	     display: block;
+	     margin: 32px auto 0 auto;
+	     transition: background 0.18s;
+	   }
+	   button[type="submit"]:hover {
+	     background: #efe6c9;
+	   }
+	   .search-result-table {
+	     width: 100%;
+	     max-width: 420px;
+	     margin: 30px auto 0 auto;
+	     border-collapse: collapse;
+	     background: #fff6;
+	     box-shadow: 0 2px 8px #0002;
+	     border-radius: 12px;
+	     overflow: hidden;
+	     font-size: 17px;
+	   }
+	   .search-result-table th, .search-result-table td {
+	     padding: 14px 16px;
+	     text-align: center;
+	     border-bottom: 1px solid #aaa6;
+	   }
+	   .search-result-table th {
+	     background: #C3BB8D;
+	     color: #444;
+	     font-weight: bold;
+	   }
+	   .search-result-table tr:last-child td {
+	     border-bottom: none;
+	   }
+	   .action-btn {
+	     margin: 0 6px;
+	     padding: 6px 20px;
+	     border: none;
+	     border-radius: 8px;
+	     background: #504B38;
+	     color: white;
+	     font-size: 15px;
+	     font-weight: bold;
+	     cursor: pointer;
+	     transition: background 0.15s;
+	   }
+	   .action-btn.edit { background: #18477A; }
+	   .action-btn.delete { background: #d82828; }
+	   .action-btn:hover { opacity: 0.8; }
+	   .return-link {
+	     color: #18477A;
+	     font-size: 17px;
+	     text-decoration: underline;
+	     display: block;
+	     margin: 10px auto 0 auto;
+	     border: none;
+	     background: none;
+	     cursor: pointer;
+	     width: fit-content;
+	   }
+	   .required { color: #d82828; font-weight: bold; margin-right: 2px;}
+	 </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="left">
+        <div class="circle-bg"></div>
+        <div class="menu-buttons">
+          <a href="/Admin"><div class="menu-button">ユーザー検索</div></a>
         </div>
-        <button type="submit">検索</button>
-      </form>
-      
-      <!-- 
-        2. 検索結果テーブル
-        サーバーからデータを渡される場合は、テンプレートエンジンやJSで下の内容を生成・置換してください
-        例：SpringならThymeleafのth:each、またはJSTL等
-      -->
-      <table class="search-result-table">
-        <tr>
-          <th>社員名</th>
-          <th>社員番号</th>
-          <th>部署ID</th>
-          <th>操作</th>
-        </tr>
-        <!-- 検索結果のサンプル。サーバーからの値で繰り返し出力する -->
-        <tr>
-          <td>田中 太郎</td>
-          <td>10001</td>
-          <td>D001</td>
-          <td>
-            <!-- 編集・削除は各社員のIDをクエリやパスで渡してください -->
-            <aform method="GET" action="/EmpEdit" style="display:inline;">
-              <input type="hidden" name="employeeId" value="10001">
-              <a href ="/EmpEdit"><button type="submit" class="action-btn edit">編集</button></a>
-            </form>
-            <form method="POST" action="/Delete" style="display:inline;">
-              <input type="hidden" name="employeeId" value="10001">
-              <button type="submit" class="action-btn delete">削除</button>
-            </form>
-          </td>
-        </tr>
-        <!-- 検索結果が複数ならここを繰り返し出力 -->
-      </table>
-      <a href="/Admin" class="return-link">戻る</a>
+        <div class="logo-area">
+          <span class="company">company</span>
+          <span class="m">M</span>
+        </div>
+      </div>
+      <div class="right">
+        <h1>社員検索</h1>
+
+        <!-- 検索フォーム -->
+        <form method="POST" action="/EmpSearch" autocomplete="off">
+          <div class="form-group">
+            <label for="employeeId"><span class="required">※</span>社員ID</label>
+            <div class="form-input-wrap">
+              <input type="text" id="employeeId" name="employeeId" required placeholder="社員番号を入力">
+            </div>
+          </div>
+          <button type="submit">検索</button>
+        </form>
+
+        <!-- エラー表示 -->
+        <div th:if="${notFoundMessage}" style="color:red; margin-top:10px;">
+          <p th:text="${notFoundMessage}"></p>
+        </div>
+
+        <!-- 検索結果表示 -->
+        <table class="search-result-table" th:if="${resultUser != null}">
+          <tr>
+            <th>社員名</th>
+            <th>社員番号</th>
+            <th>部署ID</th>
+            <th>操作</th>
+          </tr>
+          <tr>
+            <td th:text="${resultUser.name}">氏名</td>
+            <td th:text="${resultUser.employeeId}">社員番号</td>
+            <td th:text="${resultUser.departmentId}">部署ID</td>
+            <td>
+              <form method="GET" action="/EmpEdit" style="display:inline;">
+                <input type="hidden" name="employeeId" th:value="${resultUser.employeeId}">
+                <button type="submit" class="action-btn edit">編集</button>
+              </form>
+              <form method="POST" action="/Delete" style="display:inline;">
+                <input type="hidden" name="employeeId" th:value="${resultUser.employeeId}">
+                <button type="submit" class="action-btn delete">削除</button>
+              </form>
+            </td>
+          </tr>
+        </table>
+
+        <a href="/Admin" class="return-link">戻る</a>
+      </div>
     </div>
-  </div>
-</body>
-</html>
+  </body>
+  </html>

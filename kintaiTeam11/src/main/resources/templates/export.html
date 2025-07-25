@@ -11,7 +11,7 @@
     body {
       margin: 0;
       padding: 0;
-	  background-color: #B9B28A;
+      background-color: #B9B28A;
     }
     .container {
       display: flex;
@@ -23,221 +23,243 @@
     .left {
       width: 50%;
       position: relative;
-      z-index: 1;
     }
     .circle-bg {
       position: absolute;
       width: 130vmin;
       height: 130vmin;
-	  background-color: #504B38;
+      background-color: #504B38;
       border-radius: 50%;
-      bottom: -15vmin;
-      left: -15vmin;
-      z-index: 0;
+      bottom: -10vmin;
+      left: -30vmin;
     }
-	.menu-buttons {
-	  position: relative;
-	  z-index: 1;
-	  display: flex;
-	  flex-direction: column;
-	  align-items: flex-start; /* 子要素を左端に揃える */
-	  margin-top: 20px;
-	}
-	.menu-button { 
-	  transform: translateY(-20px); /* Y軸方向に上に移動ボタンを上にそろえる */
-	  width: 220px;
-	  height: 100px;
-	  background-color: #C3BB8D;
-	  color: white;
-	  font-size: 22px;
-	  font-weight: bold;
-	  line-height: 100px;
-	  text-align: center;
-	  border: 2px solid black;
-	  border-radius: 0 100px 100px 0;
-	  margin-bottom: -2px;
-	  margin-left: 0; /* 左端に配置するためのマージン */
-	}
-    .logo-area {
-      position: absolute;
-      top: 54%;   /* ←ロゴを下げました（例: 36%→54%） */
-      left: 38%;
-      transform: translate(-30%, -30%);
+    .menu-buttons {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 20px;
+      z-index: 1;
+    }
+    .menu-button {
+      transform: translateY(-20px);
+      width: 220px;
+      height: 100px;
+      background-color: #C3BB8D;
       color: white;
+      font-size: 22px;
+      font-weight: bold;
+      line-height: 100px;
       text-align: center;
-      z-index: 2;
+      border: 2px solid black;
+      border-radius: 0 100px 100px 0;
+      margin-bottom: -2px;
     }
-    .logo-area .company {
-      font-family: "Montserrat", sans-serif;
-      letter-spacing: 5px;
-      font-size: 18px;
-      margin-bottom: 5px;
-      display: block;
-    }
-    .logo-area .m {
-      font-family: "Monoton", sans-serif;
-      font-size: 150px;
-      font-weight: 300;
-      line-height: 1;
-    }
+        .logo-area {
+        position: absolute;
+        top: 50%;    /* 少し上に調整 */
+        left: 38%;
+        transform: translate(-30%, -50%);
+        color: white;
+        text-align: center;
+        z-index: 2;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        }
+
+        .logo-area .company {
+        font-family: "Montserrat", sans-serif;
+        letter-spacing: 5px;
+        font-size: 18px;
+        margin-bottom: 10px;  /* Mとの間隔 */
+        }
+
+        .logo-area .m {
+        font-family: "Monoton", sans-serif;
+        font-size: 130px;
+        font-weight: 300;
+        line-height: 1;
+        }
     .right {
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       padding: 40px 15px;
-      width: 50%;
+      width: 60%;
+      overflow-y: auto;
     }
     h1 {
+	  margin: 0 auto;
+	  text-align: center;
       font-size: 28px;
       font-weight: bold;
       margin-bottom: 20px;
     }
     form {
       width: 100%;
-      max-width:400px;
-      background: none;
+      max-width: 500px;
     }
-    .error-message {
-      color: red;
-      font-weight: bold;
-      font-size: 16px;
-      margin-bottom: 20px;
+    table {
+        font-size: 14px;
+        background-color: #eee;
+        border-collapse: separate; /* collapseからseparateに変更 */
+        border-spacing: 0; /* セル間の隙間を無くす */
+        border-radius: 12px; /* 角丸の大きさ */
+        overflow: hidden; /* はみ出しを隠す */
+        border: 1px solid black; /* テーブル枠線 */
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
       text-align: center;
     }
-    .form-group {
-      margin-bottom: 18px;
+    th {
+      background-color: #eee;
+    }
+    .form-inline {
       display: flex;
       align-items: center;
       gap: 10px;
+      margin-bottom: 20px;
     }
-	
-
-	.form-group label {
-	  font-size: 16px;
-	  font-weight: bold;
-	  width: 130px;
-	  white-space: nowrap;
-	}
-
-	
-
-    .form-input-wrap {
-      position: relative;
-      flex: 1;
-      display: flex;
-      align-items: center;
-    }
-    .form-group input, .form-group select {
-      width: 100%;
-      padding: 8px 34px 8px 10px;
-      font-size: 16px;
-      border: 2px solid #333;
-      border-radius: 5px;
-      max-width: 100%;
-    }
-    .show-password-btn {
-      position: absolute;
-      right: 7px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      font-size: 20px;
-      cursor: pointer;
-      color: #444;
-      padding: 2px 3px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    button[type="submit"] {
-      width: 100%;
-      max-width: 220px;
-      padding: 12px 0;
-      font-size: 18px;
+    label {
       font-weight: bold;
-      background-color: white;
-      border: 2px solid black;
-      border-radius: 12px;
-      cursor: pointer;
-      display: block;
-      margin: 32px auto 0 auto;
-      transition: background 0.18s;
     }
-    button[type="submit"]:hover {
-      background: #efe6c9;
+    select {
+      padding: 5px;
+      font-size: 16px;
+    }
+    button {
+      padding: 8px 16px;
+      font-size: 16px;
+      font-weight: bold;
+      border: 2px solid black;
+      border-radius: 6px;
+      background-color: white;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .submitt{
+        margin-left: 120px;
+    }
+
+    .migini{
+        margin-right: 50px;
+    }
+    
+    button:hover {
+      background-color: #efe6c9;
     }
     .return-link {
-      color: #18477A;
-      font-size: 17px;
-      text-decoration: underline;
-      display: block;
-      margin: 10px auto 0 auto;
-      border: none;
-      background: none;
-      cursor: pointer;
-      width: fit-content;
+		margin-left: -10px;
+			display: block;
+			text-align: center;
+			font-size: 16px;
+			font-weight: bold;
+			color: #0077cc;
+			margin-top: 20px;
+			text-decoration: underline;
+			font-size: 16px;
+			font-weight: bold;
+			margin-top: 10px;
+			text-align: left;
     }
-    .required { color: #d82828; font-weight: bold; margin-right: 2px;}
   </style>
-  
 </head>
-
 <body>
-  <h1>CSVファイル出力（[[${year}]]年[[${month}]]月）</h1>
+  <div class="container">
+    <div class="left">
+      <div class="circle-bg"></div>
+      <div class="menu-buttons">
+        <a href="/top"><div class="menu-button">トップページ</div></a>
+        <a href="/L"><div class="menu-button">ログアウト</div></a>
+      </div>
+      <div class="logo-area">
+        <span class="company">company</span>
+        <span class="m">M</span>
+      </div>
+    </div>
 
-  <form method="get" action="/admin/export-view">
-	<select name="year">
-	  <option th:each="y : ${#numbers.sequence(2020, T(java.time.YearMonth).now().year)}"
-	          th:value="${y}"
-	          th:text="${y}"
-	          th:selected="${y == year}">
-	  </option>
-	</select>
-    年
-    <select name="month">
-      <option th:each="m: ${#numbers.sequence(1,12)}"
-              th:value="${m}" th:text="${m}"
-              th:selected="${m == month}"/>
-    </select>
-    月
-    <button type="submit">表示切替</button>
-  </form>
+    <div class="right">
+      <h1>CSVファイル出力<br>[[${year}]]年[[${month}]]月</h1>
 
-  <table border="1">
-    <thead>
-      <tr><th>社員ID</th><th>日付</th><th>出勤区分</th><th>出勤</th><th>退勤</th><th>実労働時間</th><th>休憩時間</th><th>残業時間</th><th>各IDでのCSV出力</th></tr>
-    </thead>
-    <tbody>
-      <tr th:if="${MonthlyData != null and MonthlyData.empty}">
-        <td colspan="9">勤怠データはありません</td>
-      </tr>
-      <tr th:each="a : ${MonthlyData}">
-        <td th:text="${a.empId}"></td>
-        <td th:text="${a.workDate}"></td>
-        <td th:text="${a.leaveType}"></td>
-        <td th:text="${a.checkInTime}"></td>
-        <td th:text="${a.checkOutTime}"></td>
-        <td th:text="${a.workTimeHours}"></td>
-        <td th:text="${a.breakTime}"></td>
-        <td th:text="${a.overtimeHours}"></td>
-        <td>
-			<form method="post" th:action="@{/admin/export}">
-			            <input type="hidden" name="empId" th:value="${a.empId}"/>
-			            <input type="hidden" name="workDate" th:value="${a.workDate}"/>
-			            <button type="submit">CSV出力</button>
-			          </form>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <form method="post" th:action="@{/export-all}" style="margin-top:20px;">
-      <input type="hidden" name="year" th:value="${year}" />
-      <input type="hidden" name="month" th:value="${month}" />
-      <button type="submit">全社員一括CSVダウンロード</button>
-    </form>
 
-  <a href="/Admin">管理者権限画面に戻る</a>
+    <div class="migini">
+      <form method="get" action="/admin/export-view" class="form-inline">
+       
+        <select name="year" id="year">
+          <option th:each="y : ${#numbers.sequence(2020, T(java.time.YearMonth).now().year)}"
+                  th:value="${y}" th:text="${y}" th:selected="${y == year}"></option>
+        </select>
+		<label for="year">年</label>
+       
+        <select name="month" id="month">
+          <option th:each="m: ${#numbers.sequence(1,12)}"
+                  th:value="${m}" th:text="${m}" th:selected="${m == month}"></option>
+        </select>
+		<label for="month">月</label>
+        <button type="submit">表示切替</button>
+      </form>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">社員ID</th>
+            <th scope="col">日付</th>
+            <th scope="col">出勤区分</th>
+            <th scope="col">出勤</th>
+            <th scope="col">退勤</th>
+            <th scope="col">実労働時間</th>
+            <th scope="col">休憩時間</th>
+            <th scope="col">残業時間</th>
+            <th scope="col">各IDでのCSV出力</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:if="${MonthlyData != null and MonthlyData.empty}">
+            <td colspan="9">勤怠データはありません</td>
+          </tr>
+          <tr th:each="a : ${MonthlyData}">
+            <td th:text="${a.empId}"></td>
+            <td th:text="${a.workDate}"></td>
+            <td th:text="${a.leaveType}"></td>
+            <td th:text="${a.checkInTime}"></td>
+            <td th:text="${a.checkOutTime}"></td>
+            <td th:text="${a.workTimeHours}"></td>
+            <td th:text="${a.breakTime}"></td>
+            <td th:text="${a.overtimeHours}"></td>
+            <td>
+              <form method="post" th:action="@{/admin/export}">
+                <input type="hidden" name="empId" th:value="${a.empId}" />
+                <input type="hidden" name="workDate" th:value="${a.workDate}" />
+                <button type="submit">CSV出力</button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <form method="post" th:action="@{/export-all}" style="margin-top:20px;">
+        <input type="hidden" name="year" th:value="${year}" />
+        <input type="hidden" name="month" th:value="${month}" />
+        <div class="submitt"><button type="submit">全社員一括CSVダウンロード</button></div>
+      </form>
+
+      <a class="return-link" href="/Admin">管理者権限画面に戻る</a>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('form').forEach(form => {
+      form.addEventListener('submit', () => {
+        const btn = form.querySelector('button[type="submit"]');
+        if (btn) btn.disabled = true;
+      });
+    });
+  </script>
 </body>
 </html>

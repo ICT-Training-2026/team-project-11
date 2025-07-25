@@ -2,10 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>編集完了</title>
+<title>削除完了</title>
 <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/style_attendance.css">
 </head>
 <body>
     <div class="container">
@@ -22,9 +22,17 @@
     </div>
     <div class="right">
 		
-	    <h2>編集完了！</h2>
+	    <h2>削除完了！</h2>
 
+        <table class="confirm-table">
+            <tr>
+                <td class="guide">【ID】</td>
+                <td th:text="${sessionScope.empId}"></td> 
+            </tr>
+        </table>
+        <br>
             <a href="/Admin" class="return-link">勤怠メニューに戻る</a>
+        </form>
     </div>
 
 </body>

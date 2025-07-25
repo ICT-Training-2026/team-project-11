@@ -8,11 +8,13 @@
     @import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
     a { text-decoration: none; }
     * { box-sizing: border-box; font-family: "メイリオ", sans-serif; }
+
     body {
       margin: 0;
       padding: 0;
       background-color: #B9B28A;
     }
+
     .container {
       display: flex;
       height: 100vh;
@@ -20,11 +22,13 @@
       overflow: hidden;
       position: relative;
     }
+
     .left {
       width: 50%;
       position: relative;
       z-index: 1;
     }
+
     .circle-bg {
       position: absolute;
       width: 130vmin;
@@ -35,51 +39,38 @@
       left: -15vmin;
       z-index: 0;
     }
-    .menu-buttons {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      margin-top: 20px;
-    }
-    .menu-button { 
-      transform: translateY(-20px);
-      width: 220px;
-      height: 100px;
-      background-color: #C3BB8D;
-      color: white;
-      font-size: 22px;
-      font-weight: bold;
-      line-height: 100px;
-      text-align: center;
-      border: 2px solid black;
-      border-radius: 0 100px 100px 0;
-      margin-bottom: -2px;
-      margin-left: 0;
-    }
-    .logo-area {
+
+	.menu-buttons {
+	     position: relative; z-index: 1;
+	     display: flex; flex-direction: column;
+	     align-items: flex-start; margin-top: 20px;
+	   }
+	   .menu-button {
+	     transform: translateY(-20px);
+	     width: 220px; height: 100px; background-color: #C3BB8D;
+	     color: white; font-size: 22px; font-weight: bold;
+	     line-height: 100px; text-align: center; border: 2px solid black;
+	     border-radius: 0 100px 100px 0; margin-bottom: -2px; margin-left: 0;
+	   }
+    .info-area {
       position: absolute;
-      top: 54%;
-      left: 38%;
-      transform: translate(-30%, -30%);
+      top: 50%;
+      left: 42%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
       color: white;
-      text-align: center;
-      z-index: 2;
-    }
-    .logo-area .company {
-      font-family: "Montserrat", sans-serif;
-      letter-spacing: 5px;
       font-size: 18px;
-      margin-bottom: 5px;
-      display: block;
     }
-    .logo-area .m {
-      font-family: "Monoton", sans-serif;
-      font-size: 150px;
-      font-weight: 300;
-      line-height: 1;
+
+    .info-block {
+      margin-bottom: 16px;
     }
+
+    .info-block .label {
+      font-weight: bold;
+      margin-right: 8px;
+    }
+
     .right {
       display: flex;
       flex-direction: column;
@@ -88,34 +79,39 @@
       padding: 40px 15px;
       width: 50%;
     }
+
     h1 {
       font-size: 28px;
       font-weight: bold;
       margin-bottom: 20px;
     }
+
     form {
       width: 100%;
-      max-width:400px;
-      background: none;
+      max-width: 400px;
     }
+
     .form-group {
       margin-bottom: 18px;
       display: flex;
       align-items: center;
       gap: 10px;
     }
+
     .form-group label {
       font-size: 16px;
       font-weight: bold;
       width: 130px;
       white-space: nowrap;
     }
+
     .form-input-wrap {
       position: relative;
       flex: 1;
       display: flex;
       align-items: center;
     }
+
     .form-group input, .form-group select {
       width: 100%;
       padding: 8px 34px 8px 10px;
@@ -124,6 +120,7 @@
       border-radius: 5px;
       max-width: 100%;
     }
+
     button[type="submit"] {
       width: 100%;
       max-width: 220px;
@@ -138,9 +135,11 @@
       margin: 32px auto 0 auto;
       transition: background 0.18s;
     }
+
     button[type="submit"]:hover {
       background: #efe6c9;
     }
+
     .return-link {
       color: #18477A;
       font-size: 17px;
@@ -151,9 +150,24 @@
       background: none;
       cursor: pointer;
       width: fit-content;
+    }
+
+    .required {
+      color: #d82828;
+      font-weight: bold;
+      margin-right: 2px;
+    }
+
+    .message {
+      margin-top: 10px;
+      font-weight: bold;
+      color: green;
       text-align: center;
     }
-    .required { color: #d82828; font-weight: bold; margin-right: 2px;}
+
+    .error {
+      color: red;
+    }
   </style>
 </head>
 <body>
@@ -161,33 +175,37 @@
     <div class="left">
       <div class="circle-bg"></div>
       <div class="menu-buttons">
-        <a href="/Admin"><div class="menu-button">管理者権限画面</div></a>
+        <a href="/Admin"><div class="menu-button">管理者メニュー</div></a>
       </div>
-      <div class="logo-area">
-        <span class="company">company</span>
-        <span class="m">M</span>
+      <div class="info-area">
+        <div class="info-block"><span class="label">社員ID:</span><span th:text="${user.employeeId}">10001</span></div>
+        <div class="info-block"><span class="label">氏名:</span><span th:text="${user.name}">山田 太郎</span></div>
+        <div class="info-block"><span class="label">メール:</span><span th:text="${user.email}">example@example.com</span></div>
+        <div class="info-block"><span class="label">部署ID:</span><span th:text="${user.departmentId}">1</span></div>
+        <div class="info-block"><span class="label">役割:</span><span th:text="${user.role}">0</span></div>
       </div>
     </div>
+
     <div class="right">
       <h1>ユーザー編集</h1>
-      <form method="POST" action="/EmpEdit" autocomplete="off" onsubmit="return confirmSubmit();">
+      <form method="POST" action="/EmpEdit" autocomplete="off" onsubmit="return confirm('変更を保存しますか？');">
         <div class="form-group">
-          <label for="username"><span class="required">※</span>氏名</label>
+          <label for="username">氏名</label>
           <div class="form-input-wrap">
-            <input type="text" id="username" name="username" required placeholder="氏名">
+            <input type="text" id="username" name="username" placeholder="未変更なら空欄でOK">
           </div>
         </div>
         <div class="form-group">
-          <label for="email"><span class="required">※</span>メールアドレス</label>
+          <label for="email">メール</label>
           <div class="form-input-wrap">
-            <input type="email" id="email" name="email" required placeholder="sample@example.com">
+            <input type="email" id="email" name="email" placeholder="未変更なら空欄でOK">
           </div>
         </div>
         <div class="form-group">
-          <label for="department"><span class="required">※</span>部門ID</label>
+          <label for="department">部署ID</label>
           <div class="form-input-wrap">
-            <select id="department" name="department" required>
-              <option value="" disabled selected>選択してください</option>
+            <select id="department" name="department">
+              <option value="" selected>選択しない</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -195,25 +213,22 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="role"><span class="required">※</span>役割</label>
+          <label for="role">役割</label>
           <div class="form-input-wrap">
-            <select id="role" name="role" required>
-              <option value="" disabled selected>選択してください</option>
+            <select id="role" name="role">
+              <option value="" selected>選択しない</option>
               <option value="0">0</option>
               <option value="1">1</option>
             </select>
           </div>
         </div>
-        <button type="submit">登録</button>
-        <a href="/Admin" class="return-link">戻る</a>
+        <button type="submit">変更を保存</button>
+
+        <div class="message" th:if="${successMessage}" th:text="${successMessage}"></div>
+        <div class="message error" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+        <a href="/Admin_Search" class="return-link">戻る</a>
       </form>
     </div>
   </div>
-  <script>
-    // 登録時に確認アラート
-    function confirmSubmit() {
-      return confirm('登録しますか？');
-    }
-  </script>
 </body>
 </html>
