@@ -21,6 +21,7 @@
         <span class="m">M</span>
       </div>
     </div>
+	<input type="hidden" id="prevDayStatus" value="missing">
     <div class="right">
       <h1>勤怠登録画面</h1>
       <form th:action="@{/Register_complate}" method="POST" 
@@ -79,7 +80,7 @@
           </div>
         </div>
         <button type="submit">登録</button></a>
-        <a href="/Admin" class="return-link">戻る</a>
+        <a href="/AtMenu" class="return-link">勤怠メニューに戻る</a>
       </form>
     </div>
   </div>
@@ -88,6 +89,17 @@
       const pwInput = document.getElementById('password');
       pwInput.type = pwInput.type === 'password' ? 'text' : 'password';
     }
+	document.querySelector('form').addEventListener('submit', function(e) {
+	   const prevStatus = document.getElementById('prevDayStatus').value;
+
+	   if (prevStatus === 'missing') {
+	     const confirmRegister = confirm('前日の勤怠登録がありません。\nこのまま登録してもよろしいですか？');
+	     if (!confirmRegister) {
+	       e.preventDefault(); // 送信キャンセル
+	       return;
+	     }
+	   }
+	 });
   </script>
 </body>
 </html>
