@@ -3,27 +3,26 @@ package com.example.demo.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "holiday")
 public class Holiday {
-    
-	@Id
+
+    @Id
     @Column(name = "EMP_ID")
     private String employeeId;
 
-	@Column(name = "paid")
-	private int paid;
-	    
-	@Column(name = "substitute")
-	private int substitute;
-    
-    @ManyToOne
-    private User user; // Userエンティティとの関係
+    @Column(name = "paid")
+    private int paid;
 
-    // ゲッターやセッター
+    @Column(name = "substitute")
+    private int substitute;
+
+    // --- Getter & Setter ---
+
     public String getEmployeeId() {
         return employeeId;
     }
@@ -47,4 +46,8 @@ public class Holiday {
     public void setSubstitute(int substitute) {
         this.substitute = substitute;
     }
+    @ManyToOne
+    @JoinColumn(name = "EMP_ID", insertable = false, updatable = false)
+    private User user;
+
 }
