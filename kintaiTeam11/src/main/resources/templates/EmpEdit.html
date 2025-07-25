@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>社員検索</title>
+  <title>ユーザー編集</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
@@ -43,7 +43,7 @@
       align-items: flex-start;
       margin-top: 20px;
     }
-    .menu-button {
+    .menu-button { 
       transform: translateY(-20px);
       width: 220px;
       height: 100px;
@@ -116,9 +116,9 @@
       display: flex;
       align-items: center;
     }
-    .form-group input {
+    .form-group input, .form-group select {
       width: 100%;
-      padding: 8px 10px;
+      padding: 8px 34px 8px 10px;
       font-size: 16px;
       border: 2px solid #333;
       border-radius: 5px;
@@ -141,45 +141,6 @@
     button[type="submit"]:hover {
       background: #efe6c9;
     }
-    .search-result-table {
-      width: 100%;
-      max-width: 420px;
-      margin: 30px auto 0 auto;
-      border-collapse: collapse;
-      background: #fff6;
-      box-shadow: 0 2px 8px #0002;
-      border-radius: 12px;
-      overflow: hidden;
-      font-size: 17px;
-    }
-    .search-result-table th, .search-result-table td {
-      padding: 14px 16px;
-      text-align: center;
-      border-bottom: 1px solid #aaa6;
-    }
-    .search-result-table th {
-      background: #C3BB8D;
-      color: #444;
-      font-weight: bold;
-    }
-    .search-result-table tr:last-child td {
-      border-bottom: none;
-    }
-    .action-btn {
-      margin: 0 6px;
-      padding: 6px 20px;
-      border: none;
-      border-radius: 8px;
-      background: #504B38;
-      color: white;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-    .action-btn.edit { background: #18477A; }
-    .action-btn.delete { background: #d82828; }
-    .action-btn:hover { opacity: 0.8; }
     .return-link {
       color: #18477A;
       font-size: 17px;
@@ -190,6 +151,7 @@
       background: none;
       cursor: pointer;
       width: fit-content;
+      text-align: center;
     }
     .required { color: #d82828; font-weight: bold; margin-right: 2px;}
   </style>
@@ -199,7 +161,7 @@
     <div class="left">
       <div class="circle-bg"></div>
       <div class="menu-buttons">
-        <a href="/Admin"><div class="menu-button">ユーザー検索</div></a>
+        <a href="/Admin"><div class="menu-button">管理者権限画面</div></a>
       </div>
       <div class="logo-area">
         <span class="company">company</span>
@@ -207,54 +169,51 @@
       </div>
     </div>
     <div class="right">
-      <h1>社員検索</h1>
-      <!-- 
-        1. 社員ID検索フォーム（ここでIDを入力して検索）
-        サーバー側で検索処理を行い、検索結果を下に渡すよう実装する
-      -->
-      <form method="POST" action="/EmpSearch" autocomplete="off">
+      <h1>ユーザー編集</h1>
+      <form method="POST" action="/EmpEdit" autocomplete="off" onsubmit="return confirmSubmit();">
         <div class="form-group">
-          <label for="employeeId"><span class="required">※</span>社員ID</label>
+          <label for="username"><span class="required">※</span>氏名</label>
           <div class="form-input-wrap">
-            <input type="text" id="employeeId" name="employeeId" required placeholder="社員番号を入力">
+            <input type="text" id="username" name="username" required placeholder="氏名">
           </div>
         </div>
-        <button type="submit">検索</button>
+        <div class="form-group">
+          <label for="email"><span class="required">※</span>メールアドレス</label>
+          <div class="form-input-wrap">
+            <input type="email" id="email" name="email" required placeholder="sample@example.com">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="department"><span class="required">※</span>部門ID</label>
+          <div class="form-input-wrap">
+            <select id="department" name="department" required>
+              <option value="" disabled selected>選択してください</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="role"><span class="required">※</span>役割</label>
+          <div class="form-input-wrap">
+            <select id="role" name="role" required>
+              <option value="" disabled selected>選択してください</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit">登録</button>
+        <a href="/Admin" class="return-link">戻る</a>
       </form>
-      
-      <!-- 
-        2. 検索結果テーブル
-        サーバーからデータを渡される場合は、テンプレートエンジンやJSで下の内容を生成・置換してください
-        例：SpringならThymeleafのth:each、またはJSTL等
-      -->
-      <table class="search-result-table">
-        <tr>
-          <th>社員名</th>
-          <th>社員番号</th>
-          <th>部署ID</th>
-          <th>操作</th>
-        </tr>
-        <!-- 検索結果のサンプル。サーバーからの値で繰り返し出力する -->
-        <tr>
-          <td>田中 太郎</td>
-          <td>10001</td>
-          <td>D001</td>
-          <td>
-            <!-- 編集・削除は各社員のIDをクエリやパスで渡してください -->
-            <aform method="GET" action="/EmpEdit" style="display:inline;">
-              <input type="hidden" name="employeeId" value="10001">
-              <a href ="/EmpEdit"><button type="submit" class="action-btn edit">編集</button></a>
-            </form>
-            <form method="POST" action="/Delete" style="display:inline;">
-              <input type="hidden" name="employeeId" value="10001">
-              <button type="submit" class="action-btn delete">削除</button>
-            </form>
-          </td>
-        </tr>
-        <!-- 検索結果が複数ならここを繰り返し出力 -->
-      </table>
-      <a href="/Admin" class="return-link">戻る</a>
     </div>
   </div>
+  <script>
+    // 登録時に確認アラート
+    function confirmSubmit() {
+      return confirm('登録しますか？');
+    }
+  </script>
 </body>
 </html>
