@@ -17,7 +17,7 @@ import lombok.Data;
 @Table(name = "attendance")
 public class AttendanceEntity {
 	@Id
-    private Integer empId;
+    private String empId;
     private LocalDate workDate;
     private String leaveType;
     private LocalTime checkInTime;

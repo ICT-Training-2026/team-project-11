@@ -61,10 +61,10 @@ public class RegisterController {
         
         
         String empId = (String) session.getAttribute("employeeId");
-        int employeeId = Integer.parseInt(empId);
+        //int employeeId = Integer.parseInt(empId);
         
         AttendanceEntity e = new AttendanceEntity();
-        e.setEmpId(employeeId);
+        e.setEmpId(empId);
         e.setWorkDate(form.getWorkDate());
         e.setLeaveType(form.getLeaveType());
         e.setCheckInTime(form.getCheckInTime());

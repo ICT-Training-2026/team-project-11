@@ -1,8 +1,9 @@
 package com.example.demo.service;
 
+import org.springframework.stereotype.Service;
+
+import com.example.demo.entity.Holiday;
+@Service
 public interface HolidayService {
-    void incrementPaid(int employeeId); // paidカラムを+1
-    void decrementPaid(int employeeId); // paidカラムを-1
-    void incrementSubstitute(int employeeId); // substituteカラムを+1
-    void decrementSubstitute(int employeeId); // substituteカラムを-1
-}
+	void holiadd(Holiday holiday);
+	}

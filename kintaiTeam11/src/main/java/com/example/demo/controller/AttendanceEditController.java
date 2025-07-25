@@ -19,7 +19,7 @@ import com.example.demo.entity.AttendanceEntity;
 import com.example.demo.form.AttendancetForm;
 import com.example.demo.repository.GetAttendanceRepository;
 import com.example.demo.service.EditService;
-import com.example.demo.service.HolidayService;
+import com.example.demo.service.HolidaymathService;
 import com.example.demo.service.TimeService;
 
 @Controller
@@ -34,7 +34,7 @@ public class AttendanceEditController {
     private GetAttendanceRepository getattendancerepository;
 	
 	@Autowired
-    private HolidayService holidayService;
+    private HolidaymathService holidaymathService;
 
     @ModelAttribute("AttendancetForm")
     public AttendancetForm form() {
@@ -64,28 +64,28 @@ public class AttendanceEditController {
         
         LocalDateTime currentDateTime = LocalDateTime.now();
         
-        String empId = (String) session.getAttribute("employeeId");
+        String employeeId = (String) session.getAttribute("employeeId");
       
-        int employeeId = Integer.parseInt(empId);
+        
         
         AttendanceEntity attendance =getattendancerepository.findByEmpIdAndWorkDate(employeeId, form.getWorkDate());
         if ("有給".equals(attendance.getLeaveType())) {
         	if("出勤".equals(form.getLeaveType())) {
-        		holidayService.incrementPaid(employeeId);
+        		holidaymathService.incrementPaid(employeeId);
         	}
         	else if("振出".equals(form.getLeaveType())) {
-        		holidayService.incrementSubstitute(employeeId);
+        		holidaymathService.incrementSubstitute(employeeId);
         	};
         }
         if ("出勤".equals(attendance.getLeaveType())) {
         	if("有給".equals(form.getLeaveType())) {
-        		holidayService.decrementPaid(employeeId);
+        		holidaymathService.decrementPaid(employeeId);
         	}
         	else if("振休".equals(form.getLeaveType())) {
-        		holidayService.decrementSubstitute(employeeId);
+        		holidaymathService.decrementSubstitute(employeeId);
         	};
         }
-        
+      //  int empId = Integer.parseInt(employeeId);
         AttendanceEntity e = new AttendanceEntity();
         e.setEmpId(employeeId);
         e.setWorkDate(form.getWorkDate());
