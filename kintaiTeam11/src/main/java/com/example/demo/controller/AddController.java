@@ -21,18 +21,20 @@ public class AddController {
 
     @Autowired
     private HolidayRepository holidayRepository;
+
+    // 管理者画面に遷移
     @GetMapping("/Admin")
     public String Admin() {
         return "Admin";
     }
-    // アカウント登録フォームを表示
-  
+
+    // ユーザー登録フォーム表示
     @GetMapping("/Register")
     public String showRegistrationForm(Model model) {
-    	return "admin_add"; // admin_add.html にファイル名を一致させる
+        return "admin_add"; // 登録画面(admin_add.html)
     }
 
-    // アカウント登録処理
+    // ユーザー登録処理
     @PostMapping("/Register")
     public String registerUser(
             @RequestParam String employeeId,
@@ -43,17 +45,17 @@ public class AddController {
             @RequestParam int role,
             Model model) {
 
-        // ① 重複チェック：既に社員IDが存在している場合
-    	if (nuserRepository.existsByEmployeeId(employeeId)) {
-    	    model.addAttribute("errorMessage", "この社員IDはすでに登録されています。");
-    	      return "admin_add";
-    	}
+        // ① 重複チェック
+        if (nuserRepository.existsByEmployeeId(employeeId)) {
+            model.addAttribute("duplicateId", true); // JavaScript用フラグ
+            return "admin_add"; // 再表示
+        }
 
         // ② パスワードハッシュ化
         String hashedPassword = Password_Hasher.hashPassword(password);
         int departmentId = Integer.parseInt(department);
 
-        // ③ Userオブジェクトの生成
+        // ③ ユーザーエンティティ作成
         User newUser = new User();
         newUser.setEmployeeId(employeeId);
         newUser.setName(username);
@@ -62,20 +64,17 @@ public class AddController {
         newUser.setDepartmentId(departmentId);
         newUser.setRole(role);
 
-        // ④ ユーザー登録
+        // ④ 登録
         nuserRepository.save(newUser);
 
-        // ⑤ 有給初期化
-        Holiday newHoliday = new Holiday();
-        newHoliday.setEmployeeId(employeeId);
-        newHoliday.setPaid(20);        // 有給：20日
-        newHoliday.setSubstitute(0);   // 代休：0日
+        // ⑤ 有給情報も登録
+        Holiday holiday = new Holiday();
+        holiday.setEmployeeId(employeeId);
+        holiday.setPaid(20);
+        holiday.setSubstitute(0);
+        holidayRepository.save(holiday);
 
-        holidayRepository.save(newHoliday);
-
-        // ⑥ 完了メッセージ
-        model.addAttribute("successMessage", "アカウントが登録されました。");
-
-        return "redirect:/Admin"; // 管理者画面に遷移
+        // ⑥ 管理者画面へ遷移
+        return "redirect:/Admin";
     }
 }
