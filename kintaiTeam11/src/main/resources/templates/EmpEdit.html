@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ユーザー編集</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
+    a { text-decoration: none; }
+    * { box-sizing: border-box; font-family: "メイリオ", sans-serif; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #B9B28A;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .left {
+      width: 50%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .circle-bg {
+      position: absolute;
+      width: 130vmin;
+      height: 130vmin;
+      background-color: #504B38;
+      border-radius: 50%;
+      bottom: -15vmin;
+      left: -15vmin;
+      z-index: 0;
+    }
+
+	.menu-buttons {
+	     position: relative; z-index: 1;
+	     display: flex; flex-direction: column;
+	     align-items: flex-start; margin-top: 20px;
+	   }
+	   .menu-button {
+	     transform: translateY(-20px);
+	     width: 220px; height: 100px; background-color: #C3BB8D;
+	     color: white; font-size: 22px; font-weight: bold;
+	     line-height: 100px; text-align: center; border: 2px solid black;
+	     border-radius: 0 100px 100px 0; margin-bottom: -2px; margin-left: 0;
+	   }
+    .info-area {
+      position: absolute;
+      top: 50%;
+      left: 42%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      color: white;
+      font-size: 18px;
+    }
+
+    .info-block {
+      margin-bottom: 16px;
+    }
+
+    .info-block .label {
+      font-weight: bold;
+      margin-right: 8px;
+    }
+
+    .right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 15px;
+      width: 50%;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    form {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .form-group label {
+      font-size: 16px;
+      font-weight: bold;
+      width: 130px;
+      white-space: nowrap;
+    }
+
+    .form-input-wrap {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 8px 34px 8px 10px;
+      font-size: 16px;
+      border: 2px solid #333;
+      border-radius: 5px;
+      max-width: 100%;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      max-width: 220px;
+      padding: 12px 0;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: white;
+      border: 2px solid black;
+      border-radius: 12px;
+      cursor: pointer;
+      display: block;
+      margin: 32px auto 0 auto;
+      transition: background 0.18s;
+    }
+
+    button[type="submit"]:hover {
+      background: #efe6c9;
+    }
+
+    .return-link {
+      color: #18477A;
+      font-size: 17px;
+      text-decoration: underline;
+      display: block;
+      margin: 10px auto 0 auto;
+      border: none;
+      background: none;
+      cursor: pointer;
+      width: fit-content;
+    }
+
+    .required {
+      color: #d82828;
+      font-weight: bold;
+      margin-right: 2px;
+    }
+
+    .message {
+      margin-top: 10px;
+      font-weight: bold;
+      color: green;
+      text-align: center;
+    }
+
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="left">
+      <div class="circle-bg"></div>
+      <div class="menu-buttons">
+        <a href="/Admin"><div class="menu-button">管理者メニュー</div></a>
+      </div>
+      <div class="info-area">
+        <div class="info-block"><span class="label">社員ID:</span><span th:text="${user.employeeId}">10001</span></div>
+        <div class="info-block"><span class="label">氏名:</span><span th:text="${user.name}">山田 太郎</span></div>
+        <div class="info-block"><span class="label">メール:</span><span th:text="${user.email}">example@example.com</span></div>
+        <div class="info-block"><span class="label">部署ID:</span><span th:text="${user.departmentId}">1</span></div>
+        <div class="info-block"><span class="label">役割:</span><span th:text="${user.role}">0</span></div>
+      </div>
+    </div>
+
+    <div class="right">
+      <h1>ユーザー編集</h1>
+      <form method="POST" action="/EmpEdit" autocomplete="off" onsubmit="return confirm('変更を保存しますか？');">
+        <div class="form-group">
+          <label for="username">氏名</label>
+          <div class="form-input-wrap">
+            <input type="text" id="username" name="username" placeholder="未変更なら空欄でOK">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">メール</label>
+          <div class="form-input-wrap">
+            <input type="email" id="email" name="email" placeholder="未変更なら空欄でOK">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="department">部署ID</label>
+          <div class="form-input-wrap">
+            <select id="department" name="department">
+              <option value="" selected>選択しない</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="role">役割</label>
+          <div class="form-input-wrap">
+            <select id="role" name="role">
+              <option value="" selected>選択しない</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit">変更を保存</button>
+
+        <div class="message" th:if="${successMessage}" th:text="${successMessage}"></div>
+        <div class="message error" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+        <a href="/Admin_Search" class="return-link">戻る</a>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
