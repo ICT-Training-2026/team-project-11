@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -15,20 +16,21 @@ public class SearchEmpController {
     @Autowired
     private NuserRepository nuserRepository;
 
-    @PostMapping("/SearchEmp_complete")
-    public String searchEmployee(@RequestParam String employeeId, Model model) {
-        // 社員番号に基づいてユーザーを検索
-        User user = nuserRepository.findByEmployeeId(employeeId);
+    // 検索フォームの表示
+    @GetMapping("/EmpSearch")
+    public String showSearchForm() {
+        return "Admin_Search"; // ← HTMLファイル名に対応
+    }
 
-        // ユーザーが見つかったか確認
+    // 社員ID検索処理
+    @PostMapping("/EmpSearch")
+    public String searchEmployee(@RequestParam String employeeId, Model model) {
+        User user = nuserRepository.findByEmployeeId(employeeId);
         if (user != null) {
-            // 存在する場合、処理を続行
-            // ここに続行するための処理を書く
-            return ""; // 遷移先のテンプレート名
+            model.addAttribute("resultUser", user);
         } else {
-            // 存在しない場合
-            return "Admin_Search"; // Search_Empのテンプレート名
+            model.addAttribute("notFoundMessage", "該当する社員が見つかりませんでした。");
         }
+        return "Admin_Search"; // ← 検索結果も同じテンプレートに表示
     }
 }
-	 
