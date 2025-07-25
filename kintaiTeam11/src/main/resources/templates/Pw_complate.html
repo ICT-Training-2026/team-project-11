@@ -2,10 +2,9 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>パスワード再設定結果</title>
-  <!-- スタイルは省略せず完全に保持 -->
+  <title>パスワード再設定</title>
+  <!-- スタイルは省略せず完全に保持 + 目アイコン追加 -->
   <style>
-    /* 既存CSSコード（そのまま） */
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
     a { text-decoration: none; }
@@ -31,7 +30,7 @@
       position: absolute;
       width: 130vmin;
       height: 130vmin;
-      background-color: #87816c;
+      background-color: #87816C;
       border-radius: 50%;
       bottom: -15vmin;
       left: -15vmin;
@@ -82,11 +81,9 @@
       font-weight: 300;
       line-height: 1;
     }
-
     .right {
       width: 50%;
     }
-
     .absolute-center-form {
       position: absolute;
       top: 50%;
@@ -100,18 +97,15 @@
       align-items: center;
       background: none;
     }
-
     h1 {
       font-size: 30px;
       font-weight: bold;
       margin-bottom: 26px;
       text-align: center;
     }
-
     form {
       width: 100%;
     }
-
     .form-group {
       margin-bottom: 19px;
       display: flex;
@@ -119,7 +113,6 @@
       gap: 10px;
       width: 100%;
     }
-
     .form-group label {
       font-size: 16px;
       font-weight: bold;
@@ -127,23 +120,42 @@
       text-align: right;
       flex-shrink: 0;
     }
-
     .form-input-wrap {
       position: relative;
       flex: 1;
       display: flex;
       align-items: center;
     }
-
-    .form-group input {
+    .form-group input[type="password"],
+    .form-group input[type="text"] {
       width: 100%;
-      padding: 8px 34px 8px 10px;
+      padding: 8px 38px 8px 10px; /* アイコン分の右余白 */
       font-size: 16px;
       border: 2px solid #333;
       border-radius: 5px;
       background: #fff;
     }
-
+    /* :目:目のアイコン用スタイル */
+    .pw-toggle {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      fill: #888;
+      opacity: 0.65;
+      transition: opacity 0.2s, fill 0.2s;
+      z-index: 2;
+      background: transparent;
+      border: none;
+      padding: 0;
+    }
+    .pw-toggle:hover {
+      opacity: 1;
+      fill: #333;
+    }
     button[type="submit"] {
       width: 100%;
       max-width: 200px;
@@ -158,33 +170,30 @@
       box-shadow: 0 2px 7px rgba(0,0,0,0.06);
       margin-left: 110px;
     }
-
     button[type="submit"]:hover {
-      background: #efe6c9;
+      background: #EFE6C9;
     }
-
-   .return-link {
-  position: fixed;
-  bottom: 80px;  /* 画面下から20px上に配置 */
-  left: 50%;     /* 横中央に配置 */
-  transform: translateX(-50%); /* 中央揃え */
-  font-size: 16px;
-  font-weight: bold;
-  color: #0077cc;
-  text-decoration: underline;
-  background-color: transparent; /* 必要に応じて背景色 */
-  z-index: 1000;  /* 他の要素より前面に */
-  margin: 0;  /* fixedなのでmarginは不要 */
-  text-align: center;
-  cursor: pointer;
-}
-
+    .return-link {
+      margin-left: 140px;
+      display: block;
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+      color: #0077CC;
+      margin-top: 20px;
+      text-decoration: underline;
+      font-size: 16px;
+      font-weight: bold;
+      color: #0077CC;
+      text-decoration: underline;
+      margin-left: 110px;
+      text-align: left;
+    }
     .required {
-      color: #d82828;
+      color: #D82828;
       font-weight: bold;
       margin-right: 2px;
     }
-
     @media (max-width: 900px) {
       .container { flex-direction: column; }
       .left, .right { width: 100%; }
@@ -198,23 +207,73 @@
       <div class="circle-bg"></div>
       <div class="menu-buttons">
         <a href="/top"><div class="menu-button">トップページ</div></a>
-        <a href="/L.html"><div class="menu-button">ログアウト</div></a>
+        <a href="/L"><div class="menu-button">ログアウト</div></a>
       </div>
       <div class="logo-area">
         <span class="company">company</span>
         <span class="m">M</span>
       </div>
     </div>
-
     <div class="right"></div>
-
     <div class="absolute-center-form">
-      <h1>パスワード再設定完了</h1>
-　　 </div>
-
-        <a href="/Admin" class="return-link">システムメニュー画面に戻る</a>
+      <h1>パスワード再設定</h1>
+      <form th:action="@{/Register_pw}" method="POST">
+        <div class="form-group">
+          <label for="oldpw"><span class="required">※</span>旧パスワード</label>
+          <div class="form-input-wrap">
+            <input type="password" id="oldpw" name="oldpw" placeholder="現在のパスワードを入力" required>
+            <!-- :目: 目アイコン（SVG） -->
+            <svg class="pw-toggle" tabindex="0" data-target="oldpw" viewBox="0 0 24 24">
+              <path d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7zm0 12c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8.3A3.3 3.3 0 1 0 15.3 12 3.3 3.3 0 0 0 12 8.7z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="newpw"><span class="required">※</span>新パスワード</label>
+          <div class="form-input-wrap">
+            <input type="password" id="newpw" name="newpw" placeholder="新しいパスワードを入力" required>
+            <svg class="pw-toggle" tabindex="0" data-target="newpw" viewBox="0 0 24 24">
+              <path d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7zm0 12c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8.3A3.3 3.3 0 1 0 15.3 12 3.3 3.3 0 0 0 12 8.7z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="new1pw"><span class="required">※</span>確認用</label>
+          <div class="form-input-wrap">
+            <input type="password" id="new1pw" name="new1pw" placeholder="再度新しいパスワードを入力" required>
+            <svg class="pw-toggle" tabindex="0" data-target="new1pw" viewBox="0 0 24 24">
+              <path d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7zm0 12c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8.3A3.3 3.3 0 1 0 15.3 12 3.3 3.3 0 0 0 12 8.7z"/>
+            </svg>
+          </div>
+        </div>
+        <button type="submit">登録</button>
+        <a href="/System" class="return-link">システムメニュー画面に戻る</a>
       </form>
     </div>
   </div>
+  <script>
+    // :目: 目アイコンでパスワード表示・非表示を切り替え
+    document.querySelectorAll('.pw-toggle').forEach(function(icon) {
+      icon.addEventListener('click', function() {
+        const input = document.getElementById(icon.getAttribute('data-target'));
+        if (input.type === 'password') {
+          input.type = 'text';
+          icon.style.fill = '#3875D7'; // 表示中カラー
+          icon.style.opacity = '1';
+        } else {
+          input.type = 'password';
+          icon.style.fill = '#888';
+          icon.style.opacity = '0.65';
+        }
+      });
+      // キーボード操作にも対応
+      icon.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          icon.click();
+          e.preventDefault();
+        }
+      });
+    });
+  </script>
 </body>
 </html>
