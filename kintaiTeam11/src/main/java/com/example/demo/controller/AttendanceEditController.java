@@ -1,7 +1,10 @@
 package com.example.demo.controller;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+
+import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,10 +34,10 @@ public class AttendanceEditController {
         return new AttendancetForm();
     }
 
-    @PostMapping("/Attendance_Edit")
+    @PostMapping("/Edit_complete")
     public String AttendanceEditComplate(
     		@Validated @ModelAttribute AttendancetForm form,
-            BindingResult result) {
+            BindingResult result,HttpSession session) {
     	
     	
     	
@@ -53,26 +56,33 @@ public class AttendanceEditController {
         
         LocalTime worktime =base.plus(workT);
         
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        
+        String empId = (String) session.getAttribute("employeeId");
+        
+        int employeeId = Integer.parseInt(empId);
         AttendanceEntity e = new AttendanceEntity();
-        e.setEmpId(form.getEmpId());
+        e.setEmpId(employeeId);
         e.setWorkDate(form.getWorkDate());
         e.setLeaveType(form.getLeaveType());
         e.setCheckInTime(form.getCheckInTime());
         e.setCheckOutTime(form.getCheckOutTime());
         e.setBreakTime(form.getBreakTime());
         e.setOvertimeHours(overtime);
-        e.setConsecutiveDays(form.getConsecutiveDays());
+        e.setConsecutiveDays(1);
         e.setWorkTimeHours(worktime);
         e.setRemarks(form.getRemarks());
-        e.setApproval(form.getApproval());
-        e.setUpdatedAt(form.getUpdatedAt());
+        e.setApproval(0);
+        e.setUpdatedAt(currentDateTime);
 
         service.regist(e);
         return "Edit_complete";
     }
     
     @GetMapping("/Attendance_Edit")
-    public String showRegisterForm(Model model) {
+    public String showRegisterForm(Model model,HttpSession session,Model model2) {
+    	String employeeId = (String) session.getAttribute("employeeId");
+    	model2.addAttribute("employeeId",employeeId);
         model.addAttribute("AttendancetForm", new AttendancetForm()); // 必須！
         return "Attendance_edit"; // HTML名
     }
