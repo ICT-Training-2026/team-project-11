@@ -12,7 +12,7 @@ public class Holiday {
     
 	@Id
     @Column(name = "EMP_ID")
-    private String employeeId;
+    private int employeeId;
 
 	@Column(name = "paid")
 	private int paid;
@@ -24,11 +24,11 @@ public class Holiday {
     private User user; // Userエンティティとの関係
 
     // ゲッターやセッター
-    public String getEmployeeId() {
+    public int getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(String employeeId) {
+    public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
     }
 

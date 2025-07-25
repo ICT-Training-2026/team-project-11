@@ -54,10 +54,10 @@ public class AddController {
 
         // ユーザーをデータベースに保存
         nuserRepository.save(newUser);
-
+        int empId = Integer.parseInt(employeeId);
         // Holidayオブジェクトを作成し、データベースに保存
         Holiday newHoliday = new Holiday();
-        newHoliday.setEmployeeId(employeeId);
+        newHoliday.setEmployeeId(empId);
         newHoliday.setPaid(20); // paidカラムに20を設定
         newHoliday.setSubstitute(0); // substituteカラムに0を設定
 
