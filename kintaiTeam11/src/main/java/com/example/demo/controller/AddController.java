@@ -40,7 +40,7 @@ public class AddController {
     public String showRegistrationForm(Model model) {
         return "admin_add"; // 登録画面(admin_add.html)
     }
-
+    
     // ユーザー登録処理
     @PostMapping("/Register")
     public String registerUser(

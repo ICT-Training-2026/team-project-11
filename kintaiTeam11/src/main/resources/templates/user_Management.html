@@ -2,14 +2,16 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <title>管理者権限</title>
+  <title>ユーザー管理メニュー</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
 	
+
 	
 	a {
 		       text-decoration: none; /*リンクに下線を引かせないようにする*/
 		   }
+
     html, body {
       margin: 0;
       padding: 0;
@@ -18,16 +20,20 @@
       height: 100%;
       overflow: hidden; /* スクロール防止 */
     }
+
     .container {
   display: flex;
   height: 700px;
   width: 100vw;       /* ← 横幅を画面いっぱいに変更 */
   max-width: none;    /* ← 中央寄せを解除 */
 }
+
+
     .sidebar {
       width: 280px;
       position: relative;
     }
+
     .circle {
       position: absolute;
       top: -300px;
@@ -38,6 +44,7 @@
       border-radius: 50%;
       z-index: 0;
     }
+
     .menu-buttons {
   position: relative;
   z-index: 1;
@@ -46,7 +53,8 @@
   align-items: flex-start; /* 子要素を左端に揃える */
   margin-top: 20px;
 }
-    .menu-button {
+
+    .menu-button { 
   transform: translateY(-20px); /* Y軸方向に上に移動ボタンを上にそろえる */
   width: 220px;
   height: 100px;
@@ -61,6 +69,7 @@
   margin-bottom: -2px;
   margin-left: 0; /* 左端に配置するためのマージン */
 }
+
     .logo-area {
       position: absolute;
       top: 50%;
@@ -70,11 +79,13 @@
       text-align: center;
       z-index: 2;
     }
+
     .monoton-regular {
       font-family: "Monoton", sans-serif;
       font-weight: 400;
       font-style: normal;
     }
+
     .logo-area .company {
       font-family: "Montserrat", sans-serif;
       letter-spacing: 5px;
@@ -82,12 +93,14 @@
       margin-bottom: 5px;
       display: block;
     }
+
     .logo-area .m {
       font-family: "Monoton", sans-serif;
       font-size: 150px;
       font-weight: 300;
       line-height: 1;
     }
+
     .main {
       flex: 1;
       display: flex;
@@ -95,16 +108,19 @@
       align-items: center;
       padding-top: 20px; /* 余白を小さくして上へ */
     }
+
     .main h1 {
       font-size: 28px;
       font-weight: bold;
       margin-bottom: 50px;
     }
+
     .button-group {
       display: flex;
       flex-direction: column;
       gap: 30px;
     }
+
     .main-button {
       left: 0%;
       width: 280px;
@@ -126,8 +142,9 @@
 	      <div class="circle"></div>
 	      <div class="menu-buttons">
 			<a href="/top"><div class="menu-button">トップページ</div></a>
+
 			<a href="/System"><div class="menu-button">システムメニュー</div></a>
-	  
+	   
 	      </div>
 	      <div class="logo-area">
 	        <span class="company">company</span>
@@ -135,22 +152,29 @@
 	      </div>
 	    </div>
 	    <div class="main">
-	      <h1>管理者権限画面</h1>
+	      <h1>ユーザー管理メニュー</h1>
 	      <adiv class="button-group">
 			<adiv class="button-group">
-				<a href="/user_Management"><button class="main-button">ユーザー管理</button></a>
-			  <a href ="/admin_approval"><button class="main-button">申請承認・却下</button></a>
-			  
-			  
-			  <a href ="/export"><button class="main-button">エクスポート(CSV)</button></a>
-			  <a href="/System" class="return-link">戻る</a>
+			
+			  <a href="/Admin_Search"><button class="main-button">アカウント削除＆編集</button></a>
+			 
+			  <!--
+			  <a href="/admin_edit">
+			    <button class="main-button">勤怠編集</button>
+			  </a>
+			  -->
+			  <a href ="/admin_add"><button class="main-button">アカウント登録</button></a>
+
+			  <a href="/Admin" class="return-link">戻る</a>
 	      </div>
+		  
+
 	    </div>
 	  </div>
 	</body>
 	</html>
-
-
+	
+	
 
 
 
