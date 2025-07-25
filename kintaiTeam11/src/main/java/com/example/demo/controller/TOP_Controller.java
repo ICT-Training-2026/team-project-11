@@ -140,6 +140,10 @@ import org.springframework.web.bind.annotation.RequestParam;
   	    public String admin_edit() {
   	        return "admin_edit"; // Thymeleafは templates/AtAdd.html を探します
   	    }
+    	 @GetMapping("/user_Management")
+  	    public String user_Management() {
+  	        return "user_Management"; // Thymeleafは templates/AtAdd.html を探します
+  	    }
     }
     	
 
