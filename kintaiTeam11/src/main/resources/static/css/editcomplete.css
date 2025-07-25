@@ -80,7 +80,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 40px 15px;
+        padding: 30px 10px;
         width: 50%;
         min-width: 360px; /* 画面幅が小さいときも潰れないように */
 
@@ -101,6 +101,7 @@
         max-width: 400px;
         margin: 0 auto;
         background: none;
+		padding: 0;
       /*width: 100%;
       max-width:400px;
       background: none;*/
@@ -113,16 +114,48 @@
       text-align: center;
     }
     .form-group {
-        margin-bottom: 18px;
+        margin-bottom: 10px;
         display: flex;
         align-items: center;
         gap: 10px;
         width: 100%;
+		
       /*margin-bottom: 18px;
       display: flex;
       align-items: center;
       gap: 10px;*/
     }
+	
+	.form-group input[type="password"],
+	  .form-group input[type="text"] {
+	    width: 100%;
+	    padding: 8px 38px 8px 10px; /* アイコン分の右余白 */
+	    font-size: 16px;
+	    border: 2px solid #333;
+	    border-radius: 5px;
+	    background: #fff;
+	  }
+	  /* :目:目のアイコン用スタイル */
+	  .pw-toggle {
+	    position: absolute;
+	    right: 10px;
+	    top: 50%;
+	    transform: translateY(-50%);
+	    width: 24px;
+	    height: 24px;
+	    cursor: pointer;
+	    fill: #888;
+	    opacity: 0.65;
+	    transition: opacity 0.2s, fill 0.2s;
+	    z-index: 2;
+	    background: transparent;
+	    border: none;
+	    padding: 0;
+	  }
+	  .pw-toggle:hover {
+	    opacity: 1;
+	    fill: #333;
+	  }
 	
 
 	.form-group label {
@@ -194,19 +227,23 @@
       background: #efe6c9;
     }
     .return-link {
-        margin-left: 140px;
-        display: block;
-  text-align: center;
-  font-size: 16px;
-  font-weight: bold;
-  color: #0077cc;
-  margin-top: 20px;
-  text-decoration: underline;
-    font-size: 16px;
-    font-weight: bold;
-    color: #0077cc;
-    text-decoration: underline;
-    margin-top: 10px;
-    text-align: left;
+		margin-left: 140px;
+			display: block;
+			text-align: center;
+			font-size: 16px;
+			font-weight: bold;
+			color: #0077cc;
+			margin-top: 20px;
+			text-decoration: underline;
+			font-size: 16px;
+			font-weight: bold;
+			margin-top: 10px;
+			text-align: left;
     }
     .required { color: #d82828; font-weight: bold; margin-right: 2px;}
+	
+	@media (max-width: 900px) {
+	     .container { flex-direction: column; }
+	     .left, .right { width: 100%; }
+	     .absolute-center-form { width: 98vw; max-width: 98vw; }
+	   }
