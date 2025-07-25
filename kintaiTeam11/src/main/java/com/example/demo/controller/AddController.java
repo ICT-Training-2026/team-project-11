@@ -3,14 +3,19 @@ package com.example.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Holiday;
 import com.example.demo.entity.User;
+
 import com.example.demo.repository.HolidayRepository;
+
 import com.example.demo.repository.NuserRepository;
+import com.example.demo.service.HolidayService;
 import com.example.demo.service.Password_Hasher;
 
 @Controller
@@ -20,7 +25,9 @@ public class AddController {
     private NuserRepository nuserRepository;
 
     @Autowired
+
     private HolidayRepository holidayRepository;
+
 
     // 管理者画面に遷移
     @GetMapping("/Admin")
@@ -37,6 +44,7 @@ public class AddController {
     // ユーザー登録処理
     @PostMapping("/Register")
     public String registerUser(
+    		@Validated @ModelAttribute HolidayForm form,
             @RequestParam String employeeId,
             @RequestParam String username,
             @RequestParam String email,
@@ -67,12 +75,14 @@ public class AddController {
         // ④ 登録
         nuserRepository.save(newUser);
 
+
         // ⑤ 有給情報も登録
         Holiday holiday = new Holiday();
         holiday.setEmployeeId(employeeId);
         holiday.setPaid(20);
         holiday.setSubstitute(0);
         holidayRepository.save(holiday);
+
 
         // ⑥ 管理者画面へ遷移
         return "redirect:/Admin";

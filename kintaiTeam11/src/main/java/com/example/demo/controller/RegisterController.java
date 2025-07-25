@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.time.Duration;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -40,7 +41,9 @@ public class RegisterController{
     @PostMapping("/Register_complate")
     public String registerComplate(
     		@Validated @ModelAttribute AttendancetForm form,
+
             BindingResult result,HttpSession session, Model model) {
+
 
         if (result.hasErrors()) {
             System.out.println("error");
@@ -59,10 +62,12 @@ public class RegisterController{
         
         LocalDateTime currentDateTime = LocalDateTime.now();
 
+
         String empId = (String) session.getAttribute("employeeId");
         int employeeId = Integer.parseInt(empId);
         AttendanceEntity e = new AttendanceEntity();
         e.setEmpId(employeeId);
+
         e.setWorkDate(form.getWorkDate());
         e.setLeaveType(form.getLeaveType());
         e.setCheckInTime(form.getCheckInTime());
@@ -73,6 +78,7 @@ public class RegisterController{
         e.setRemarks(form.getRemarks());
         e.setApproval(0);
         e.setUpdatedAt(currentDateTime);
+
 
         // 1日前の日付を取得
         LocalDate previousDate = form.getWorkDate().minusDays(1);
@@ -109,6 +115,7 @@ public class RegisterController{
 //        } else {
 //        	e.setLeaveType("カス");
 //        }
+
 
         service.regist(e);
         return "Register_complete";

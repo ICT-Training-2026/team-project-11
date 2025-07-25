@@ -1,39 +1,33 @@
 package com.example.demo.entity;
 
-import java.util.List;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Employees")
+@Table(name = "employees")
 public class User {
 
     @Id
     @Column(name = "EMP_ID")
     private String employeeId;
-    
+
     @Column(name = "name")
     private String name;
-    
+
     @Column(name = "email")
     private String email;
-    
+
     @Column(name = "pass_hash")
     private String password; // ハッシュ化したパスワード
-    
+
     @Column(name = "DEP_ID")
     private int departmentId; // 部門ID
-    
+
     @Column(name = "role")
     private int role; // 役割 (0: 管理者, 1: 一般ユーザー)
-    
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Holiday> holidays;
+
 
     public String getEmployeeId() {
         return employeeId;
