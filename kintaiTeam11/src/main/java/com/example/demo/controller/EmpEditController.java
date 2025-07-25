@@ -18,34 +18,61 @@ public class EmpEditController {
     @Autowired
     private NuserRepository nuserRepository;
 
-    // アカウント登録フォームを表示するメソッド
+    // 編集画面の表示
     @GetMapping("/EmpEdit")
-    public String showRegistrationForm(Model model) {
-        return "EmpEdit"; // registration.html の Thymeleaf テンプレートを返す
+    public String showEditForm(@RequestParam("employeeId") String employeeId, Model model, HttpSession session) {
+        User user = nuserRepository.findByEmployeeId(employeeId);
+        if (user == null) {
+            model.addAttribute("errorMessage", "社員が見つかりません。");
+            return "Admin_Search";
+        }
+
+        session.setAttribute("employeeId", employeeId); // セッションに保存しておく
+        model.addAttribute("user", user);
+        return "EmpEdit";
     }
 
-    // アカウント登録処理
+    // 編集処理（空欄以外を反映）
     @PostMapping("/EmpEdit")
-    public String registerUser(@RequestParam String username,@RequestParam String email,
-                               @RequestParam String department, @RequestParam int role,
-                               Model model,HttpSession empId) {
-        
-        int departmentId = Integer.parseInt(department);
-        String employeeId = (String) empId.getAttribute("employeeId");
-        // ユーザーオブジェクトを作成
-        User newUser = new User();
-        newUser.setEmployeeId(employeeId);
-        newUser.setName(username);
-        newUser.setEmail(email);
-        newUser.setDepartmentId(departmentId);
-        newUser.setRole(role);
+    public String updateUser(
+        @RequestParam(required = false) String username,
+        @RequestParam(required = false) String email,
+        @RequestParam(required = false) String department,
+        @RequestParam(required = false) String role,
+        Model model,
+        HttpSession session
+    ) {
+        String employeeId = (String) session.getAttribute("employeeId");
+        if (employeeId == null) {
+            model.addAttribute("errorMessage", "編集対象の社員が見つかりません。");
+            return "EmpEdit";
+        }
 
-        // ユーザーをデータベースに保存
-        nuserRepository.save(newUser);
+        User user = nuserRepository.findByEmployeeId(employeeId);
+        if (user == null) {
+            model.addAttribute("errorMessage", "社員が見つかりません。");
+            return "EmpEdit";
+        }
 
-        // 登録完了メッセージなどを表示
-        model.addAttribute("successMessage", "アカウントが編集されました。");
+        // 入力があるものだけ更新
+        if (username != null && !username.isBlank()) {
+            user.setName(username);
+        }
+        if (email != null && !email.isBlank()) {
+            user.setEmail(email);
+        }
+        if (department != null && !department.isBlank()) {
+            user.setDepartmentId(Integer.parseInt(department));
+        }
+        if (role != null && !role.isBlank()) {
+            user.setRole(Integer.parseInt(role));
+        }
 
-        return "Admin"; // 再度登録画面を表示（必要に応じてリダイレクトも可）
+        nuserRepository.save(user);
+
+        model.addAttribute("successMessage", "変更を保存しました。");
+        model.addAttribute("user", user); // 更新後の情報を再表示
+
+        return "EmpEdit";
     }
 }
