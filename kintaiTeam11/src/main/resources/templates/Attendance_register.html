@@ -6,7 +6,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap" rel="stylesheet">
 <!--<link rel="stylesheet" th:href="@{/css/style_user.css}">-->
-<link rel="stylesheet" href="/css/style_attendance.css">
+<link rel="stylesheet" th:href="@{/css/style_attendance.css}">
 </head>
 <body>
   <div class="container">
@@ -41,13 +41,13 @@
           <label for="kubunn"><span class="required">※</span>勤怠区分</label>
           <div class="form-input-wrap">
             <select th:field="*{leaveType}" required>
-                <option value="0">選択してください</option>
-                <option value="1">出勤</option>
-                <option value="2">振出</option>
-                <option value="3">振休</option>
-                <option value="4">年休</option>
-                <option value="5">休日</option>
-                <option value="6">欠勤</option>
+                <option value="選択してください">選択してください</option>
+                <option value="出勤">出勤</option>
+                <option value="振出">振出</option>
+                <option value="振休">振休</option>
+                <option value="年休">年休</option>
+                <option value="休日">休日</option>
+                <option value="欠勤">欠勤</option>
 			</select>
           </div>
         </div>
