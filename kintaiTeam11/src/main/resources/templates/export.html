@@ -189,16 +189,18 @@
 
     <div class="migini">
       <form method="get" action="/admin/export-view" class="form-inline">
-        <label for="year">年</label>
+       
         <select name="year" id="year">
           <option th:each="y : ${#numbers.sequence(2020, T(java.time.YearMonth).now().year)}"
                   th:value="${y}" th:text="${y}" th:selected="${y == year}"></option>
         </select>
-        <label for="month">月</label>
+		<label for="year">年</label>
+       
         <select name="month" id="month">
           <option th:each="m: ${#numbers.sequence(1,12)}"
                   th:value="${m}" th:text="${m}" th:selected="${m == month}"></option>
         </select>
+		<label for="month">月</label>
         <button type="submit">表示切替</button>
       </form>
       </div>
