@@ -182,6 +182,7 @@
     </div>
     <div class="right">
       <h1>新規ユーザー登録</h1>
+
       <form method="POST" action="/Register" onsubmit="return confirmSubmission();">
         <div class="form-group">
           <label for="employeeId"><span class="required">※</span>ユーザーID</label>
@@ -259,6 +260,16 @@
         `役割：${roleText}`
       );
     }
-  </script>
+	</script>
+	<script th:inline="javascript">
+	  /*<![CDATA[*/
+	  const duplicateId = /*[[${duplicateId}]]*/ false;
+	  if (duplicateId) {
+	    alert("この社員IDはすでに登録されています。");
+	  }
+	  /*]]>*/
+	</script>
+
+ 
 </body>
 </html>
