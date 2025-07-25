@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.entity.Holiday; // Holidayをインポート
+import com.example.demo.entity.Holiday;
 import com.example.demo.entity.User;
-import com.example.demo.form.HolidayForm;
+
+import com.example.demo.repository.HolidayRepository;
+
 import com.example.demo.repository.NuserRepository;
 import com.example.demo.service.HolidayService;
 import com.example.demo.service.Password_Hasher;
@@ -23,20 +25,23 @@ public class AddController {
     private NuserRepository nuserRepository;
 
     @Autowired
-    private HolidayService service; // HolidayRepositoryの追加
-    
-    @ModelAttribute("HolidayForm")
-    public HolidayForm form() {
-        return new HolidayForm();
+
+    private HolidayRepository holidayRepository;
+
+
+    // 管理者画面に遷移
+    @GetMapping("/Admin")
+    public String Admin() {
+        return "Admin";
     }
 
-    // アカウント登録フォームを表示するメソッド
+    // ユーザー登録フォーム表示
     @GetMapping("/Register")
     public String showRegistrationForm(Model model) {
-        return "registration"; // registration.html の Thymeleaf テンプレートを返す
+        return "admin_add"; // 登録画面(admin_add.html)
     }
 
-    // アカウント登録処理
+    // ユーザー登録処理
     @PostMapping("/Register")
     public String registerUser(
     		@Validated @ModelAttribute HolidayForm form,
@@ -48,11 +53,17 @@ public class AddController {
             @RequestParam int role,
             Model model) {
 
-        // パスワードをハッシュ化（SHA-256など）する処理
+        // ① 重複チェック
+        if (nuserRepository.existsByEmployeeId(employeeId)) {
+            model.addAttribute("duplicateId", true); // JavaScript用フラグ
+            return "admin_add"; // 再表示
+        }
+
+        // ② パスワードハッシュ化
         String hashedPassword = Password_Hasher.hashPassword(password);
         int departmentId = Integer.parseInt(department);
 
-        // ユーザーオブジェクトを作成
+        // ③ ユーザーエンティティ作成
         User newUser = new User();
         newUser.setEmployeeId(employeeId);
         newUser.setName(username);
@@ -61,21 +72,19 @@ public class AddController {
         newUser.setDepartmentId(departmentId);
         newUser.setRole(role);
 
-        // ユーザーをデータベースに保存
+        // ④ 登録
         nuserRepository.save(newUser);
-       // int empId = Integer.parseInt(employeeId);
-        // Holidayオブジェクトを作成し、データベースに保存
-        Holiday newHoliday = new Holiday();
-        newHoliday.setEmployeeId(employeeId);
-        newHoliday.setPaid(20); // paidカラムに20を設定
-        newHoliday.setSubstitute(0); // substituteカラムに0を設定
 
-        // Holidayデータを保存
-        service.holiadd(newHoliday);
 
-        // 登録完了メッセージなどを表示
-        model.addAttribute("successMessage", "アカウントが登録されました。");
+        // ⑤ 有給情報も登録
+        Holiday holiday = new Holiday();
+        holiday.setEmployeeId(employeeId);
+        holiday.setPaid(20);
+        holiday.setSubstitute(0);
+        holidayRepository.save(holiday);
 
-        return "Admin"; // 再度登録画面やダッシュボードにリダイレクト
+
+        // ⑥ 管理者画面へ遷移
+        return "redirect:/Admin";
     }
 }

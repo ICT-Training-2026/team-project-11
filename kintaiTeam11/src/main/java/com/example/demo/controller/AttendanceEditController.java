@@ -45,6 +45,9 @@ public class AttendanceEditController {
     public String AttendanceEditComplate(
     		@Validated @ModelAttribute AttendancetForm form,
             BindingResult result,HttpSession session) {
+
+    	
+
     	
     	
         if (result.hasErrors()) {
@@ -64,6 +67,7 @@ public class AttendanceEditController {
         
         LocalDateTime currentDateTime = LocalDateTime.now();
         
+
         String employeeId = (String) session.getAttribute("employeeId");
       
         
@@ -86,6 +90,11 @@ public class AttendanceEditController {
         	};
         }
       //  int empId = Integer.parseInt(employeeId);
+
+        String empId = (String) session.getAttribute("employeeId");
+        
+        int employeeId = Integer.parseInt(empId);
+
         AttendanceEntity e = new AttendanceEntity();
         e.setEmpId(employeeId);
         e.setWorkDate(form.getWorkDate());

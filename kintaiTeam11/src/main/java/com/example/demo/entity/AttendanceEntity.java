@@ -14,10 +14,12 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "attendance")
+
+@Table(name = "attendance") 
 public class AttendanceEntity {
 	@Id
-    private String empId;
+    private Integer empId;
+
     private LocalDate workDate;
     private String leaveType;
     private LocalTime checkInTime;
