@@ -26,6 +26,7 @@ public class LoginController {
 
         if (user != null) {
         	session.setAttribute("employeeId", employeeId);
+        	
             // 一致した場合、システムメニュー画面に遷移
             return "System"; // Thymeleafは templates/System.html を探します
         } else {

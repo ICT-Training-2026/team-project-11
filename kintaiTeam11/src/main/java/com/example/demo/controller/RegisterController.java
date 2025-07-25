@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import jakarta.servlet.http.HttpSession;
@@ -36,7 +37,7 @@ public class RegisterController {
     @PostMapping("/Register_complate")
     public String registerComplate(
     		@Validated @ModelAttribute AttendancetForm form,
-            BindingResult result) {
+            BindingResult result,HttpSession session) {
     	
     	
     	
@@ -55,19 +56,26 @@ public class RegisterController {
         
         LocalTime worktime =base.plus(workT);
         
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        
+        
+        
+        String empId = (String) session.getAttribute("employeeId");
+        int employeeId = Integer.parseInt(empId);
+        
         AttendanceEntity e = new AttendanceEntity();
-        e.setEmpId(form.getEmpId());
+        e.setEmpId(employeeId);
         e.setWorkDate(form.getWorkDate());
         e.setLeaveType(form.getLeaveType());
         e.setCheckInTime(form.getCheckInTime());
         e.setCheckOutTime(form.getCheckOutTime());
         e.setBreakTime(form.getBreakTime());
         e.setOvertimeHours(overtime);
-        e.setConsecutiveDays(form.getConsecutiveDays());
+        e.setConsecutiveDays(1);
         e.setWorkTimeHours(worktime);
         e.setRemarks(form.getRemarks());
-        e.setApproval(form.getApproval());
-        e.setUpdatedAt(form.getUpdatedAt());
+        e.setApproval(0);
+        e.setUpdatedAt(currentDateTime);
 
         service.regist(e);
         return "Register_complate";
