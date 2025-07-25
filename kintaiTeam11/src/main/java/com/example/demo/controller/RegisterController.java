@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import java.time.Duration;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import jakarta.servlet.http.HttpSession;
@@ -56,7 +56,9 @@ public class RegisterController {
         
         LocalTime worktime =base.plus(workT);
         
-        LocalDate dayBefore = form.getWorkDate().minusDays(1);
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        
+        
         
         String empId = (String) session.getAttribute("employeeId");
         int employeeId = Integer.parseInt(empId);
@@ -73,6 +75,7 @@ public class RegisterController {
         e.setWorkTimeHours(worktime);
         e.setRemarks(form.getRemarks());
         e.setApproval(0);
+        e.setUpdatedAt(currentDateTime);
 
         service.regist(e);
         return "Register_complate";
