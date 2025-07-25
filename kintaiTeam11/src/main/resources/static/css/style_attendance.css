@@ -172,3 +172,22 @@ button[type="submit"]:hover {
   width: fit-content;
 }
 .required { color: #d82828; font-weight: bold; margin-right: 2px;}
+
+
+/* 確認画面用 */
+.confirm-table {
+    background-color: #F8F3D9;
+	width: 50%; 					/* テーブル横幅 */
+}
+
+.confirm-table .guide {
+	width: 30%; 					/* ガイド横幅 */
+}
+
+.confirm-table td {
+    text-align:left;
+}
+
+.review-list {
+    background-color: #afeeee;
+}
