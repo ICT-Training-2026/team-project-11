@@ -77,6 +77,7 @@ a { text-decoration: none; }
       line-height: 1;
     }
     .right {
+		
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -97,6 +98,9 @@ a { text-decoration: none; }
 
     }
     h3{
+	  position: fixed;
+	  top: 320px;
+	  right: 30px;
       font-size: 20px;
       z-index: 10;
       text-align: right; /* テキストを右揃えに */
@@ -194,13 +198,14 @@ a { text-decoration: none; }
 
     /* テーブルのスタイル */
 		table {
+			overflow-y: auto;
 		    width: 100%;
         background-color: white;
 		    border-collapse: collapse;
 		    margin-top: 20px;
-        margin-left: auto; /* 左のマージンを自動に設定 */
-        margin-right: auto; /* 右のマージンを自動に設定 */
-        margin-right:50px;
+        margin-left: -200px; /* 左のマージンを自動に設定 */
+  
+        margin-right: auto;
         z-index: 1; /* テーブルの z-index を 1 に設定 */
         position: relative; /* z-index を適用するために position を relative に設定 */
 }
