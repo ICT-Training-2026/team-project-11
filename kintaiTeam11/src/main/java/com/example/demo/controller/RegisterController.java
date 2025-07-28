@@ -28,9 +28,11 @@ public class RegisterController{
     @Autowired
     private RegistService service;
 
-    @Autowired private TimeService Tservice;
+    @Autowired 
+    private TimeService Tservice;
 
-    @Autowired private AttendanceService attendanceService;
+    @Autowired 
+    private AttendanceService attendanceService;
 
     @ModelAttribute("AttendancetForm")
     public AttendancetForm form() {
@@ -105,15 +107,7 @@ public class RegisterController{
             	e.setConsecutiveDays(0);
             }
         }
-//        System.out.println(form.getLeaveType());        // leaveTypeが1の場合に"出勤"を設定
-//        if (form.getLeaveType() == "1") {
-//            e.setLeaveType("出勤");
-//        } 
-//        if (form.getLeaveType() == "2") {
-//            e.setLeaveType("振出");
-//        } else {
-//        	e.setLeaveType("カス");
-//        }
+
 
 
         service.regist(e);
