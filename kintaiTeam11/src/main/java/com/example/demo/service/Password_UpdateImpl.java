@@ -18,26 +18,45 @@ public class Password_UpdateImpl implements Password_Update{
     @Override
     public String updatePassword(String employeeId, String oldPassword, String newPassword, String confirmPassword) {
         // 新しいパスワードが一致するか確認
-        if (!newPassword.equals(confirmPassword)) {
-            return "/top";
-        }
+        //if (!newPassword.equals(confirmPassword)) {
+        //    return "/top";
+        //}
 
         // 旧パスワードをハッシュ化
-        String hashedOldPassword = Password_Hasher.hashPassword(oldPassword);
+       // String hashedOldPassword = Password_Hasher.hashPassword(oldPassword);
 
         // ユーザーを検索
-        At1 employee = userRepository.findByEmployeeIdAndPassword(employeeId, hashedOldPassword);
+       // At1 employee = userRepository.findByEmployeeIdAndPassword(employeeId, hashedOldPassword);
 
         // ユーザーが見つからない場合
-        if (employee == null) {
-            return "/pw";
-        }
+       // if (employee == null) {
+        //    return "/pw";
+        //}
 
         // 新しいパスワードをハッシュ化して保存
-        String hashedNewPassword = Password_Hasher.hashPassword(newPassword);
-        employee.setPassword(hashedNewPassword);
-        userRepository.save(employee);
+       // String hashedNewPassword = Password_Hasher.hashPassword(newPassword);
+       // employee.setPassword(hashedNewPassword);
+       // userRepository.save(employee);
 
-        return "Pw_complete";
+       // return "Pw_complete";
+    //}
+    
+    if (!newPassword.equals(confirmPassword)) {
+        return "mismatch";
     }
-}
+
+    String hashedOldPassword = Password_Hasher.hashPassword(oldPassword);
+    At1 employee = userRepository.findByEmployeeIdAndPassword(employeeId, hashedOldPassword);
+
+    if (employee == null) {
+        return "invalid_old";
+    }
+
+    String hashedNewPassword = Password_Hasher.hashPassword(newPassword);
+    employee.setPassword(hashedNewPassword);
+    userRepository.save(employee);
+
+    return "success";
+  
+   
+}}
