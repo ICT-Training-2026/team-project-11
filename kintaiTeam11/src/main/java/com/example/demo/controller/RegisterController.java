@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import java.time.Duration;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -122,9 +121,9 @@ public class RegisterController{
         
     }
   @GetMapping("/Attendance_register")
-  public String showRegisterForm(Model model,Model model2,HttpSession session) {
+  public String showRegisterForm(Model model,HttpSession session) {
   	String employeeId = (String) session.getAttribute("employeeId");
-  	model2.addAttribute("employeeId",employeeId);
+  	model.addAttribute("employeeId",employeeId);
       model.addAttribute("AttendancetForm", new AttendancetForm()); // 必須！
       return "Attendance_register"; // HTML名
   }
