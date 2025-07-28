@@ -49,14 +49,14 @@ public class Password_UpdateImpl implements Password_Update{
     At1 employee = userRepository.findByEmployeeIdAndPassword(employeeId, hashedOldPassword);
 
     if (employee == null) {
-        return "invalid_old";
+    	 return "/pw";
     }
 
     String hashedNewPassword = Password_Hasher.hashPassword(newPassword);
     employee.setPassword(hashedNewPassword);
     userRepository.save(employee);
 
-    return "success";
+    return "Pw_complete";
   
    
 }}
