@@ -147,9 +147,10 @@
       border-radius: 12px;
       cursor: pointer;
       margin: 32px auto 0 auto;
+	  margin-left: 110px; /* 左のマージンを20pxに設定して右に寄せる */
     }
     button[type="submit"]:hover {
-      background: #efe6c9;
+      background: #EFE6C9;
     }
     .return-link {
       color: #18477A;
@@ -157,12 +158,13 @@
       text-decoration: underline;
       display: block;
       margin: 10px auto 0 auto;
+	  margin-left: 200px; /* 左のマージンを20pxに設定して右に寄せる */
       background: none;
       border: none;
       cursor: pointer;
     }
     .required {
-      color: #d82828;
+      color: #D82828;
       font-weight: bold;
       margin-right: 2px;
     }
@@ -189,14 +191,7 @@
             <input type="text" id="employeeId" name="employeeId" required>
           </div>
         </div>
-        <div class="form-group">
-          <label for="email"><span class="required">※</span>メールアドレス</label>
-          <div class="form-input-wrap">
-            <input type="text" id="email" name="email" required
-                   pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$"
-                   title="有効なメールアドレスを入力してください（例: user@example.com）">
-          </div>
-        </div>
+       
         <div class="form-group">
           <label for="username"><span class="required">※</span>名前</label>
           <div class="form-input-wrap">
@@ -214,18 +209,7 @@
             </select>
           </div>
         </div>
-        <div class="form-group">
-          <label for="password"><span class="required">※</span>パスワード</label>
-          <div class="form-input-wrap">
-            <input type="password" id="password" name="password" required>
-            <button type="button" class="show-password-btn" onclick="togglePassword()" tabindex="-1" aria-label="パスワード表示">
-              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="3"/>
-                <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/>
-              </svg>
-            </button>
-          </div>
-        </div>
+        
         <div class="form-group">
           <label for="role"><span class="required">※</span>役割</label>
           <div class="form-input-wrap">
@@ -235,18 +219,39 @@
             </select>
           </div>
         </div>
+		
+		
+		<div class="form-group">
+		          <label for="password"><span class="required">※</span>パスワード</label>
+		          <div class="form-input-wrap">
+		            <input type="password" id="password" name="password" required>
+		            <button type="button" class="show-password-btn" onclick="togglePassword()" tabindex="-1" aria-label="パスワード表示">
+		              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		                <circle cx="12" cy="12" r="3"/>
+		                <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/>
+		              </svg>
+		            </button>
+		          </div>
+		   </div>
+		
+		<div class="form-group">
+		          <label for="email"><span class="required">※</span>メールアドレス</label>
+		          <div class="form-input-wrap">
+		            <input type="text" id="email" name="email" required
+		                   pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$"
+		                   title="有効なメールアドレスを入力してください（例: user@example.com）">
+		          </div>
+		        </div>
         <button type="submit">登録</button>
         <a href="/Admin" class="return-link">戻る</a>
       </form>
     </div>
   </div>
-
   <script>
     function togglePassword() {
       const pwInput = document.getElementById('password');
       pwInput.type = pwInput.type === 'password' ? 'text' : 'password';
     }
-
     function confirmSubmission() {
       const id = document.getElementById("employeeId").value;
       const name = document.getElementById("username").value;
@@ -254,13 +259,11 @@
       const department = document.getElementById("department").value;
       const role = document.getElementById("role").value;
       const roleText = role === "0" ? "管理者" : "一般";
-
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailPattern.test(email)) {
         alert("正しいメールアドレスを入力してください（例: user@example.com）");
         return false;
       }
-
       return confirm(
         `以下の内容で登録しますか？\n\n` +
         `社員ID：${id}\n` +
@@ -271,7 +274,6 @@
       );
     }
   </script>
-
   <script th:inline="javascript">
     /*<![CDATA[*/
     const duplicateId = /*[[${duplicateId}]]*/ false;
