@@ -5,7 +5,6 @@
 <title>勤怠登録</title>
 <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap" rel="stylesheet">
-<!--<link rel="stylesheet" th:href="@{/css/style_user.css}">-->
 <link rel="stylesheet" th:href="@{/css/style_attendance.css}">
 </head>
 <body>
@@ -21,86 +20,96 @@
         <span class="m">M</span>
       </div>
     </div>
-	<input type="hidden" id="prevDayStatus" value="missing">
+
+    <!-- 🔽 前日未登録フラグを仕込む -->
+    <input type="hidden" id="prevDayStatus" value="missing">
+
     <div class="right">
       <h1>勤怠登録画面</h1>
-      <form th:action="@{/Register_complate}" method="POST" 
-		th:object="${AttendancetForm}">
+      <form th:action="@{/Register_complate}" method="POST" th:object="${AttendancetForm}">
+        
+        <!-- 🔽 重複登録エラー表示ブロック -->
+        <div th:if="${duplicateError}" class="error-message" style="color: red; font-weight: bold; margin-bottom: 15px;">
+          <p th:text="${duplicateError}"></p>
+        </div>
+
         <div class="form-group">
-          <label for="userid"><span class="required">※</span>ユーザーID</label>
+          <label><span class="required">※</span>ユーザーID</label>
           <div class="form-input-wrap">
-			<p><strong th:text="${employeeId}">未ログイン</strong></p>
+            <p><strong th:text="${employeeId}">未ログイン</strong></p>
           </div>
         </div>
+
         <div class="form-group">
-          <label for="day"><span class="required">※</span>日付</label>
+          <label><span class="required">※</span>日付</label>
           <div class="form-input-wrap">
             <input type="date" th:field="*{workDate}" placeholder="日付を選択" required>
           </div>
         </div>
+
         <div class="form-group">
-          <label for="kubunn"><span class="required">※</span>勤怠区分</label>
+          <label><span class="required">※</span>勤怠区分</label>
           <div class="form-input-wrap">
             <select th:field="*{leaveType}" required>
-
-                <option value="選択してください">選択してください</option>
-                <option value="出勤">出勤</option>
-                <option value="振出">振出</option>
-                <option value="振休">振休</option>
-                <option value="年休">年休</option>
-                <option value="休日">休日</option>
-                <option value="欠勤">欠勤</option>
-			</select>
+              <option value="選択してください">選択してください</option>
+              <option value="出勤">出勤</option>
+              <option value="振出">振出</option>
+              <option value="振休">振休</option>
+              <option value="年休">年休</option>
+              <option value="休日">休日</option>
+              <option value="欠勤">欠勤</option>
+            </select>
           </div>
         </div>
+
         <div class="form-group">
-          <label for="starttime"><span class="required">※</span>開始時間</label>
+          <label><span class="required">※</span>開始時間</label>
           <div class="form-input-wrap">
-            <input type="time" th:field="*{checkInTime}" placeholder="勤務開始時間を入力" required>
+            <input type="time" th:field="*{checkInTime}" required>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="finishtime"><span class="required">※</span>終了時間</label>
+          <label><span class="required">※</span>終了時間</label>
           <div class="form-input-wrap">
-            <input type="time" th:field="*{checkOutTime}" placeholder="勤務終了時間を入力" required>
+            <input type="time" th:field="*{checkOutTime}" required>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="resttime"><span class="required">※</span>休憩時間</label>
+          <label><span class="required">※</span>休憩時間</label>
           <div class="form-input-wrap">
-            <input type="time" th:field="*{breakTime}" placeholder="休憩時間を入力" required>
+            <input type="time" th:field="*{breakTime}" required>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="bikou"><span class="required">※</span>備考</label>
+
+          <label for="bikou">備考</label>
+
           <div class="form-input-wrap">
             <input type="text" th:field="*{remarks}" placeholder="備考">
           </div>
         </div>
-        <button type="submit">登録</button></a>
+
+        <button type="submit">登録</button>
         <a href="/AtMenu" class="return-link">勤怠メニューに戻る</a>
       </form>
     </div>
   </div>
-  <script>
-    function togglePassword() {
-      const pwInput = document.getElementById('password');
-      pwInput.type = pwInput.type === 'password' ? 'text' : 'password';
-    }
-	document.querySelector('form').addEventListener('submit', function(e) {
-	   const prevStatus = document.getElementById('prevDayStatus').value;
 
-	   if (prevStatus === 'missing') {
-	     const confirmRegister = confirm('前日の勤怠登録がありません。\nこのまま登録してもよろしいですか？');
-	     if (!confirmRegister) {
-	       e.preventDefault(); // 送信キャンセル
-	       return;
-	     }
-	   }
-	 });
+  <script>
+    // 前日未登録チェックの確認ダイアログ
+    document.querySelector('form').addEventListener('submit', function(e) {
+      const prevStatus = document.getElementById('prevDayStatus').value;
+      if (prevStatus === 'missing') {
+        const confirmRegister = confirm('前日の勤怠登録がありません。\nこのまま登録してもよろしいですか？');
+        if (!confirmRegister) {
+          e.preventDefault();
+          return;
+        }
+      }
+    });
   </script>
 </body>
 </html>
