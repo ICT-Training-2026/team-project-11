@@ -45,7 +45,7 @@ public class SearchAttendanceController {
 	         form.getEmpId(), start, end
 	     );
 	     model.addAttribute("attList", list);
-	     return "search_complate";
+	     return "Attendance_search";
 	 }
 }
 	 

@@ -28,8 +28,9 @@ public class RegisterController {
     @Autowired
     private RegistService service;
 
-    @Autowired
+
     private TimeService Tservice;
+
 
     @Autowired
     private AttendanceService attendanceService;
@@ -99,6 +100,7 @@ public class RegisterController {
                 e.setConsecutiveDays(0);
             }
         }
+
 
         service.regist(e);
         return "Register_complete";

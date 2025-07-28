@@ -2,11 +2,16 @@
     
 package com.example.demo.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.example.demo.entity.AttendanceEntity;
 
 @Controller
    // @RequiredArgsConstructor
@@ -55,8 +60,10 @@ import org.springframework.web.bind.annotation.RequestParam;
    	    //    return "Attendance_register"; // Thymeleafは templates/AtAdd.html を探します
    	    //}
     	 @GetMapping("/Attendance_search")
-   	    public String Attendance_search() {
-   	        return "Attendance_search"; // Thymeleafは templates/AtAdd.html を探します
+   	    public String Attendance_search(Model model) {
+    		 List<AttendanceEntity> list = new ArrayList<>();
+    		 model.addAttribute("attList", list); 
+    		 return "Attendance_search";// Thymeleafは templates/AtAdd.html を探します
    	    }
     	
     	 
