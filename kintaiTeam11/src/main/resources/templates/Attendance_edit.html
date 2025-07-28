@@ -21,12 +21,12 @@
 	    <div class="right">
 	      <h1>勤怠編集</h1>
 		  <form method="POST" action="/Register" autocomplete="off">
-		    <div class="form-group">
-		      <label for="userid"><span class="required">※</span>ユーザーID</label>
-		      <div class="form-input-wrap">
-		        <p th:text="${sessionScope != null and sessionScope.empId != null ? sessionScope.empId : '未ログイン'}" class="form-value"></p>
-		      </div>
-		    </div>
+			<div class="form-group">
+			          <label for="userid"><span class="required">※</span>ユーザーID</label>
+			          <div class="form-input-wrap">
+						<p><strong th:text="${employeeId}">未ログイン</strong></p>
+			          </div>
+			        </div>
 
 		    <div class="form-group">
 		      <label for="workDate"><span class="required">※</span>日付</label>
