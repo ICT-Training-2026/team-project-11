@@ -32,6 +32,7 @@ public class Password_UpdateImpl implements Password_Update {
         employee.setPassword(hashedNewPassword);
         userRepository.save(employee);
 
+        // 成功した場合
         return "success";
     }
 }
