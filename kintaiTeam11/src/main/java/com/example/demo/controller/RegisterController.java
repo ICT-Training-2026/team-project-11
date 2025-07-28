@@ -68,6 +68,33 @@ public class RegisterController {
         LocalDateTime currentDateTime = LocalDateTime.now();
 
         AttendanceEntity e = new AttendanceEntity();
+        if("年休".equals(form.getLeaveType())) {
+        	e.setEmpId(employeeId);
+            e.setWorkDate(form.getWorkDate());
+            e.setLeaveType(form.getLeaveType());
+        	e.setCheckInTime(LocalTime.of(0, 0));
+        	e.setCheckOutTime(LocalTime.of(0, 0));
+        	e.setOvertimeHours(LocalTime.of(0, 0));
+        	e.setWorkTimeHours(LocalTime.of(7, 0));
+        	e.setBreakTime(LocalTime.of(0, 0));
+        	e.setRemarks(form.getRemarks());
+            e.setApproval(0);
+            e.setUpdatedAt(currentDateTime);
+        	
+        }
+        else if("振休".equals(form.getLeaveType())||"振休".equals(form.getLeaveType())) {
+        	e.setEmpId(employeeId);
+            e.setWorkDate(form.getWorkDate());
+            e.setLeaveType(form.getLeaveType());
+        	e.setCheckInTime(LocalTime.of(0, 0));
+        	e.setCheckOutTime(LocalTime.of(0, 0));
+        	e.setOvertimeHours(LocalTime.of(0, 0));
+        	e.setWorkTimeHours(LocalTime.of(0, 0));
+        	e.setBreakTime(LocalTime.of(0, 0));
+        	e.setRemarks(form.getRemarks());
+            e.setApproval(0);
+            e.setUpdatedAt(currentDateTime);
+        }else {
         e.setEmpId(employeeId);
         e.setWorkDate(form.getWorkDate());
         e.setLeaveType(form.getLeaveType());
@@ -79,6 +106,7 @@ public class RegisterController {
         e.setRemarks(form.getRemarks());
         e.setApproval(0);
         e.setUpdatedAt(currentDateTime);
+        }
 
         // 前日チェック
         LocalDate previousDate = form.getWorkDate().minusDays(1);

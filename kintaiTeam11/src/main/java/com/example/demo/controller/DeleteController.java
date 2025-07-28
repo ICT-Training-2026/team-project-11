@@ -29,11 +29,13 @@ public class DeleteController {
     
     // ユーザーを削除するエンドポイント
     @DeleteMapping("/users/{employeeId}")
-    public String deleteUser(@PathVariable String employeeId) {
-        User user = userRepository.findByEmployeeId(employeeId);
+    public String deleteUser(@PathVariable String empId) {
+        User user = userRepository.findByEmployeeId(empId);
+        int employeeId = Integer.parseInt(empId);
         Holiday holiday=holidayRepository.findByEmployeeId(employeeId);
         if (user != null) {
         	deleteholidayRepository.delete(holiday);
+        	
             deleteRepository.delete(user); // ユーザーを削除
             return "ユーザーが削除されました: " + employeeId;
         } else {
