@@ -5,51 +5,89 @@
 <title>勤怠検索</title>
 <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/style_attendance.css">
-</head>
-<body>
+<link rel="stylesheet" th:href="@{/css/search.css}"></head>
+  <body>
 
     <div class="container">
-    <div class="left">
-      <div class="circle-bg"></div>
-      <div class="menu-buttons">
-        <a href="/top"><div class="menu-button">トップページ</div></a>
-        <a href="L.html"><div class="menu-button">ログアウト</div></a>
+      <div class="left">
+        <div class="circle-bg"></div>
+        <div class="menu-buttons">
+          <a href="/top"><div class="menu-button">トップページ</div></a>
+          <a href="L.html"><div class="menu-button">ログアウト</div></a>
+        </div>
+        <div class="logo-area">
+          <span class="company">company</span>
+          <span class="m">M</span>
+        </div>
       </div>
-      <div class="logo-area">
-        <span class="company">company</span>
-        <span class="m">M</span>
-      </div>
-    </div>
 
     <div class="right">
-    <div class="kennsaku">
-      <h1>検索画面</h1>
-    </div>
-	    <h2>ユーザー検索</h2>
-	    <form th:action="@{/search_complate}" method="POST">
-	       <div class="form-group">
-                <label for="userid">ユーザーID</label>
-                <input type="text" id="search_id" name="empId" placeholder="ID" required>
-            </div>
-            <div class="form-group">
-                <label for="date">日付</label>
-                <input type="date" id="search_date" name="workDate" placeholder="date" required>
-            </div>   
+      <div class="kennsaku">
+        <!--<h1>検索画面</h1>-->
+      </div>
+        <h2>ユーザー検索</h2>
+        <form th:action="@{/search_complate}" method="POST">
+          <div class="form-group">
+              <label for="userid">ユーザーID</label>
+              <input type="text" id="search_id" name="empId" placeholder="ID" required>
+          </div>
+          <div class="form-group">
+              <label for="date">日付</label>
+              <input type="date" id="search_date" name="workDate" placeholder="date" required>
+          </div>   
 
-            <div class="form-group">
-                <label for="piriod">期間</label>
-                <select name="searchRange" required>
-                    <option value="1日" selected>1日</option>
-                    <option value="1週間">1週間</option>
-                    <option value="1か月">1か月</option>
-                </select>
-            </div>
+          <div class="form-group">
+              <label for="piriod">期間</label>
+              <select name="searchRange" required>
+                  <option value="1日" selected>1日</option>
+                  <option value="1週間">1週間</option>
+                  <option value="1か月">1か月</option>
+              </select>
+          </div>
 
-            <button type="submit">検索</button>
-            <a href="/AtMenu" class="return-link">勤怠メニューに戻る</a>
+          <button type="submit">検索</button>
+          <a href="/AtMenu" class="return-link">勤怠メニューに戻る</a>
         
-	    </form>    
-	</div>
-</body>
+	      </form>    
+
+        <div class="search-results"> 
+          <h3>検索結果</h3>
+          <table class="results-table">
+            <thead>
+              <tr>
+                  <th>社員ID</th>
+                  <th>日付</th>
+                  <th>出勤</th>
+                  <th>退勤</th>
+                  <th>休憩</th>
+                  <th>残業</th>
+                  <th>連続</th>
+                  <th>勤務時間</th>
+                  <th>備考</th>
+                  <th>承認</th>
+                  <th>更新日時</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${attList.empty}">
+                  <td colspan="11">該当データがありません</td>
+                </tr>
+                <tr th:each="a : ${attList}">
+                  <td th:text="${a.empId}"></td>
+                  <td th:text="${#temporals.format(a.workDate, 'yyyy-MM-dd')}"></td>
+                  <td th:text="${a.checkInTime}"></td>
+                  <td th:text="${a.checkOutTime}"></td>
+                  <td th:text="${a.breakTime}"></td>
+                  <td th:text="${a.overtimeHours}"></td>
+                  <td th:text="${a.consecutiveDays}"></td>
+                  <td th:text="${a.workTimeHours}"></td>
+                  <td th:text="${a.remarks}"></td>
+                  <td th:text="${a.approval}"></td>
+                  <td th:text="${#temporals.format(a.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                </tr>
+            </tbody>
+          </table>
+        </div> 
+	  </div>
+  </body>
 </html>
