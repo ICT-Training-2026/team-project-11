@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.entity.Holiday;
 
-public interface HolidaymathRepository extends JpaRepository<Holiday, Integer> {
-    Holiday findByEmployeeId(Integer employeeId);
+public interface HolidaymathRepository extends JpaRepository<Holiday, String> {
+    Holiday findByEmployeeId(String employeeId);
 }

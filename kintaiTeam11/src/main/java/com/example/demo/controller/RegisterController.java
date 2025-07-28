@@ -29,7 +29,6 @@ public class RegisterController {
     private RegistService service;
 
 
-    @Autowired 
     private TimeService Tservice;
 
 
