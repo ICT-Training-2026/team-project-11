@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.entity.AttendanceEntity;
 import com.example.demo.service.ExportService;
@@ -86,11 +87,22 @@ public class ExportController {
 	    
 	    // 同じ内容を POSTでも扱えるように一括出力用
 	    
-	    @PostMapping("/export-all")  // POSTリクエストに正しく対応
-	    public void exportAll(@RequestParam int year,
-	                          @RequestParam int month,
-	                          HttpServletResponse response) throws IOException {
+	    @PostMapping("/export-all")
+	    public void exportAll(@RequestParam(required=false) Integer year,
+	                          @RequestParam(required=false) Integer month,
+	                          HttpServletResponse response,
+	                          RedirectAttributes redirectAttrs) throws IOException {
+	        if (year == null || month == null) {
+	            redirectAttrs.addFlashAttribute("alertMessage",
+	                "年または月が未指定です。正しい数値を入力してください。");
+	            response.sendRedirect("/export");
+	            return;
+	        }
+	        // 正常時：CSV出力
 	        List<AttendanceEntity> data = service.getAttendanceByMonth(year, month);
-	        service.writeCsv(response, data, String.format("attendance-all-%d-%02d.csv", year, month));
+	        service.writeCsv(response, data,
+	            String.format("attendance-all-%d-%02d.csv", year, month));
 	    }
+	    
+	    
 	}
