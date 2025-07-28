@@ -17,7 +17,7 @@ public class Holiday {
 
     @Id
     @Column(name = "EMP_ID")
-    private String employeeId;
+    private Integer employeeId;
 
     @Column(name = "paid")
     private int paid;
@@ -27,11 +27,11 @@ public class Holiday {
 
     // --- Getter & Setter ---
 
-    public String getEmployeeId() {
+    public Integer getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(String employeeId) {
+    public void setEmployeeId(Integer employeeId) {
         this.employeeId = employeeId;
     }
 

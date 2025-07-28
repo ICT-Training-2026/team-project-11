@@ -56,8 +56,9 @@ public class AddController {
         // ④ 登録
         nuserRepository.save(newUser);
         // ⑤ 有給情報も登録
+        int empId = Integer.parseInt(employeeId);
         Holiday holiday = new Holiday();
-        holiday.setEmployeeId(employeeId);
+        holiday.setEmployeeId(empId);
         holiday.setPaid(20);
         holiday.setSubstitute(0);
         holidayRepository.save(holiday);
