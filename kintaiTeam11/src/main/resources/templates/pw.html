@@ -209,6 +209,9 @@
     <div class="right"></div>
     <div class="absolute-center-form">
       <h1>パスワード再設定</h1>
+	  <div th:if="${error}" style="color: red; margin-bottom: 1em;">
+	    <p th:text="${error}"></p>
+	  </div>
       <form th:action="@{/Register_pw}" method="POST">
         <div class="form-group">
           <label for="oldpw"><span class="required">※</span>旧パスワード</label>
