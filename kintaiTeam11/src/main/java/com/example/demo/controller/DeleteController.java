@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.Holiday;
 import com.example.demo.entity.User;
+import com.example.demo.repository.AttendanceDeleteRepository;
 import com.example.demo.repository.DeleteRepository;
 import com.example.demo.repository.DeleteholidayRepository;
 import com.example.demo.repository.HolidayRepository;
@@ -27,16 +28,28 @@ public class DeleteController {
     @Autowired
     private DeleteholidayRepository deleteholidayRepository;
     
+    @Autowired
+    private AttendanceDeleteRepository attendanceDeleteRepository;
+    
+   
     // ユーザーを削除するエンドポイント
     @DeleteMapping("/users/{employeeId}")
-    public String deleteUser(@PathVariable String empId) {
-        User user = userRepository.findByEmployeeId(empId);
-        int employeeId = Integer.parseInt(empId);
-        Holiday holiday=holidayRepository.findByEmployeeId(employeeId);
+    public String deleteUser(@PathVariable String employeeId) {
+        User user = userRepository.findByEmployeeId(employeeId);
+        int empId = Integer.parseInt(employeeId);
+        Holiday holiday=holidayRepository.findByEmployeeId(empId);
+        
+       
         if (user != null) {
-        	deleteholidayRepository.delete(holiday);
         	
-            deleteRepository.delete(user); // ユーザーを削除
+        	if(holiday != null) {
+        	deleteholidayRepository.delete(holiday);
+        	}
+        	attendanceDeleteRepository.deleteByEmployeeId(empId);
+        	
+        	deleteRepository.delete(user);
+        	
+             // ユーザーを削除
             return "ユーザーが削除されました: " + employeeId;
         } else {
             return "ユーザーが見つかりません: " + employeeId;

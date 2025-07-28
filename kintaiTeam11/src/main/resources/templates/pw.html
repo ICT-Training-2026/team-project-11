@@ -186,6 +186,11 @@
       font-weight: bold;
       margin-right: 2px;
     }
+    .error-message {
+      color: red;
+      font-weight: bold;
+      margin-bottom: 1em;
+    }
     @media (max-width: 900px) {
       .container { flex-direction: column; }
       .left, .right { width: 100%; }
@@ -207,8 +212,14 @@
       </div>
     </div>
     <div class="right"></div>
+
     <div class="absolute-center-form">
       <h1>パスワード再設定</h1>
+
+      <div th:if="${error}" class="error-message">
+        <p th:text="${error}"></p>
+      </div>
+
       <form th:action="@{/Register_pw}" method="POST">
         <div class="form-group">
           <label for="oldpw"><span class="required">※</span>旧パスワード</label>
@@ -242,20 +253,15 @@
       </form>
     </div>
   </div>
+
   <script>
-    // パスワード表示切替 + キーボード対応
+    // パスワード表示切替（クリック＋キーボード対応）
     document.querySelectorAll('.pw-toggle').forEach(function(icon) {
       icon.addEventListener('click', function () {
         const input = document.getElementById(icon.getAttribute('data-target'));
-        if (input.type === 'password') {
-          input.type = 'text';
-          icon.style.fill = '#3875D7';
-          icon.style.opacity = '1';
-        } else {
-          input.type = 'password';
-          icon.style.fill = '#888';
-          icon.style.opacity = '0.65';
-        }
+        input.type = input.type === 'password' ? 'text' : 'password';
+        icon.style.fill = input.type === 'text' ? '#3875D7' : '#888';
+        icon.style.opacity = input.type === 'text' ? '1' : '0.65';
       });
 
       icon.addEventListener('keydown', function (e) {
@@ -266,7 +272,7 @@
       });
     });
 
-    // バリデーション + 確認ダイアログ
+    // 入力バリデーション（文字数と一致チェック）
     document.querySelector('form').addEventListener('submit', function (e) {
       const newpw = document.getElementById('newpw').value;
       const new1pw = document.getElementById('new1pw').value;
@@ -286,11 +292,20 @@
         return;
       }
 
-      const confirmMsg = `以下のパスワードを再設定しますか？\n\n${newpw}`;
-      if (!confirm(confirmMsg)) {
+      if (!confirm(`以下のパスワードを再設定しますか？\n\n${newpw}`)) {
         e.preventDefault();
       }
     });
+  </script>
+
+  <script th:inline="javascript">
+  /*<![CDATA[*/
+    const success = /*[[${success}]]*/ false;
+    if (success) {
+      alert("パスワード再設定が完了しました。");
+      window.location.href = "/System";
+    }
+  /*]]>*/
   </script>
 </body>
 </html>

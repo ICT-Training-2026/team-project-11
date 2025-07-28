@@ -20,13 +20,17 @@
 	    </div>
 	    <div class="right">
 	      <h1>勤怠編集</h1>
+
 		  <form method="POST" action="/Edit_complete" th:object="${AttendancetForm}">
+
 			<div class="form-group">
 			          <label for="userid"><span class="required">※</span>ユーザーID</label>
-			          <div class="form-input-wrap">
-						<p><strong th:text="${employeeId}">未ログイン</strong></p>
-			          </div>
-			        </div>
+					  
+			<div class="form-input-wrap">
+				<p><strong th:text="${employeeId}">未ログイン</strong></p>
+				     
+			</div>
+		</div>
 
 		    <div class="form-group">
 		      <label for="workDate"><span class="required">※</span>日付</label>
@@ -36,11 +40,11 @@
 		    </div>
 
 			<div class="form-group">
-			  <label for="checkInTime"><span class="required">※</span>勤務開始時間</label>
-			  <div class="form-input-wrap">
-			    <input type="time" name="checkInTime" id="checkInTime" required>
-			  </div>
-			</div>
+						  <label for="checkInTime"><span class="required">※</span>勤務開始時間</label>
+						  <div class="form-input-wrap">
+						    <input type="time" name="checkInTime" id="checkInTime" required>
+						  </div>
+						</div>
 
 			<div class="form-group">
 			  <label for="checkOutTime"><span class="required">※</span>勤務終了時間</label>
