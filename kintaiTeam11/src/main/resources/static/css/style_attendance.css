@@ -36,7 +36,6 @@ body {
   flex-direction: column;
   align-items: flex-start; /* 子要素を左端に揃える */
   margin-top: 20px;
-  margin-bottom: 30px; 
 }
 .menu-button { 
   transform: translateY(-20px); /* Y軸方向に上に移動ボタンを上にそろえる */
@@ -82,7 +81,6 @@ body {
   align-items: center;
   padding: 40px 15px;
   width: 50%;
-  overflow-y: auto; /* ←追加 */
 }
 h1 {
   font-size: 28px;
@@ -158,7 +156,6 @@ button[type="submit"] {
   display: block;
   margin: 32px auto 0 auto;
   transition: background 0.18s;
-  margin: 24px auto 10px auto;
 }
 button[type="submit"]:hover {
   background: #efe6c9;
@@ -173,7 +170,6 @@ button[type="submit"]:hover {
   background: none;
   cursor: pointer;
   width: fit-content;
-  margin: 8px auto 0 auto;
 }
 .required { color: #d82828; font-weight: bold; margin-right: 2px;}
 

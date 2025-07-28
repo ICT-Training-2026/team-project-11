@@ -23,15 +23,15 @@ import com.example.demo.service.RegistService;
 import com.example.demo.service.TimeService;
 
 @Controller
-public class RegisterController {
+public class RegisterController{
 
     @Autowired
     private RegistService service;
 
-    @Autowired
+    @Autowired 
     private TimeService Tservice;
 
-    @Autowired
+    @Autowired 
     private AttendanceService attendanceService;
 
     @ModelAttribute("AttendancetForm")
@@ -41,33 +41,34 @@ public class RegisterController {
 
     @PostMapping("/Register_complate")
     public String registerComplate(
-            @Validated @ModelAttribute AttendancetForm form,
-            BindingResult result,
-            HttpSession session,
-            Model model) {
+    		@Validated @ModelAttribute AttendancetForm form,
+
+            BindingResult result,HttpSession session, Model model) {
+
 
         if (result.hasErrors()) {
-            return "Attendance_register";
-        }
-
-        String empId = (String) session.getAttribute("employeeId");
-        int employeeId = Integer.parseInt(empId);
-
-        // ✅ 重複チェック
-        if (attendanceService.isAlreadyRegistered(employeeId, form.getWorkDate())) {
-            model.addAttribute("duplicateError", "この日付の勤怠はすでに登録されています。");
-            return "Attendance_register";
+            System.out.println("error");
+            return "Register_complate"; // HTMLのテンプレート名
         }
 
         LocalTime base = LocalTime.of(0, 0);
-        Duration overT = Tservice.timediff(form.getCheckInTime(), form.getCheckOutTime(), form.getBreakTime());
-        LocalTime overtime = base.plus(overT);
-        Duration workT = Tservice.timediff(form.getCheckInTime(), form.getCheckOutTime(), form.getBreakTime(), overtime);
-        LocalTime worktime = base.plus(workT);
+        
+        Duration overT = Tservice.timediff(form.getCheckInTime(), form.getCheckOutTime(),form.getBreakTime());
+        
+        LocalTime overtime =base.plus(overT);
+        
+        Duration workT = Tservice.timediff(form.getCheckInTime(), form.getCheckOutTime(),form.getBreakTime(),overtime);
+        
+        LocalTime worktime =base.plus(workT);
+        
         LocalDateTime currentDateTime = LocalDateTime.now();
 
+
+        String empId = (String) session.getAttribute("employeeId");
+        int employeeId = Integer.parseInt(empId);
         AttendanceEntity e = new AttendanceEntity();
         e.setEmpId(employeeId);
+
         e.setWorkDate(form.getWorkDate());
         e.setLeaveType(form.getLeaveType());
         e.setCheckInTime(form.getCheckInTime());
@@ -79,37 +80,45 @@ public class RegisterController {
         e.setApproval(0);
         e.setUpdatedAt(currentDateTime);
 
-        // 前日チェック
+
+        // 1日前の日付を取得
         LocalDate previousDate = form.getWorkDate().minusDays(1);
+        // 前日の勤怠データを取得
         AttendanceEntity previousAttendance = attendanceService.getPreviousAttendance(employeeId, previousDate);
 
+        // 前日の勤怠データが存在しない場合
         if (previousAttendance == null) {
+            // 警告メッセージをモデルに追加
             model.addAttribute("warningMessage", "前日の勤怠が登録されていませんが進みますか？");
-            model.addAttribute("showWarning", true);
+            model.addAttribute("showWarning", true); // 警告メッセージを表示するフラグ
+            // LeaveTypeが「出勤」または「振出」の場合にデータベースを更新
             if ("出勤".equals(form.getLeaveType()) || "振出".equals(form.getLeaveType())) {
                 e.setConsecutiveDays(1);
-            } else {
-                e.setConsecutiveDays(0);
+            }else {
+            	e.setConsecutiveDays(0);
             }
-        } else {
+        }else {
+            // LeaveTypeが「出勤」または「振出」の場合にデータベースを更新
             if ("出勤".equals(form.getLeaveType()) || "振出".equals(form.getLeaveType())) {
+                // 前日の連続勤務日数を取得し、今日の連続勤務日数を設定
                 int previousConsecutiveDays = previousAttendance.getConsecutiveDays();
                 e.setConsecutiveDays(previousConsecutiveDays + 1);
-            } else {
-                e.setConsecutiveDays(0);
+            }else {
+            	e.setConsecutiveDays(0);
             }
         }
 
+
+
         service.regist(e);
         return "Register_complete";
+        
     }
-
-    @GetMapping("/Attendance_register")
-    public String showRegisterForm(Model model, HttpSession session) {
-        String employeeId = (String) session.getAttribute("employeeId");
-        model.addAttribute("employeeId", employeeId);
-        model.addAttribute("AttendancetForm", new AttendancetForm());
-        return "Attendance_register";
-    }
+  @GetMapping("/Attendance_register")
+  public String showRegisterForm(Model model,HttpSession session) {
+  	String employeeId = (String) session.getAttribute("employeeId");
+  	model.addAttribute("employeeId",employeeId);
+      model.addAttribute("AttendancetForm", new AttendancetForm()); // 必須！
+      return "Attendance_register"; // HTML名
+  }
 }
-

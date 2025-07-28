@@ -5,6 +5,5 @@ import java.time.LocalDate;
 import com.example.demo.entity.AttendanceEntity;
 
 public interface AttendanceService {
-    AttendanceEntity getPreviousAttendance(Integer empId, LocalDate workDate);
-    boolean isAlreadyRegistered(Integer empId, LocalDate workDate); // ← 追加
+    AttendanceEntity getPreviousAttendance(Integer empId, LocalDate workDat);
 }

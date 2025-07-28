@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AttendanceServiceImpl implements AttendanceService {
 
+    
     private final AttendanceQueryRepository attendanceQueryRepository;
 
     @Override
@@ -20,8 +21,4 @@ public class AttendanceServiceImpl implements AttendanceService {
         return attendanceQueryRepository.findByEmpIdAndWorkDate(empId, workDate);
     }
 
-    @Override
-    public boolean isAlreadyRegistered(Integer empId, LocalDate workDate) {
-        return attendanceQueryRepository.findByEmpIdAndWorkDate(empId, workDate) != null;
-    }
 }

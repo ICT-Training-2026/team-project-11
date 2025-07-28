@@ -243,16 +243,11 @@
         </tbody>
       </table>
 
-	  <form method="post" th:action="@{/export-all}" style="margin-top:20px;">
-	    <input type="hidden" name="year" th:value="${year}" />
-	    <input type="hidden" name="month" th:value="${month}" />
-	    
-	    <div th:if="${alertMessage}" class="alert alert-danger" th:text="${alertMessage}"></div>
-
-	    <div class="submitt">
-	      <button type="submit">全社員一括CSVダウンロード</button>
-	    </div>
-	  </form>
+      <form method="post" th:action="@{/export-all}" style="margin-top:20px;">
+        <input type="hidden" name="year" th:value="${year}" />
+        <input type="hidden" name="month" th:value="${month}" />
+        <div class="submitt"><button type="submit">全社員一括CSVダウンロード</button></div>
+      </form>
 
       <a class="return-link" href="/Admin">管理者権限画面に戻る</a>
     </div>
