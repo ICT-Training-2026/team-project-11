@@ -3,12 +3,190 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" th:href="@{/css/style.css}">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
+    a { text-decoration: none; }
+    * { box-sizing: border-box; font-family: "メイリオ", sans-serif; }
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #B9B28A;
+    }
+    .container {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      position: relative;
+    }
+    .left {
+      width: 50%;
+      position: relative;
+    }
+    .circle-bg {
+      position: absolute;
+      width: 130vmin;
+      height: 130vmin;
+      background-color: #504B38;
+      border-radius: 50%;
+      bottom: -10vmin;
+      left: -30vmin;
+    }
+    .menu-buttons {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 20px;
+      z-index: 1;
+    }
+    .menu-button {
+      transform: translateY(-20px);
+      width: 220px;
+      height: 100px;
+      background-color: #C3BB8D;
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+      line-height: 100px;
+      text-align: center;
+      border: 2px solid black;
+      border-radius: 0 100px 100px 0;
+      margin-bottom: -2px;
+    }
+        .logo-area {
+        position: absolute;
+        top: 50%;    /* 少し上に調整 */
+        left: 38%;
+        transform: translate(-30%, -50%);
+        color: white;
+        text-align: center;
+        z-index: 2;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        }
+
+        .logo-area .company {
+        font-family: "Montserrat", sans-serif;
+        letter-spacing: 5px;
+        font-size: 18px;
+        margin-bottom: 10px;  /* Mとの間隔 */
+        }
+
+        .logo-area .m {
+        font-family: "Monoton", sans-serif;
+        font-size: 130px;
+        font-weight: 300;
+        line-height: 1;
+        }
+    .right {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 40px 15px;
+      width: 60%;
+      overflow-y: auto;
+    }
+    h1 {
+	  margin: 0 auto;
+	  text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    form {
+      width: 100%;
+      max-width: 500px;
+    }
+    table {
+        font-size: 14px;
+        background-color: #eee;
+        border-collapse: separate; /* collapseからseparateに変更 */
+        border-spacing: 0; /* セル間の隙間を無くす */
+        border-radius: 12px; /* 角丸の大きさ */
+        overflow: hidden; /* はみ出しを隠す */
+        border: 1px solid black; /* テーブル枠線 */
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #eee;
+    }
+    .form-inline {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+    }
+    select {
+      padding: 5px;
+      font-size: 16px;
+    }
+    button {
+      padding: 8px 16px;
+      font-size: 16px;
+      font-weight: bold;
+      border: 2px solid black;
+      border-radius: 6px;
+      background-color: white;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .submitt{
+        margin-left: 120px;
+    }
+
+    .migini{
+        margin-right: 50px;
+    }
+    
+    button:hover {
+      background-color: #efe6c9;
+    }
+    .return-link {
+		margin-left: -10px;
+			display: block;
+			text-align: center;
+			font-size: 16px;
+			font-weight: bold;
+			color: #0077cc;
+			margin-top: 20px;
+			text-decoration: underline;
+			font-size: 16px;
+			font-weight: bold;
+			margin-top: 10px;
+			text-align: left;
+    }
+  </style>
 </head>
 <body>
-<h1>申請承認・却下画面（管理者用）</h1>
+	<div class="container">
+	    <div class="left">
+	      <div class="circle-bg"></div>
+	      <div class="menu-buttons">
+	        <a href="/top"><div class="menu-button">トップページ</div></a>
+	        <a href="/L"><div class="menu-button">ログアウト</div></a>
+	      </div>
+	      <div class="logo-area">
+	        <span class="company">company</span>
+	        <span class="m">M</span>
+	      </div>
+	    </div>
 
-<table border="1">
+	<div class="right">
+		<h1>申請承認・却下画面（管理者用）</h1>
+
+	<table border="1">
     <thead>
       <tr>
         <th>社員ID</th><th>日付</th><th>出勤区分</th><th>出勤</th><th>退勤</th><th>実労働時間</th><th>備考</th><th>承認</th>
@@ -67,12 +245,8 @@
 	  
     </tbody>
   </table>
+  <a href="/Admin" class="return-link">管理者権限画面に戻る</a>
+	</div>
 
-
-
-
-
-
-<a href="/Admin">管理者権限画面に戻る</a></br>
 </body>
 </html>
