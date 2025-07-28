@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>パスワード再設定</title>
-  <!-- スタイルは省略せず完全に保持 + 目アイコン追加 -->
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
@@ -129,13 +128,12 @@
     .form-group input[type="password"],
     .form-group input[type="text"] {
       width: 100%;
-      padding: 8px 38px 8px 10px; /* アイコン分の右余白 */
+      padding: 8px 38px 8px 10px;
       font-size: 16px;
       border: 2px solid #333;
       border-radius: 5px;
       background: #fff;
     }
-    /* :目:目のアイコン用スタイル */
     .pw-toggle {
       position: absolute;
       right: 10px;
@@ -167,27 +165,21 @@
       border-radius: 12px;
       cursor: pointer;
       margin: 30px auto 0 auto;
-      box-shadow: 0 2px 7px rgba(0,0,0,0.06);
       margin-left: 110px;
+      box-shadow: 0 2px 7px rgba(0,0,0,0.06);
     }
     button[type="submit"]:hover {
       background: #EFE6C9;
     }
     .return-link {
-      margin-left: 140px;
       display: block;
-      text-align: center;
-      font-size: 16px;
-      font-weight: bold;
-      color: #0077CC;
-      margin-top: 20px;
-      text-decoration: underline;
-      font-size: 16px;
-      font-weight: bold;
-      color: #0077CC;
-      text-decoration: underline;
-      margin-left: 110px;
       text-align: left;
+      font-size: 16px;
+      font-weight: bold;
+      color: #0077CC;
+      text-decoration: underline;
+      margin-top: 20px;
+      margin-left: 110px;
     }
     .required {
       color: #D82828;
@@ -222,7 +214,6 @@
           <label for="oldpw"><span class="required">※</span>旧パスワード</label>
           <div class="form-input-wrap">
             <input type="password" id="oldpw" name="oldpw" placeholder="現在のパスワードを入力" required>
-            <!-- :目: 目アイコン（SVG） -->
             <svg class="pw-toggle" tabindex="0" data-target="oldpw" viewBox="0 0 24 24">
               <path d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7zm0 12c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8.3A3.3 3.3 0 1 0 15.3 12 3.3 3.3 0 0 0 12 8.7z"/>
             </svg>
@@ -252,59 +243,13 @@
     </div>
   </div>
   <script>
-	  // パスワード表示切替
-	  document.querySelectorAll('.pw-toggle').forEach(function(icon) {
-	    icon.addEventListener('click', function () {
-	      const input = document.getElementById(icon.getAttribute('data-target'));
-	      if (input.type === 'password') {
-	        input.type = 'text';
-	        icon.style.fill = '#3875D7';
-	        icon.style.opacity = '1';
-	      } else {
-	        input.type = 'password';
-	        icon.style.fill = '#888';
-	        icon.style.opacity = '0.65';
-	      }
-	    });
-	    icon.addEventListener('keydown', function (e) {
-	      if (e.key === 'Enter' || e.key === ' ') {
-	        icon.click();
-	        e.preventDefault();
-	      }
-	    });
-	  });
-
-	  // ✅ パスワード一致 & 長さチェック
-	  document.querySelector('form').addEventListener('submit', function (e) {
-	    const newpw = document.getElementById('newpw').value;
-	    const new1pw = document.getElementById('new1pw').value;
-
-	    // 1. パスワード長さチェック
-	    if (newpw.length < 8 || new1pw.length < 8) {
-	      e.preventDefault();
-	      alert('新しいパスワードは8文字以上で入力してください。');
-	      if (newpw.length < 8) document.getElementById('newpw').focus();
-	      else document.getElementById('new1pw').focus();
-	      return;
-	    }
-
-	    // 2. パスワード一致チェック
-	    if (newpw !== new1pw) {
-	      e.preventDefault();
-	      alert('新しいパスワードと確認用パスワードが一致しません。\nもう一度入力してください。');
-	      document.getElementById('new1pw').value = '';
-	      document.getElementById('new1pw').focus();
-	    }
-	  });
-
-	
-    // :目: 目アイコンでパスワード表示・非表示を切り替え
+    // パスワード表示切替 + キーボード対応
     document.querySelectorAll('.pw-toggle').forEach(function(icon) {
-      icon.addEventListener('click', function() {
+      icon.addEventListener('click', function () {
         const input = document.getElementById(icon.getAttribute('data-target'));
         if (input.type === 'password') {
           input.type = 'text';
-          icon.style.fill = '#3875D7'; // 表示中カラー
+          icon.style.fill = '#3875D7';
           icon.style.opacity = '1';
         } else {
           input.type = 'password';
@@ -312,13 +257,39 @@
           icon.style.opacity = '0.65';
         }
       });
-      // キーボード操作にも対応
-      icon.addEventListener('keydown', function(e) {
+
+      icon.addEventListener('keydown', function (e) {
         if (e.key === 'Enter' || e.key === ' ') {
           icon.click();
           e.preventDefault();
         }
       });
+    });
+
+    // バリデーション + 確認ダイアログ
+    document.querySelector('form').addEventListener('submit', function (e) {
+      const newpw = document.getElementById('newpw').value;
+      const new1pw = document.getElementById('new1pw').value;
+
+      if (newpw.length < 8 || new1pw.length < 8) {
+        e.preventDefault();
+        alert('新しいパスワードは8文字以上で入力してください。');
+        (newpw.length < 8 ? document.getElementById('newpw') : document.getElementById('new1pw')).focus();
+        return;
+      }
+
+      if (newpw !== new1pw) {
+        e.preventDefault();
+        alert('新しいパスワードと確認用パスワードが一致しません。\nもう一度入力してください。');
+        document.getElementById('new1pw').value = '';
+        document.getElementById('new1pw').focus();
+        return;
+      }
+
+      const confirmMsg = `以下のパスワードを再設定しますか？\n\n${newpw}`;
+      if (!confirm(confirmMsg)) {
+        e.preventDefault();
+      }
     });
   </script>
 </body>
