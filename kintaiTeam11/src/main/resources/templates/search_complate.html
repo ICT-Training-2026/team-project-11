@@ -3,9 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+	<div class="left">
+		      <div class="circle-bg"></div>
+		      <div class="menu-buttons">
+		        <a href="/top"><div class="menu-button">トップページ</div></a>
+		        <a href="/L"><div class="menu-button">ログアウト</div></a>
+		      </div>
+		      <div class="logo-area">
+		        <span class="company">company</span>
+		        <span class="m">M</span>
+		      </div>
+	</div>
 <h1>検索完了画面</h1>
 
 
@@ -35,7 +48,6 @@
       </tr>
     </tbody>
   </table>
-
-<a href="/System">システムメニュー画面に戻る</a></br>
+			<a href="/AtMenu" class="return-link">勤怠メニューに戻る</a>
 </body>
 </html>
