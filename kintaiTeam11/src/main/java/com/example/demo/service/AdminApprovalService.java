@@ -19,6 +19,7 @@ public class AdminApprovalService {
         return repository.findUnapprovedAttendance();
     }
     
+    
     public void deleteAttendance(Long empId, LocalDate workDate) {
         repository.deleteAttendance(empId, workDate);
     }
@@ -27,6 +28,6 @@ public class AdminApprovalService {
     
     
     public void approveAttendance(Long empId, LocalDate workDate) {
-        repository.deleteAttendance(empId, workDate);
+        repository.approveAttendance(empId, workDate);
     }
 }
