@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.entity.AttendanceEntity;
 import com.example.demo.form.AttendancetForm;
+import com.example.demo.repository.GetAttendanceRepository;
 import com.example.demo.service.AttendanceService;
 import com.example.demo.service.HolidaymathService;
 import com.example.demo.service.RegistService;
@@ -34,7 +35,9 @@ public class RegisterController {
     
     @Autowired
     private HolidaymathService holidaymathService;
-
+    
+    @Autowired
+    private GetAttendanceRepository getattendancerepository;
 
     @Autowired
     private AttendanceService attendanceService;
@@ -154,10 +157,10 @@ public class RegisterController {
         // 前日チェック
         LocalDate previousDate = form.getWorkDate().minusDays(1);
         AttendanceEntity previousAttendance = attendanceService.getPreviousAttendance(employeeId, previousDate);
-
+        
+        
+        
         if (previousAttendance == null) {
-            model.addAttribute("warningMessage", "前日の勤怠が登録されていませんが進みますか？");
-            model.addAttribute("showWarning", true);
             if ("出勤".equals(form.getLeaveType()) || "振出".equals(form.getLeaveType())) {
                 e.setConsecutiveDays(1);
             } else {
@@ -174,6 +177,11 @@ public class RegisterController {
 
 
         service.regist(e);
+        AttendanceEntity previousattendance =getattendancerepository.findByEmpIdAndWorkDate(employeeId, previousDate);
+        if(previousattendance==null) {
+        	return "alertIf";
+        }
+        
         return "Register_complete";
     }
 

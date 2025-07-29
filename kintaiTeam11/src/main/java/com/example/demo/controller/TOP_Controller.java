@@ -82,7 +82,10 @@ import com.example.demo.entity.AttendanceEntity;
     	 public String pw() {
             return "pw"; // input.htmlを返す
         }
-
+    	 @GetMapping("/Register_complete")
+    	 public String Register_complete() {
+    		 return "Register_complete";
+    	 }
     	 
     	
     	 
