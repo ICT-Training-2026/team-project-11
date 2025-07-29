@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.example.demo.entity.AttendanceEntity;
 import com.example.demo.form.AttendancetForm;
 import com.example.demo.service.AttendanceService;
+import com.example.demo.service.HolidaymathService;
 import com.example.demo.service.RegistService;
 import com.example.demo.service.TimeService;
 
@@ -30,6 +31,9 @@ public class RegisterController {
 
     @Autowired
     private TimeService Tservice;
+    
+    @Autowired
+    private HolidaymathService holidaymathService;
 
 
     @Autowired
@@ -85,9 +89,9 @@ public class RegisterController {
         	e.setRemarks(form.getRemarks());
             e.setApproval(0);
             e.setUpdatedAt(currentDateTime);
-        	
+        	holidaymathService.incrementdecrement(4,employeeId);
         }
-        else if("振休".equals(form.getLeaveType())||"休日".equals(form.getLeaveType())) {
+        else if("振休".equals(form.getLeaveType())) {
         	e.setEmpId(employeeId);
             e.setWorkDate(form.getWorkDate());
             e.setLeaveType(form.getLeaveType());
@@ -99,7 +103,34 @@ public class RegisterController {
         	e.setRemarks(form.getRemarks());
             e.setApproval(0);
             e.setUpdatedAt(currentDateTime);
-        }else {
+            holidaymathService.incrementdecrement(5,employeeId);
+        }else if("休日".equals(form.getLeaveType())) {
+        	e.setEmpId(employeeId);
+            e.setWorkDate(form.getWorkDate());
+            e.setLeaveType(form.getLeaveType());
+        	e.setCheckInTime(LocalTime.of(0, 0));
+        	e.setCheckOutTime(LocalTime.of(0, 0));
+        	e.setOvertimeHours(LocalTime.of(0, 0));
+        	e.setWorkTimeHours(LocalTime.of(0, 0));
+        	e.setBreakTime(LocalTime.of(0, 0));
+        	e.setRemarks(form.getRemarks());
+            e.setApproval(0);
+            e.setUpdatedAt(currentDateTime);
+        }else if("振出".equals(form.getLeaveType())) {
+        	e.setEmpId(employeeId);
+            e.setWorkDate(form.getWorkDate());
+            e.setLeaveType(form.getLeaveType());
+            e.setCheckInTime(form.getCheckInTime());
+            e.setCheckOutTime(form.getCheckOutTime());
+            e.setBreakTime(form.getBreakTime());
+            e.setOvertimeHours(overtime);
+            e.setWorkTimeHours(worktime);
+            e.setRemarks(form.getRemarks());
+            e.setApproval(0);
+            e.setUpdatedAt(currentDateTime);
+            holidaymathService.incrementdecrement(11,employeeId);
+        }
+        else {
         e.setEmpId(employeeId);
         e.setWorkDate(form.getWorkDate());
         e.setLeaveType(form.getLeaveType());
