@@ -1,6 +1,9 @@
 package com.example.demo.controller;
 
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,7 +37,12 @@ public class DeleteController {
    
     // ユーザーを削除するエンドポイント
     @DeleteMapping("/users/{employeeId}")
-    public String deleteUser(@PathVariable String employeeId) {
+    public String deleteUser(@PathVariable String employeeId, HttpSession session,Model model) {
+    	String checklog = (String) session.getAttribute("employeeId");
+    	if(checklog ==null) {
+    		 model.addAttribute("alertMessage", "セッションが無効です。再度ログインしてください。");
+             return "alertTop";
+    	}
         User user = userRepository.findByEmployeeId(employeeId);
         int empId = Integer.parseInt(employeeId);
         Holiday holiday=holidayRepository.findByEmployeeId(empId);

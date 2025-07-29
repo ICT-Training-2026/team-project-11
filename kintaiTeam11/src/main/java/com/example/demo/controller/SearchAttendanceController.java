@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,7 +24,12 @@ public class SearchAttendanceController {
 	/*検索リクエスト*/
 
 	 @PostMapping("/search_complate")
-	 public String searchAttendance(@ModelAttribute SearchForm form, Model model) {
+	 public String searchAttendance(@ModelAttribute SearchForm form, Model model, HttpSession session) {
+		 String checklog = (String) session.getAttribute("employeeId");
+	    	if(checklog ==null) {
+	    		 model.addAttribute("alertMessage", "セッションが無効です。再度ログインしてください。");
+	             return "alertTop";
+	    	}
 		 String searchRange = form.getSearchRange();
 		 LocalDate start =form.getWorkDate();
 	     LocalDate end = start;

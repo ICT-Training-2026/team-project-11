@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +34,7 @@ public class AdminApprovalController {
     @PostMapping("/admin/attendance/approve")
     public String approveAttendance(@RequestParam("empId") Long empId,
                                     @RequestParam("workDate") LocalDate workDate,
-                                    RedirectAttributes redirectAttributes) {
+                                    RedirectAttributes redirectAttributes,HttpSession session) {
         try {
             service.approveAttendance(empId, workDate);
             redirectAttributes.addFlashAttribute("message", "申請が承認されました。");
@@ -46,7 +48,12 @@ public class AdminApprovalController {
     @PostMapping("/admin/attendance/reject")
     public String rejectAttendance(@RequestParam("empId") Long empId,
                                    @RequestParam("workDate") LocalDate workDate,
-                                   RedirectAttributes redirectAttributes) {
+                                   RedirectAttributes redirectAttributes,HttpSession session,Model model) {
+    	String checklog = (String) session.getAttribute("employeeId");
+    	if(checklog ==null) {
+    		 model.addAttribute("alertMessage", "セッションが無効です。再度ログインしてください。");
+             return "alertTop";
+    	}
         try {
             service.deleteAttendance(empId, workDate);
             redirectAttributes.addFlashAttribute("message", "該当の申請が却下されました。");

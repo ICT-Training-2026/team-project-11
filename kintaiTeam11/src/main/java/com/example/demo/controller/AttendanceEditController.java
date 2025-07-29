@@ -49,7 +49,11 @@ public class AttendanceEditController {
     public String AttendanceEditComplate(
     		@Validated @ModelAttribute AttendancetForm form,
             BindingResult result,HttpSession session,Model model) {
-    	
+    	String checklog = (String) session.getAttribute("employeeId");
+    	if(checklog ==null) {
+    		 model.addAttribute("alertMessage", "セッションが無効です。再度ログインしてください。");
+             return "alertTop";
+    	}
     	
     	
         if (result.hasErrors()) {
@@ -140,10 +144,11 @@ public class AttendanceEditController {
         return "Edit_complete";
     }
     @GetMapping("/Attendance_Edit")
-    public String showRegisterForm(Model model,HttpSession session) {
+    public String showEditerForm(Model model,HttpSession session) {
     	String employeeId = (String) session.getAttribute("employeeId");
     	model.addAttribute("employeeId",employeeId);
         model.addAttribute("AttendancetForm", new AttendancetForm()); // 必須！
+        System.out.println("取得した社員番号: " + employeeId);
         return "Attendance_edit"; // HTML名
     }
 }

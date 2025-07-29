@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +26,12 @@ public class SearchEmpController {
 
     // 社員ID検索処理
     @PostMapping("/EmpSearch")
-    public String searchEmployee(@RequestParam String employeeId, Model model) {
+    public String searchEmployee(@RequestParam String employeeId, Model model, HttpSession session) {
+    	String checklog = (String) session.getAttribute("employeeId");
+    	if(checklog ==null) {
+    		 model.addAttribute("alertMessage", "セッションが無効です。再度ログインしてください。");
+             return "alertTop";
+    	}
         User user = nuserRepository.findByEmployeeId(employeeId);
         if (user != null) {
             model.addAttribute("resultUser", user);
