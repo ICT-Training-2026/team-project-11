@@ -28,7 +28,7 @@ public class RegisterController {
     @Autowired
     private RegistService service;
 
-
+    @Autowired
     private TimeService Tservice;
 
 
@@ -87,7 +87,7 @@ public class RegisterController {
             e.setUpdatedAt(currentDateTime);
         	
         }
-        else if("振休".equals(form.getLeaveType())||"振休".equals(form.getLeaveType())) {
+        else if("振休".equals(form.getLeaveType())||"休日".equals(form.getLeaveType())) {
         	e.setEmpId(employeeId);
             e.setWorkDate(form.getWorkDate());
             e.setLeaveType(form.getLeaveType());
