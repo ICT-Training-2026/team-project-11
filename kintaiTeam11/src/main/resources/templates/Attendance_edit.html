@@ -1,105 +1,101 @@
 <!DOCTYPE html>
-	<html lang="ja">
-	<head>
-	  <meta charset="UTF-8">
-	  <link rel="stylesheet" th:href="@{/css/editcomplete.css}">
-	  <title>勤怠編集</title>
-	  </head>
-	<body>
-	  <div class="container">
-	    <div class="left">
-	      <div class="circle-bg"></div>
-	      <div class="menu-buttons">
-	        <a href="/top"><div class="menu-button">トップページ</div></a>
-	        <a href="/L"><div class="menu-button">ログアウト</div></a>
-	      </div>
-	      <div class="logo-area">
-	        <span class="company">company</span>
-	        <span class="m">M</span>
-	      </div>
-	    </div>
-	    <div class="right">
-          
-	      <h1>勤怠編集</h1>
-		  
-		
-		  <form method="POST" action="/Edit_complete" th:object="${AttendancetForm}">
 
-			<div class="form-group">
-			          <label for="userid"><span class="required">※</span>ユーザーID</label>
-					  
-			<div class="form-input-wrap">
-				<p><strong th:text="${employeeId}">未ログイン</strong></p>
-				     
-			</div>
-		</div>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>勤怠編集</title>
+  <link rel="stylesheet" th:href="@{/css/editcomplete.css}">
+</head>
+<body>
+  <div class="container">
+    <div class="left">
+      <div class="circle-bg"></div>
+      <div class="menu-buttons">
+        <a href="/top"><div class="menu-button">トップページ</div></a>
+        <a href="/L"><div class="menu-button">ログアウト</div></a>
+      </div>
+      <div class="logo-area">
+        <span class="company">company</span>
+        <span class="m">M</span>
+      </div>
+    </div>
 
-		    <div class="form-group">
-		      <label for="workDate"><span class="required">※</span>日付</label>
-		      <div class="form-input-wrap">
-		        <input type="date" id="workDate" name="workDate" required>
-		      </div>
-		    </div>
-			
-
-			<div class="form-group">
-			      <label for="leaveType"><span class="required">※</span>勤怠区分</label>
-			      <div class="form-input-wrap">
-				        <select id="leaveType" name="leaveType" required>
-				          <option value="選択してください">選択してください</option>
-				           <option value="出勤">出勤</option>
-						     <option value="振出">振出</option>
-						     <option value="振休">振休</option>
-						     <option value="年休">年休</option>
-						     <option value="休日">休日</option>
-						     <option value="欠勤">欠勤</option>
-				        </select>
-			      </div>
-			</div>
-
-			<div class="form-group">
-						  <label for="checkInTime"><span class="required">※</span>開始時間</label>
-						  <div class="form-input-wrap">
-						    <input type="time" name="checkInTime" id="checkInTime" required>
-						  </div>
-						</div>
-
-			<div class="form-group">
-			  <label for="checkOutTime"><span class="required">※</span>終了時間</label>
-			  <div class="form-input-wrap">
-			    <input type="time" name="checkOutTime" id="checkOutTime" required>
-			  </div>
-			</div>
-
-			<div class="form-group">
-			  <label for="breakTime"><span class="required">※</span>休憩時間</label>
-			  <div class="form-input-wrap">
-			    <input type="time" name="breakTime" id="breakTime" required>
-			  </div>
-			</div>
+    <div class="right">
+      <h1>勤怠編集</h1>
 
 
+      <form method="POST" action="/Edit_complete" th:object="${AttendancetForm}">
+        
+        <!-- ユーザーID表示 -->
+        <div class="form-group">
+          <label for="userid"><span class="required">※</span>ユーザーID</label>
+          <div class="form-input-wrap">
+			<p><strong th:text="${employeeId}">未ログイン</strong></p>
+          </div>
+        </div>
 
-		    <div class="form-group">
-		      <label for="remarks">備考</label>
-		      <div class="form-input-wrap">
-		        <textarea id="remarks" name="remarks" rows="1" placeholder="備考を入力してください" style="resize: none;"></textarea>
-		      </div>
-		    </div>
+        <div class="form-group">
+          <label for="workDate"><span class="required">※</span>日付</label>
+          <div class="form-input-wrap">
+            <input type="date" id="workDate" name="workDate" required>
+          </div>
+        </div>
 
-		    <button type="submit">登録</button>
-		  </form>
+        <div class="form-group">
+          <label for="leaveType"><span class="required">※</span>勤怠区分</label>
+          <div class="form-input-wrap">
+            <select id="leaveType" name="leaveType" required>
+              <option value="選択してください">選択してください</option>
+              <option value="出勤">出勤</option>
+              <option value="振出">振出</option>
+              <option value="振休">振休</option>
+              <option value="年休">年休</option>
+              <option value="休日">休日</option>
+              <option value="欠勤">欠勤</option>
+            </select>
+          </div>
+        </div>
 
-		  <a href="/AtMenu" class="return-link">勤怠メニューに戻る</a>
+        <div class="form-group">
+          <label for="checkInTime"><span class="required">※</span>開始時間</label>
+          <div class="form-input-wrap">
+            <input type="time" name="checkInTime" id="checkInTime" required>
+          </div>
+        </div>
 
-	    </div>
-	  
-	  <script>
-	    function togglePassword() {
-	      const pwInput = document.getElementById('password');
-	      pwInput.type = pwInput.type === 'password' ? 'text' : 'password';
-	    }
-	  </script>
-	</body>
-	</html>
+        <div class="form-group">
+          <label for="checkOutTime"><span class="required">※</span>終了時間</label>
+          <div class="form-input-wrap">
+            <input type="time" name="checkOutTime" id="checkOutTime" required>
+          </div>
+        </div>
 
+        <div class="form-group">
+          <label for="breakTime"><span class="required">※</span>休憩時間</label>
+          <div class="form-input-wrap">
+            <input type="time" name="breakTime" id="breakTime" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="remarks">備考</label>
+          <div class="form-input-wrap">
+            <textarea id="remarks" name="remarks" rows="1" placeholder="備考を入力してください" style="resize: none;"></textarea>
+          </div>
+        </div>
+
+        <button type="submit">登録</button>
+      </form>
+
+      <a href="/AtMenu" class="return-link">勤怠メニューに戻る</a>
+    </div>
+  </div>
+
+  <script>
+    function togglePassword() {
+      const pwInput = document.getElementById('password');
+      pwInput.type = pwInput.type === 'password' ? 'text' : 'password';
+    }
+  </script>
+</body>
+</html>
