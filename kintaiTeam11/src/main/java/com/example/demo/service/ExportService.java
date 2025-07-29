@@ -31,8 +31,7 @@ public class ExportService {
     public List<AttendanceEntity> findByEmpAndMonth(Long empId, YearMonth ym) {
         return repo.findByEmpAndDateRange(empId, ym.atDay(1), ym.atEndOfMonth());
     }
-    
-    
+
     public List<AttendanceEntity> getAttendanceByMonth(int year, int month) {
         return repo.findByMonth(year, month);
     }
@@ -40,21 +39,28 @@ public class ExportService {
     public void writeCsv(HttpServletResponse response,
                          List<AttendanceEntity> data,
                          String filename) throws IOException {
+
         response.setContentType("text/csv; charset=UTF-8");
-        response.setHeader("Content-Disposition",
-                "attachment; filename=\"" + filename + "\"");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
 
-        try (BufferedWriter writer = new BufferedWriter(
-                new OutputStreamWriter(response.getOutputStream(), StandardCharsets.UTF_8));
-             CSVPrinter csv = new CSVPrinter(writer,
-                     CSVFormat.DEFAULT.withHeader(
-                         "社員ID","日付","出勤区分","出勤","退勤","実労働時間","休憩時間","残業時間"))) {
+        var os = response.getOutputStream();
+        os.write(0xEF); os.write(0xBB); os.write(0xBF); // UTF-8 BOM
 
+        try (
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
+            CSVPrinter csv = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(
+                    "社員ID", "日付", "出勤区分", "出勤", "退勤", "実労働時間", "休憩時間", "残業時間"))
+        ) {
             for (AttendanceEntity a : data) {
                 csv.printRecord(
-                    a.getEmpId(), a.getWorkDate(), a.getLeaveType(),
-                    a.getCheckInTime(), a.getCheckOutTime(),
-                    a.getWorkTimeHours(), a.getBreakTime(), a.getOvertimeHours()
+                    a.getEmpId(),
+                    a.getWorkDate(),
+                    a.getLeaveType(),
+                    a.getCheckInTime(),
+                    a.getCheckOutTime(),
+                    a.getWorkTimeHours(),
+                    a.getBreakTime(),
+                    a.getOvertimeHours()
                 );
             }
             csv.flush();
