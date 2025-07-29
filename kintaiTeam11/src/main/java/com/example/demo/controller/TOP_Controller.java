@@ -5,6 +5,8 @@ package com.example.demo.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +26,8 @@ import com.example.demo.entity.AttendanceEntity;
     	// ColorRepositoryはcolorテーブルにアクセスするためのリポジトリ
     	/*--- 最初のリクエスト -------------------------*/
     	@GetMapping("/top")
-    	 public String TOP() {
+    	 public String TOP(HttpSession session) {
+    		session.invalidate(); 
             return "top"; // input.htmlを返す
         }
     	 @GetMapping("/AtAdd")
@@ -32,7 +35,8 @@ import com.example.demo.entity.AttendanceEntity;
     	        return "AtAdd"; // Thymeleafは templates/AtAdd.html を探します
     	 }
     	 @GetMapping("/L")
-    	    public String L() {
+    	    public String L(HttpSession session) {
+    		 session.invalidate(); 
     	        return "L"; // Thymeleafは templates/AtAdd.html を探します
     	    }
     	 
