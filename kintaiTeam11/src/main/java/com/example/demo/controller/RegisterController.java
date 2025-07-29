@@ -181,6 +181,14 @@ public class RegisterController {
             return "alertAttendanceTime"; // breaktimeがworktimeより長い場合
         }
         
+        // worktimeが4時間以上でbreaktimeが1時間未満のチェック
+        LocalTime minBreakTime = LocalTime.of(1,0); // 1時間
+        LocalTime fourHours = LocalTime.of(4,0); // 4時間
+
+        if (worktime.isAfter(fourHours) && breaktime.isBefore(minBreakTime)) {
+        	model.addAttribute("alertMessage", "1時間以上の休憩を登録してください");
+            return "alertBreakTime"; // worktimeが4時間以上でbreaktimeが1時間未満の場合
+        }
         // 前日チェック
         LocalDate previousDate = form.getWorkDate().minusDays(1);
         AttendanceEntity previousAttendance = attendanceService.getPreviousAttendance(employeeId, previousDate);
