@@ -59,6 +59,8 @@ public class RegisterController {
         if (result.hasErrors()) {
             return "Attendance_register";
         }
+        
+        
 
         String empId = (String) session.getAttribute("employeeId");
         int employeeId = Integer.parseInt(empId);
@@ -68,7 +70,12 @@ public class RegisterController {
             model.addAttribute("duplicateError", "この日付の勤怠はすでに登録されています。");
             return "Attendance_register";
         }
+        LocalTime thresholdTime = LocalTime.of(4, 0); // 04:00を設定
 
+        if ((form.getBreakTime()).isAfter(thresholdTime)) {
+        	model.addAttribute("alertMessage", "休憩時間が長すぎます。入力しなおしてください");
+        	return "alertBack";
+        }
         LocalTime base = LocalTime.of(0, 0);
         Duration overT = Tservice.timediff(form.getCheckInTime(), form.getCheckOutTime(), form.getBreakTime());
         LocalTime overtime = base.plus(overT);
