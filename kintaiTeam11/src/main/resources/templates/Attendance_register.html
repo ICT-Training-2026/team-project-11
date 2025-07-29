@@ -22,8 +22,8 @@
     </div>
 
     <!-- 🔽 前日未登録フラグを仕込む -->
-    <input type="hidden" id="prevDayStatus" value="missing">
-
+    <!--<input type="hidden" id="prevDayStatus" value="missing">
+-->
     <div class="right">
       <h1>勤怠登録画面</h1>
       <form th:action="@{/Register_complate}" method="POST" th:object="${AttendancetForm}">
@@ -100,16 +100,16 @@
 
   <script>
     // 前日未登録チェックの確認ダイアログ
-    document.querySelector('form').addEventListener('submit', function(e) {
-      const prevStatus = document.getElementById('prevDayStatus').value;
-      if (prevStatus === 'missing') {
-        const confirmRegister = confirm('前日の勤怠登録がありません。\nこのまま登録してもよろしいですか？');
-        if (!confirmRegister) {
-          e.preventDefault();
-          return;
-        }
-      }
-    });
+    //document.querySelector('form').addEventListener('submit', function(e) {
+      //const prevStatus = document.getElementById('prevDayStatus').value;
+      //if (prevStatus === 'missing') {
+       // const confirmRegister = confirm('前日の勤怠登録がありません。\nこのまま登録してもよろしいですか？');
+      //  if (!confirmRegister) {
+       //   e.preventDefault();
+      //    return;
+     //   }
+  //    }
+   // });
   </script>
 </body>
 </html>

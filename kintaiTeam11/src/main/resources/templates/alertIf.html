@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>確認ダイアログ</title>
+    <script>
+        function showAlert() {
+            // 確認ダイアログを表示
+            const userConfirmed = confirm("前日の勤怠がありません。よろしいですか?"); // ユーザーに確認を求める
+            if (!userConfirmed) {
+                // いいえが選択された場合、"/top"にリダイレクト
+				console.log("後ほど勤怠編集お願いします");
+                window.location.href = "/Attendance_register"; // トップページにリダイレクト
+            } else {
+				
+				window.location.href = "/Register_complete";
+                // はいが選択された場合の処理をここにを書く
+                
+            }
+        }
+    </script>
+</head>
+<body onload="showAlert()">  <!-- ページが読み込まれたときにshowAlert()関数を呼び出す -->
+
+    
+</body>
+</html>
