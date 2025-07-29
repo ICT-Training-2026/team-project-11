@@ -46,6 +46,11 @@ public class RegisterController {
             BindingResult result,
             HttpSession session,
             Model model) {
+    	String checklog = (String) session.getAttribute("employeeId");
+    	if(checklog ==null) {
+    		 model.addAttribute("alertMessage", "セッションが無効です。再度ログインしてください。");
+             return "alertTop";
+    	}
 
         if (result.hasErrors()) {
             return "Attendance_register";

@@ -1,4 +1,6 @@
 package com.example.demo.controller;
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,8 +38,15 @@ public class AddController {
             @RequestParam String password,
             @RequestParam String department,
             @RequestParam int role,
-            Model model) {
+            Model model,HttpSession session) {
+    	String checklog = (String) session.getAttribute("employeeId");
+    	if(checklog ==null) {
+    		 model.addAttribute("alertMessage", "セッションが無効です。再度ログインしてください。");
+             return "alertTop";
+    	}
+    	
         // ① 重複チェック
+    	
         if (nuserRepository.existsByEmployeeId(employeeId)) {
             model.addAttribute("duplicateId", true); // JavaScript用フラグ
             return "admin_add"; // 再表示

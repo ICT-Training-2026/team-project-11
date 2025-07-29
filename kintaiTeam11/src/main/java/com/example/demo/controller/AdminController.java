@@ -32,7 +32,7 @@ public class AdminController {
             }
         } else {
             model.addAttribute("alertMessage", "セッションが無効です。再度ログインしてください。");
-            return "alertBack";
+            return "alertTop";
         }
     }
 

@@ -21,6 +21,11 @@ public class EmpEditController {
     // 編集画面の表示
     @GetMapping("/EmpEdit")
     public String showEditForm(@RequestParam("employeeId") String employeeId, Model model, HttpSession session) {
+    	String checklog = (String) session.getAttribute("employeeId");
+    	if(checklog ==null) {
+    		 model.addAttribute("alertMessage", "セッションが無効です。再度ログインしてください。");
+             return "alertTop";
+    	}
         User user = nuserRepository.findByEmployeeId(employeeId);
         if (user == null) {
             model.addAttribute("errorMessage", "社員が見つかりません。");
