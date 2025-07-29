@@ -71,6 +71,10 @@ public class AttendanceEditController {
         String empId = (String) session.getAttribute("employeeId");
         int employeeId = Integer.parseInt(empId);
         AttendanceEntity attendance =getattendancerepository.findByEmpIdAndWorkDate(employeeId, form.getWorkDate());
+        if(attendance==null) {
+        	model.addAttribute("alertMessage", "その日の勤怠情報はありません。登録してください");
+        	return "alertBack";
+        }
         int type =leavetypeservice.leaveTypeChecker(attendance.getLeaveType(), form.getLeaveType());
         holidaymathService.incrementdecrement(type,employeeId);
       //  int empId = Integer.parseInt(employeeId);
