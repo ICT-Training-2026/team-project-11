@@ -47,11 +47,8 @@ import com.example.demo.entity.AttendanceEntity;
      	//    return "System";
      	//}
     	 
-    	 @GetMapping("/AtMenu")
- 	    public String AtMenu() {
- 	        return "AtMenu"; // Thymeleafは templates/AtAdd.html を探します
- 	    }
-    	 @GetMapping("/Attendance_edit")
+    	
+    	 @GetMapping("/Attendsance_edit")
   	    public String Attendance_edit() {
   	        return "Attendance_edit"; // Thymeleafは templates/AtAdd.html を探します
   	    }

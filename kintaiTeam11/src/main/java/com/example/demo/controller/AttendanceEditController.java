@@ -1,4 +1,5 @@
 package com.example.demo.controller;
+
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,144 +27,127 @@ import com.example.demo.service.TimeService;
 
 @Controller
 public class AttendanceEditController {
-	@Autowired
-	private EditService service;
-	@Autowired
-	private TimeService Tservice;
-	@Autowired
-	private AttendanceService attendanceService;
-	
-	@Autowired
-	private LeaveTypeService leavetypeservice;
-	@Autowired
+
+    @Autowired
+    private EditService service;
+
+    @Autowired
+    private TimeService Tservice;
+
+    @Autowired
+    private AttendanceService attendanceService;
+
+    @Autowired
+    private LeaveTypeService leavetypeservice;
+
+    @Autowired
     private GetAttendanceRepository getattendancerepository;
-	
-	@Autowired
+
+    @Autowired
     private HolidaymathService holidaymathService;
 
     @ModelAttribute("AttendancetForm")
     public AttendancetForm form() {
         return new AttendancetForm();
     }
+
     @PostMapping("/Edit_complete")
     public String AttendanceEditComplate(
-    		@Validated @ModelAttribute AttendancetForm form,
-            BindingResult result,HttpSession session,Model model) {
-    	String checklog = (String) session.getAttribute("employeeId");
-    	if(checklog ==null) {
-    		 model.addAttribute("alertMessage", "セッションが無効です。再度ログインしてください。");
-             return "alertTop";
-    	}
-    	
-    	
+            @Validated @ModelAttribute AttendancetForm form,
+            BindingResult result,
+            HttpSession session,
+            Model model) {
+
+        String empIdStr = (String) session.getAttribute("employeeId");
+        if (empIdStr == null) {
+            model.addAttribute("alertMessage", "セッションが無効です。再度ログインしてください。");
+            return "alertTop";
+        }
+
         if (result.hasErrors()) {
-        	System.out.println("error");
-            return "Atmenu"; // HTMLのテンプレート名
-       }
+            return "Atmenu";
+        }
+
+        int employeeId = Integer.parseInt(empIdStr);
         LocalTime base = LocalTime.of(0, 0);
-        Duration overT = Tservice.timediff(form.getCheckInTime(), form.getCheckOutTime(),form.getBreakTime());
-        LocalTime overtime =base.plus(overT);
-        Duration workT = Tservice.timediff(form.getCheckInTime(), form.getCheckOutTime(),form.getBreakTime(),overtime);
-        LocalTime worktime =base.plus(workT);
+        Duration overT = Tservice.timediff(form.getCheckInTime(), form.getCheckOutTime(), form.getBreakTime());
+        LocalTime overtime = base.plus(overT);
+        Duration workT = Tservice.timediff(form.getCheckInTime(), form.getCheckOutTime(), form.getBreakTime(), overtime);
+        LocalTime worktime = base.plus(workT);
         LocalDateTime currentDateTime = LocalDateTime.now();
-       
-        
-        String empId = (String) session.getAttribute("employeeId");
-        int employeeId = Integer.parseInt(empId);
-        AttendanceEntity attendance =getattendancerepository.findByEmpIdAndWorkDate(employeeId, form.getWorkDate());
-        if(attendance==null) {
-        	model.addAttribute("alertMessage", "その日の勤怠情報はありません。登録してください");
-        	return "alertBack";
+
+        AttendanceEntity existing = getattendancerepository.findByEmpIdAndWorkDate(employeeId, form.getWorkDate());
+        if (existing == null) {
+            model.addAttribute("alertMessage", "その日の勤怠情報はありません。登録してください");
+            return "alertBack";
         }
-        int type =leavetypeservice.leaveTypeChecker(attendance.getLeaveType(), form.getLeaveType());
-        holidaymathService.incrementdecrement(type,employeeId);
-      //  int empId = Integer.parseInt(employeeId);
-        
+
+        int type = leavetypeservice.leaveTypeChecker(existing.getLeaveType(), form.getLeaveType());
+        holidaymathService.incrementdecrement(type, employeeId);
+
         AttendanceEntity e = new AttendanceEntity();
-        if("年休".equals(form.getLeaveType())) {
-        	e.setEmpId(employeeId);
-            e.setWorkDate(form.getWorkDate());
-            e.setLeaveType(form.getLeaveType());
-        	e.setCheckInTime(LocalTime.of(0, 0));
-        	e.setCheckOutTime(LocalTime.of(0, 0));
-        	e.setOvertimeHours(LocalTime.of(0, 0));
-        	e.setWorkTimeHours(LocalTime.of(7, 0));
-        	e.setBreakTime(LocalTime.of(0, 0));
-        	e.setRemarks(form.getRemarks());
-            e.setApproval(0);
-            e.setUpdatedAt(currentDateTime);
-        	
-        }
-        else if("振休".equals(form.getLeaveType())||"振休".equals(form.getLeaveType())) {
-        	e.setEmpId(employeeId);
-            e.setWorkDate(form.getWorkDate());
-            e.setLeaveType(form.getLeaveType());
-        	e.setCheckInTime(LocalTime.of(0, 0));
-        	e.setCheckOutTime(LocalTime.of(0, 0));
-        	e.setOvertimeHours(LocalTime.of(0, 0));
-        	e.setWorkTimeHours(LocalTime.of(0, 0));
-        	e.setBreakTime(LocalTime.of(0, 0));
-        	e.setRemarks(form.getRemarks());
-            e.setApproval(0);
-            e.setUpdatedAt(currentDateTime);
-        }else {
         e.setEmpId(employeeId);
         e.setWorkDate(form.getWorkDate());
         e.setLeaveType(form.getLeaveType());
-        e.setCheckInTime(form.getCheckInTime());
-        e.setCheckOutTime(form.getCheckOutTime());
-        e.setBreakTime(form.getBreakTime());
-        e.setOvertimeHours(overtime);
-        e.setWorkTimeHours(worktime);
         e.setRemarks(form.getRemarks());
         e.setApproval(0);
         e.setUpdatedAt(currentDateTime);
+
+        if ("年休".equals(form.getLeaveType())) {
+            e.setCheckInTime(LocalTime.of(0, 0));
+            e.setCheckOutTime(LocalTime.of(0, 0));
+            e.setOvertimeHours(LocalTime.of(0, 0));
+            e.setWorkTimeHours(LocalTime.of(7, 0));
+            e.setBreakTime(LocalTime.of(0, 0));
+        } else if ("振休".equals(form.getLeaveType()) || "振出".equals(form.getLeaveType())) {
+            e.setCheckInTime(LocalTime.of(0, 0));
+            e.setCheckOutTime(LocalTime.of(0, 0));
+            e.setOvertimeHours(LocalTime.of(0, 0));
+            e.setWorkTimeHours(LocalTime.of(0, 0));
+            e.setBreakTime(LocalTime.of(0, 0));
+        } else {
+            e.setCheckInTime(form.getCheckInTime());
+            e.setCheckOutTime(form.getCheckOutTime());
+            e.setBreakTime(form.getBreakTime());
+            e.setOvertimeHours(overtime);
+            e.setWorkTimeHours(worktime);
         }
+
         LocalDate previousDate = form.getWorkDate().minusDays(1);
-        // 前日の勤怠データを取得
         AttendanceEntity previousAttendance = attendanceService.getPreviousAttendance(employeeId, previousDate);
 
-        // 前日の勤怠データが存在しない場合
         if (previousAttendance == null) {
-            // 警告メッセージをモデルに追加
             model.addAttribute("warningMessage", "前日の勤怠が登録されていませんが進みますか？");
-            model.addAttribute("showWarning", true); // 警告メッセージを表示するフラグ
-            // LeaveTypeが「出勤」または「振出」の場合にデータベースを更新
+            model.addAttribute("showWarning", true);
             if ("出勤".equals(form.getLeaveType()) || "振出".equals(form.getLeaveType())) {
                 e.setConsecutiveDays(1);
-            }else {
-            	e.setConsecutiveDays(0);
+            } else {
+                e.setConsecutiveDays(0);
             }
-        }else {
-            // LeaveTypeが「出勤」または「振出」の場合にデータベースを更新
+        } else {
             if ("出勤".equals(form.getLeaveType()) || "振出".equals(form.getLeaveType())) {
-                // 前日の連続勤務日数を取得し、今日の連続勤務日数を設定
                 int previousConsecutiveDays = previousAttendance.getConsecutiveDays();
                 e.setConsecutiveDays(previousConsecutiveDays + 1);
-            }else {
-            	e.setConsecutiveDays(0);
+            } else {
+                e.setConsecutiveDays(0);
             }
         }
+
         service.regist(e);
         return "Edit_complete";
     }
-    @GetMapping("/Attendance_Edit")
-    public String showEditerForm(Model model,HttpSession session) {
-    	String employeeId = (String) session.getAttribute("employeeId");
-    	model.addAttribute("employeeId",employeeId);
-        model.addAttribute("AttendancetForm", new AttendancetForm()); // 必須！
+
+    @GetMapping("/Attendance_edit")
+    public String showEditerForm(Model model, HttpSession session) {
+        String employeeId = (String) session.getAttribute("employeeId");
+        if (employeeId == null) {
+            model.addAttribute("alertMessage", "ログイン情報が無効です。再度ログインしてください。");
+            return "alertTop";
+        }
+
+        model.addAttribute("employeeId", employeeId);
+        model.addAttribute("AttendancetForm", new AttendancetForm());
         System.out.println("取得した社員番号: " + employeeId);
-        return "Attendance_edit"; // HTML名
+        return "Attendance_edit";
     }
 }
-
-
-
-
-
-
-
-
-
-
-
