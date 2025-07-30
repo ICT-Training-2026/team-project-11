@@ -44,6 +44,15 @@
           <label><span class="required">※</span>日付</label>
           <div class="form-input-wrap">
             <input type="date" th:field="*{workDate}" placeholder="日付を選択" required>
+			<script>
+			  document.addEventListener('DOMContentLoaded', () => {
+			    const today = new Date();
+			    const year = today.getFullYear();
+			    const month = String(today.getMonth() + 1).padStart(2, '0');
+			    const day = String(today.getDate()).padStart(2, '0');
+			    document.getElementById('workDate').value = `${year}-${month}-${day}`;
+			  });
+			</script>
           </div>
         </div>
 

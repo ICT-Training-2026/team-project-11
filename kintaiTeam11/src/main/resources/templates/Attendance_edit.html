@@ -36,6 +36,15 @@
 
         <div class="form-group">
           <label for="workDate"><span class="required">※</span>日付</label>
+		  <script>
+		    document.addEventListener('DOMContentLoaded', () => {
+		      const today = new Date();
+		      const year = today.getFullYear();
+		      const month = String(today.getMonth() + 1).padStart(2, '0');
+		      const day = String(today.getDate()).padStart(2, '0');
+		      document.getElementById('workDate').value = `${year}-${month}-${day}`;
+		    });
+		  </script>
           <div class="form-input-wrap">
             <input type="date" id="workDate" name="workDate" required>
           </div>
