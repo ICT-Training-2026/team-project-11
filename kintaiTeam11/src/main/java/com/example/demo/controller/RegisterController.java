@@ -66,8 +66,7 @@ public class RegisterController {
         if (result.hasErrors()) {
             return "Attendance_register";
         }
-        
-        
+                
 
         String empId = (String) session.getAttribute("employeeId");
         int employeeId = Integer.parseInt(empId);
@@ -157,13 +156,58 @@ public class RegisterController {
         e.setApproval(0);
         e.setUpdatedAt(currentDateTime);
         }
+        // worktimeが0分の場合のチェック
+        if (form.getCheckInTime().equals(form.getCheckOutTime())) {
+        	model.addAttribute("alertMessage", "勤怠時間が0分です。正しい時間を入力してください。");
+            return "alertWorkTime"; // worktimeが0分の場合
+        }
+        // 未来の日付のチェック
+        LocalDate currentDate = LocalDate.now();
+        if (form.getWorkDate().isAfter(currentDate)) {
+            // 年休、振休、休日の場合のみ許可
+            if (!("年休".equals(form.getLeaveType()) || "振休".equals(form.getLeaveType()) || "休日".equals(form.getLeaveType()))) {
+            	model.addAttribute("alertMessage", "日付確認をお願いします");
+                return "alertFutureClock"; // 未来の日付で年休、振休、休日以外の場合
+            }
+        }
+       
+        // チェックイン時間とチェックアウト時間の範囲チェック
+        LocalTime checkInTime = form.getCheckInTime();
+        LocalTime checkOutTime = form.getCheckOutTime();
+        LocalTime startTime = LocalTime.of(8, 0); // 8:00
+        LocalTime endTime = LocalTime.of(22, 45); // 22:45
+        // チェックインとチェックアウトの範囲チェック
+        if (checkInTime.isBefore(startTime) || checkInTime.isAfter(endTime) ||
+            checkOutTime.isBefore(startTime) || checkOutTime.isAfter(endTime)) {
+            model.addAttribute("alertMessage", "勤怠は8:00～22:45の間で登録してください");
+            return "alertWorkTime"; // チェックインまたはチェックアウトが範囲外の場合
+        }
+       
+        // worktimeとbreaktimeの比較      
+        LocalTime breaktime = form.getBreakTime();
+        if (breaktime.isAfter(worktime)) {
+        	model.addAttribute("alertMessage", "休憩時間が勤務時間を超過しています");
+            return "alertAttendanceTime"; // breaktimeがworktimeより長い場合
+        }
+        
+        // チェックイン時間がチェックアウト時間より遅い場合のチェック
+        if (checkInTime.isAfter(checkOutTime)) {
+            model.addAttribute("alertMessage", "勤怠を正しく登録してください");
+            return "alertWorkTime"; // チェックインがチェックアウトより遅い場合
+        }
+        
+        // worktimeが4時間以上でbreaktimeが1時間未満のチェック
+        LocalTime minBreakTime = LocalTime.of(1,0); // 1時間
+        LocalTime fourHours = LocalTime.of(4,0); // 4時間
 
+        if (worktime.isAfter(fourHours) && breaktime.isBefore(minBreakTime)) {
+        	model.addAttribute("alertMessage", "1時間以上の休憩を登録してください");
+            return "alertBreakTime"; // worktimeが4時間以上でbreaktimeが1時間未満の場合
+        }
         // 前日チェック
         LocalDate previousDate = form.getWorkDate().minusDays(1);
         AttendanceEntity previousAttendance = attendanceService.getPreviousAttendance(employeeId, previousDate);
-        
-        
-        
+         
         if (previousAttendance == null) {
             if ("出勤".equals(form.getLeaveType()) || "振出".equals(form.getLeaveType())) {
                 e.setConsecutiveDays(1);
