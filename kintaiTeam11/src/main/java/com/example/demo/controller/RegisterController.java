@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.entity.AttendanceEntity;
+import com.example.demo.entity.Holiday;
 import com.example.demo.form.AttendancetForm;
 import com.example.demo.repository.AttendanceDeleteRepository;
 import com.example.demo.repository.GetAttendanceRepository;
+import com.example.demo.repository.HolidaymathRepository;
 import com.example.demo.service.AttendanceService;
 import com.example.demo.service.HolidaymathService;
 import com.example.demo.service.RegistService;
@@ -45,6 +47,9 @@ public class RegisterController {
     
     @Autowired
     private AttendanceDeleteRepository attendanceDeleteRepository;
+    
+    @Autowired
+    private HolidaymathRepository holidaymathRepository;
 
     @ModelAttribute("AttendancetForm")
     public AttendancetForm form() {
@@ -91,6 +96,11 @@ public class RegisterController {
 
         AttendanceEntity e = new AttendanceEntity();
         if("年休".equals(form.getLeaveType())) {
+        	Holiday holiday = holidaymathRepository.findByEmployeeId(employeeId);
+        	if(holiday.getPaid()<=0) {
+        		model.addAttribute("alertMessage", "残有給日数が0です。入力しなおしてください");
+            	return "alertBack";
+        	}
         	e.setEmpId(employeeId);
             e.setWorkDate(form.getWorkDate());
             e.setLeaveType(form.getLeaveType());
@@ -105,6 +115,11 @@ public class RegisterController {
         	holidaymathService.incrementdecrement(4,employeeId);
         }
         else if("振休".equals(form.getLeaveType())) {
+        	Holiday holiday = holidaymathRepository.findByEmployeeId(employeeId);
+        	if(holiday.getSubstitute()<=0) {
+        		model.addAttribute("alertMessage", "残振休日数が0です。入力しなおしてください");
+            	return "alertBack";
+        	}
         	e.setEmpId(employeeId);
             e.setWorkDate(form.getWorkDate());
             e.setLeaveType(form.getLeaveType());

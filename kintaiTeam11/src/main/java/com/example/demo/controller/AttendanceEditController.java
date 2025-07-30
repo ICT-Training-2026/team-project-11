@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.entity.AttendanceEntity;
+import com.example.demo.entity.Holiday;
 import com.example.demo.form.AttendancetForm;
 import com.example.demo.repository.GetAttendanceRepository;
+import com.example.demo.repository.HolidaymathRepository;
 import com.example.demo.service.AttendanceService;
 import com.example.demo.service.EditService;
 import com.example.demo.service.HolidaymathService;
@@ -45,6 +47,9 @@ public class AttendanceEditController {
 
     @Autowired
     private HolidaymathService holidaymathService;
+    
+    @Autowired
+    private HolidaymathRepository holidaymathRepository;
 
     @ModelAttribute("AttendancetForm")
     public AttendancetForm form() {
@@ -94,18 +99,34 @@ public class AttendanceEditController {
         e.setUpdatedAt(currentDateTime);
 
         if ("年休".equals(form.getLeaveType())) {
+        	Holiday holiday = holidaymathRepository.findByEmployeeId(employeeId);
+        	if(holiday.getPaid()<=0) {
+        		model.addAttribute("alertMessage", "残有給日数が0です。入力しなおしてください");
+            	return "alertBack";
+        	}
             e.setCheckInTime(LocalTime.of(0, 0));
             e.setCheckOutTime(LocalTime.of(0, 0));
             e.setOvertimeHours(LocalTime.of(0, 0));
             e.setWorkTimeHours(LocalTime.of(7, 0));
             e.setBreakTime(LocalTime.of(0, 0));
-        } else if ("振休".equals(form.getLeaveType()) || "休日".equals(form.getLeaveType())) {
+        } else if ("振休".equals(form.getLeaveType())) {
+        	Holiday holiday = holidaymathRepository.findByEmployeeId(employeeId);
+        	if(holiday.getSubstitute()<=00) {
+        		model.addAttribute("alertMessage", "残振休日数が0です。入力しなおしてください");
+            	return "alertBack";
+        	}
             e.setCheckInTime(LocalTime.of(0, 0));
             e.setCheckOutTime(LocalTime.of(0, 0));
             e.setOvertimeHours(LocalTime.of(0, 0));
             e.setWorkTimeHours(LocalTime.of(0, 0));
             e.setBreakTime(LocalTime.of(0, 0));
-        } else {
+        }else if ("休日".equals(form.getLeaveType())) {
+            e.setCheckInTime(LocalTime.of(0, 0));
+            e.setCheckOutTime(LocalTime.of(0, 0));
+            e.setOvertimeHours(LocalTime.of(0, 0));
+            e.setWorkTimeHours(LocalTime.of(0, 0));
+            e.setBreakTime(LocalTime.of(0, 0));
+        }else {
             e.setCheckInTime(form.getCheckInTime());
             e.setCheckOutTime(form.getCheckOutTime());
             e.setBreakTime(form.getBreakTime());
