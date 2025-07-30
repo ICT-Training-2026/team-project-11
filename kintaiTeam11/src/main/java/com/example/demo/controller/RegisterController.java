@@ -233,8 +233,7 @@ public class RegisterController {
             session.setAttribute("restartchecker", null);
             
         	session.setAttribute("restartchecker", dateString);
-            model.addAttribute("employeeId", employeeId);
-            model.addAttribute("workDate",form.getWorkDate());
+
         	return "alertIf";
         }
         
@@ -254,11 +253,7 @@ public class RegisterController {
         	
         }
         session.setAttribute("restartchecker", null);
-        workDate = (String) session.getAttribute("restartchecker");
-        if (workDate != null) {
-        	return "alertIf";
-        	
-        }
+       
         model.addAttribute("employeeId", employeeId);
         model.addAttribute("AttendancetForm", new AttendancetForm());
         return "Attendance_register";
