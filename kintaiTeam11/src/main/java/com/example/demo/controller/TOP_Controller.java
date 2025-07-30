@@ -87,7 +87,12 @@ import com.example.demo.entity.AttendanceEntity;
             return "pw"; // input.htmlを返す
         }
     	 @GetMapping("/Register_complete")
-    	 public String Register_complete() {
+    	 public String Register_complete(HttpSession session) {
+    		 String workDate = (String) session.getAttribute("restartchecker");
+             if (workDate != null) {
+            	 session.setAttribute("restartchecker", null);
+             	
+             }
     		 return "Register_complete";
     	 }
     	 

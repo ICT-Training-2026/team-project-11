@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.entity.AttendanceEntity;
 import com.example.demo.form.AttendancetForm;
+import com.example.demo.repository.AttendanceDeleteRepository;
 import com.example.demo.repository.GetAttendanceRepository;
 import com.example.demo.service.AttendanceService;
 import com.example.demo.service.HolidaymathService;
@@ -41,6 +42,9 @@ public class RegisterController {
 
     @Autowired
     private AttendanceService attendanceService;
+    
+    @Autowired
+    private AttendanceDeleteRepository attendanceDeleteRepository;
 
     @ModelAttribute("AttendancetForm")
     public AttendancetForm form() {
@@ -179,6 +183,14 @@ public class RegisterController {
         service.regist(e);
         AttendanceEntity previousattendance =getattendancerepository.findByEmpIdAndWorkDate(employeeId, previousDate);
         if(previousattendance==null) {
+        	LocalDate date=form.getWorkDate();
+        	String dateString = date.toString();
+        
+            session.setAttribute("restartchecker", null);
+            
+        	session.setAttribute("restartchecker", dateString);
+            model.addAttribute("employeeId", employeeId);
+            model.addAttribute("workDate",form.getWorkDate());
         	return "alertIf";
         }
         
@@ -188,6 +200,21 @@ public class RegisterController {
     @GetMapping("/Attendance_register")
     public String showRegisterForm(Model model, HttpSession session) {
         String employeeId = (String) session.getAttribute("employeeId");
+        String workDate = (String) session.getAttribute("restartchecker");
+        if (workDate != null) {
+            
+        	int empId = Integer.parseInt(employeeId);
+        	LocalDate date = LocalDate.parse(workDate); // workDateをLocalDateに変換
+        	attendanceDeleteRepository.deleteByEmployeeIdAndWorkdate(empId, date); // レコード削除
+        	
+        	
+        }
+        session.setAttribute("restartchecker", null);
+        workDate = (String) session.getAttribute("restartchecker");
+        if (workDate != null) {
+        	return "alertIf";
+        	
+        }
         model.addAttribute("employeeId", employeeId);
         model.addAttribute("AttendancetForm", new AttendancetForm());
         return "Attendance_register";
