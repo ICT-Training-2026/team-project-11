@@ -99,7 +99,7 @@ public class AttendanceEditController {
             e.setOvertimeHours(LocalTime.of(0, 0));
             e.setWorkTimeHours(LocalTime.of(7, 0));
             e.setBreakTime(LocalTime.of(0, 0));
-        } else if ("振休".equals(form.getLeaveType()) || "振出".equals(form.getLeaveType())) {
+        } else if ("振休".equals(form.getLeaveType()) || "休日".equals(form.getLeaveType())) {
             e.setCheckInTime(LocalTime.of(0, 0));
             e.setCheckOutTime(LocalTime.of(0, 0));
             e.setOvertimeHours(LocalTime.of(0, 0));
