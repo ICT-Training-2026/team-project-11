@@ -36,6 +36,15 @@
 
         <div class="form-group">
           <label for="workDate"><span class="required">※</span>日付</label>
+		  <script>
+		    document.addEventListener('DOMContentLoaded', () => {
+		      const today = new Date();
+		      const year = today.getFullYear();
+		      const month = String(today.getMonth() + 1).padStart(2, '0');
+		      const day = String(today.getDate()).padStart(2, '0');
+		      document.getElementById('workDate').value = `${year}-${month}-${day}`;
+		    });
+		  </script>
           <div class="form-input-wrap">
             <input type="date" id="workDate" name="workDate" required>
           </div>
@@ -45,7 +54,7 @@
           <label for="leaveType"><span class="required">※</span>勤怠区分</label>
           <div class="form-input-wrap">
             <select id="leaveType" name="leaveType" required>
-              <option value="選択してください">選択してください</option>
+            
               <option value="出勤">出勤</option>
               <option value="振出">振出</option>
               <option value="振休">振休</option>
@@ -74,6 +83,12 @@
           <label for="breakTime"><span class="required">※</span>休憩時間</label>
           <div class="form-input-wrap">
             <input type="time" name="breakTime" id="breakTime" required>
+			<script>
+					     document.addEventListener('DOMContentLoaded', function() {
+					       const timeInput = document.getElementById('breakTime');
+					       timeInput.value = '01:00'; // 初期値を設定
+					     });
+					   </script>
           </div>
         </div>
 

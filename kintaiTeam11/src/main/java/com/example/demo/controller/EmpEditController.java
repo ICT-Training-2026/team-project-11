@@ -73,6 +73,7 @@ public class EmpEditController {
             user.setRole(Integer.parseInt(role));
         }
 
+        
         nuserRepository.save(user);
 
         model.addAttribute("successMessage", "変更を保存しました。");
