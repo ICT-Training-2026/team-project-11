@@ -159,6 +159,7 @@ public class RegisterController {
         // worktimeが0分の場合のチェック
         if (form.getCheckInTime().equals(form.getCheckOutTime())) {
         	model.addAttribute("alertMessage", "勤怠時間が0分です。正しい時間を入力してください。");
+        	model.addAttribute("AttendancetForm", form); 
             return "alertWorkTime"; // worktimeが0分の場合
         }
         // 未来の日付のチェック
@@ -167,7 +168,8 @@ public class RegisterController {
             // 年休、振休、休日の場合のみ許可
             if (!("年休".equals(form.getLeaveType()) || "振休".equals(form.getLeaveType()) || "休日".equals(form.getLeaveType()))) {
             	model.addAttribute("alertMessage", "日付確認をお願いします");
-                return "alertFutureClock"; // 未来の日付で年休、振休、休日以外の場合
+            	model.addAttribute("AttendancetForm", form); 
+                return "alertWorkTime"; // 未来の日付で年休、振休、休日以外の場合
             }
         }
        
@@ -180,6 +182,7 @@ public class RegisterController {
         if (checkInTime.isBefore(startTime) || checkInTime.isAfter(endTime) ||
             checkOutTime.isBefore(startTime) || checkOutTime.isAfter(endTime)) {
             model.addAttribute("alertMessage", "勤怠は8:00～22:45の間で登録してください");
+            model.addAttribute("AttendancetForm", form); 
             return "alertWorkTime"; // チェックインまたはチェックアウトが範囲外の場合
         }
        
@@ -187,12 +190,14 @@ public class RegisterController {
         LocalTime breaktime = form.getBreakTime();
         if (breaktime.isAfter(worktime)) {
         	model.addAttribute("alertMessage", "休憩時間が勤務時間を超過しています");
-            return "alertAttendanceTime"; // breaktimeがworktimeより長い場合
+        	model.addAttribute("AttendancetForm", form); 
+            return "alertWorkTime"; // breaktimeがworktimeより長い場合
         }
         
         // チェックイン時間がチェックアウト時間より遅い場合のチェック
         if (checkInTime.isAfter(checkOutTime)) {
             model.addAttribute("alertMessage", "勤怠を正しく登録してください");
+            model.addAttribute("AttendancetForm", form); 
             return "alertWorkTime"; // チェックインがチェックアウトより遅い場合
         }
         
@@ -202,7 +207,8 @@ public class RegisterController {
 
         if (worktime.isAfter(fourHours) && breaktime.isBefore(minBreakTime)) {
         	model.addAttribute("alertMessage", "1時間以上の休憩を登録してください");
-            return "alertBreakTime"; // worktimeが4時間以上でbreaktimeが1時間未満の場合
+        	model.addAttribute("AttendancetForm", form); 
+            return "alertWorkTime"; // worktimeが4時間以上でbreaktimeが1時間未満の場合
         }
         // 前日チェック
         LocalDate previousDate = form.getWorkDate().minusDays(1);
