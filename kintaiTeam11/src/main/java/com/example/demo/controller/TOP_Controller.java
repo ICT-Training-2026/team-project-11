@@ -31,7 +31,12 @@ import com.example.demo.entity.AttendanceEntity;
             return "top"; // input.htmlを返す
         }
     	 @GetMapping("/AtAdd")
-    	    public String AtAdd() {
+    	    public String AtAdd(HttpSession session,Model model) {
+    		 String checklog = (String) session.getAttribute("employeeId");
+    	    	if(checklog ==null) {
+    	    		 model.addAttribute("alertMessage", "セッションが無効です。再度ログインしてください。");
+    	             return "alertTop";
+    	    	}
     	        return "AtAdd"; // Thymeleafは templates/AtAdd.html を探します
     	 }
     	 @GetMapping("/L")
@@ -41,7 +46,12 @@ import com.example.demo.entity.AttendanceEntity;
     	    }
     	 
     	 @GetMapping("/System")
- 	    public String System() {
+ 	    public String System(HttpSession session,Model model) {
+    		 String checklog = (String) session.getAttribute("employeeId");
+    	    	if(checklog ==null) {
+    	    		 model.addAttribute("alertMessage", "セッションが無効です。再度ログインしてください。");
+    	             return "alertTop";
+    	    	}
  	        return "System"; // Thymeleafは templates/AtAdd.html を探します
  	    }
     	// @PostMapping("/System")
@@ -61,7 +71,12 @@ import com.example.demo.entity.AttendanceEntity;
    	    //    return "Attendance_register"; // Thymeleafは templates/AtAdd.html を探します
    	    //}
     	 @GetMapping("/Attendance_search")
-   	    public String Attendance_search(Model model) {
+   	    public String Attendance_search(Model model,HttpSession session) {
+    		 String checklog = (String) session.getAttribute("employeeId");
+    	    	if(checklog ==null) {
+    	    		 model.addAttribute("alertMessage", "セッションが無効です。再度ログインしてください。");
+    	             return "alertTop";
+    	    	}
     		 List<AttendanceEntity> list = new ArrayList<>();
     		 model.addAttribute("attList", list); 
     		 return "Attendance_search";// Thymeleafは templates/AtAdd.html を探します
@@ -83,11 +98,21 @@ import com.example.demo.entity.AttendanceEntity;
     	// }
     	
     	 @GetMapping("/pw")
-    	 public String pw() {
+    	 public String pw(HttpSession session,Model model) {
+    		 String checklog = (String) session.getAttribute("employeeId");
+    	    	if(checklog ==null) {
+    	    		 model.addAttribute("alertMessage", "セッションが無効です。再度ログインしてください。");
+    	             return "alertTop";
+    	    	}
             return "pw"; // input.htmlを返す
         }
     	 @GetMapping("/Register_complete")
-    	 public String Register_complete(HttpSession session) {
+    	 public String Register_complete(HttpSession session,Model model) {
+    		 String checklog = (String) session.getAttribute("employeeId");
+    	    	if(checklog ==null) {
+    	    		 model.addAttribute("alertMessage", "セッションが無効です。再度ログインしてください。");
+    	             return "alertTop";
+    	    	}
     		 String workDate = (String) session.getAttribute("restartchecker");
              if (workDate != null) {
             	 session.setAttribute("restartchecker", null);
