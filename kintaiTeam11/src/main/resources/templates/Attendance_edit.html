@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>勤怠編集</title>
-  <link rel="stylesheet" th:href="@{/css/editcomplete.css}">
+  <link rel="stylesheet" th:href="@{/css/style_attendance.css}">
 </head>
 <body>
   <div class="container">
@@ -92,12 +92,15 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="remarks">備考</label>
-          <div class="form-input-wrap">
-            <textarea id="remarks" name="remarks" rows="1" placeholder="備考を入力してください" style="resize: none;"></textarea>
-          </div>
-        </div>
+		<div class="form-group">
+
+		         <label for="bikou">備考</label>
+
+		         <div class="form-input-wrap">
+		           <input type="text" th:field="*{remarks}" placeholder="備考">
+		         </div>
+		       </div>
+
 
         <button type="submit">登録</button>
       </form>
