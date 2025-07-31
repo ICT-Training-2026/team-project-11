@@ -21,7 +21,12 @@ public class AddController {
     private HolidayRepository holidayRepository;
     // 管理者画面に遷移
     @GetMapping("/Admin")
-    public String Admin() {
+    public String Admin(HttpSession session,Model model) {
+    	String checklog = (String) session.getAttribute("employeeId");
+    	if(checklog ==null) {
+    		 model.addAttribute("alertMessage", "セッションが無効です。再度ログインしてください。");
+             return "alertTop";
+    	}
         return "Admin";
     }
     // ユーザー登録フォーム表示

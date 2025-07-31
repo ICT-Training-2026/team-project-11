@@ -63,7 +63,12 @@ import com.example.demo.entity.AttendanceEntity;
     	 
     	
     	 @GetMapping("/Attendsance_edit")
-  	    public String Attendance_edit() {
+  	    public String Attendance_edit(HttpSession session,Model model) {
+    		 String checklog = (String) session.getAttribute("employeeId");
+ 	    	if(checklog ==null) {
+ 	    		 model.addAttribute("alertMessage", "セッションが無効です。再度ログインしてください。");
+ 	             return "alertTop";
+ 	    	}
   	        return "Attendance_edit"; // Thymeleafは templates/AtAdd.html を探します
   	    }
     	// @GetMapping("/Attendance_register")
